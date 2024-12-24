@@ -1,0 +1,84 @@
+<?php
+
+namespace App\GraphQL\Queries\Contacts;
+
+use App\Models\Admin;
+use App\Models\Contact;
+use App\Services\HelperService;
+use GraphQL\Error\Error;
+use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Log;
+use Rebing\GraphQL\Support\Facades\GraphQL;
+use Rebing\GraphQL\Support\Query;
+
+class ContactsQuery extends Query
+{
+    protected $attributes = [
+        'name' => 'getContacts',
+        'description' => 'Return Contacts',
+        'model' => Contact::class
+    ];
+
+    public function type(): Type
+    {
+        return GraphQL::type('ContactPagination');
+    }
+
+    public function args(): array
+    {
+        return [
+            'page' => [
+                'name' => 'group',
+                'type' => Type::string(),
+                'description' => 'Group',
+            ],
+            'perPage' => [
+                'name' => 'perPage',
+                'type' => Type::int(),
+                'description' => 'Number Pages',
+                'defaultValue' => 10
+            ],
+        ];
+    }
+
+    /**
+     * @throws Error
+     */
+    public function resolve($root, $args)
+    {
+        $lang = $args['lang'] ?? 'ro';
+
+        try{
+            $auth = Admin::find(request()->auth['sub']);
+            $perPage = $args['perPage'] ?? 10;
+
+            if (!$auth) {
+                return new Error(HelperService::message($lang, 'denied'));
+            }elseif(!$auth->hasPermissionTo('manage-contacts')) {
+                return new Error(HelperService::message($lang, 'permission'));
+            }
+            $query = Contact::query();
+
+            if (isset($args['page'])) {
+                $query->where('page', 'like', '%' . $args['page'] . '%');
+            }
+
+            $contacts = $query->paginate($perPage);
+
+            return [
+                'data' => $contacts->items(),
+                'meta' => [
+                    'total' => $contacts->total(),
+                    'per_page' => $contacts->perPage(),
+                    'current_page' => $contacts->currentPage(),
+                    'last_page' => $contacts->lastPage(),
+                    'from' => $contacts->firstItem(),
+                    'to' => $contacts->lastItem()
+                ],
+            ];
+        }catch(\Exception $exception){
+            Log::info($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
+        }
+    }
+}
