@@ -13,7 +13,9 @@ use App\GraphQL\Mutations\Components\CreateComponentMutation;
 use App\GraphQL\Mutations\Components\DeleteComponentMutation;
 use App\GraphQL\Mutations\Components\UpdateComponentMutation;
 use App\GraphQL\Mutations\Components\UploadMediaMutation;
+use App\GraphQL\Mutations\Contacts\CreateContactMutation;
 use App\GraphQL\Mutations\Contacts\DeleteContactMutation;
+use App\GraphQL\Mutations\Orders\CreateOrderMutation;
 use App\GraphQL\Mutations\Orders\DeleteOrderMutation;
 use App\GraphQL\Mutations\Pages\CreatePageMutation;
 use App\GraphQL\Mutations\Pages\DeletePageMutation;
@@ -57,6 +59,7 @@ use App\GraphQL\Types\Components\TranslationType;
 use App\GraphQL\Types\Components\UploadResponseType;
 use App\GraphQL\Types\Contacts\ContactDeleteType;
 use App\GraphQL\Types\Contacts\ContactPaginationType;
+use App\GraphQL\Types\Contacts\ContactResponseType;
 use App\GraphQL\Types\Contacts\ContactType;
 use App\GraphQL\Types\Enums\ComponentEnumType;
 use App\GraphQL\Types\Enums\ContactEnumType;
@@ -67,6 +70,7 @@ use App\GraphQL\Types\Enums\PageEnumType;
 use App\GraphQL\Types\Enums\TranslationEnumType;
 use App\GraphQL\Types\Errors\ErrorType;
 use App\GraphQL\Types\Orders\OrderPaginationType;
+use App\GraphQL\Types\Orders\OrderResponseType;
 use App\GraphQL\Types\Orders\OrderType;
 use App\GraphQL\Types\Pages\PageDeleteType;
 use App\GraphQL\Types\Pages\PagePaginationType;
@@ -153,6 +157,7 @@ return [
                 'deleteComponent' => DeleteComponentMutation::class,
                 'updateSection' => UpdateSectionMutation::class,
                 'deleteSection' => DeleteSectionMutation::class,
+                'createContact' => CreateContactMutation::class,
                 'deleteContact' => DeleteContactMutation::class,
                 'createAdmin' => CreateAdminMutation::class,
                 'updateAdmin' => UpdateAdminMutation::class,
@@ -163,6 +168,7 @@ return [
                 'createSetting' => CreateSettingMutation::class,
                 'updateSetting' => UpdateSettingMutation::class,
                 'deleteSetting' => DeleteSettingMutation::class,
+                'createOrder' => CreateOrderMutation::class,
                 'deleteOrder' => DeleteOrderMutation::class,
                 'resetPassword' => ResetPasswordMutation::class,
                 'deleteAdmin'   => DeleteAdminMutation::class
@@ -195,6 +201,7 @@ return [
                 'PermissionInput'   => PermissionInputType::class,
                 'Field'             => FieldType::class,
                 'Contact'           => ContactType::class,
+                'ContactResponse'   => ContactResponseType::class,
                 'ContactDelete'     => ContactDeleteType::class,
                 'ContactPagination' => ContactPaginationType::class,
                 'AdminPagination'   => AdminPaginationType::class,
@@ -204,6 +211,7 @@ return [
                 'SettingPagination' => SettingPaginationType::class,
                 'PagePagination'    => PagePaginationType::class,
                 'Order'             => OrderType::class,
+                'OrderResponse'     => OrderResponseType::class,
                 'Upload'            => UploadType::class,
                 'UploadResponse'    => UploadResponseType::class,
                 'ValueInput'        => ValueInputType::class,

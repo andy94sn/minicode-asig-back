@@ -12,7 +12,8 @@ class Authorization
         '10.10.1.45',
         '10.10.1.25',
         '10.10.1.31',
-        'ozoncar.md'
+        'ozoncar.md',
+        'admin.ozoncar.md'
     ];
 
 

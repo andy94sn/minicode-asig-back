@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->boolean('is_super_admin')->after('status')->default(false);
+            $table->boolean('is_super')->after('status')->default(false);
         });
     }
 
