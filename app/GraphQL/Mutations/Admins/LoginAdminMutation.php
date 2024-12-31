@@ -2,7 +2,6 @@
 namespace App\GraphQL\Mutations\Admins;
 
 use App\Models\Admin;
-use App\Models\Role;
 use App\Services\HelperService;
 use App\Services\JwtService;
 use GraphQL\Error\Error;
@@ -63,13 +62,7 @@ class LoginAdminMutation extends Mutation
             }
 
             $jwt = $this->jwtService->generateTokens($admin);
-            $admin->role = $admin->getRoleNames()->first();
-            $admin->permissions = [
-                "view_dashboard",
-                "edit_user",
-                "delete_post"
-            ];
-
+            $admin->role = $admin->roles->first();
             return [
                 'access_token' => $jwt['access_token'],
                 'refresh_token' => $jwt['refresh_token'],

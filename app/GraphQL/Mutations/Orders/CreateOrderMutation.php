@@ -3,7 +3,6 @@
 namespace App\GraphQL\Mutations\Orders;
 
 use App\Services\HelperService;
-use App\Services\RcaApiService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Log;
@@ -14,18 +13,11 @@ use Exception;
 
 class CreateOrderMutation extends Mutation
 {
-    protected RcaApiService $service;
-
     protected $attributes = [
         'name' => 'createOrder',
         'description' => 'Create Order',
         'model' => Order::class
     ];
-
-    public function __construct(RcaApiService $service)
-    {
-        $this->service = $service;
-    }
 
     public function type(): Type
     {
@@ -121,17 +113,31 @@ class CreateOrderMutation extends Mutation
                 ]
             ];
 
-            $http_response_calculate = $this->service->calculate($args);
+            $sessionPrice = session('Price');
+            Log::info($sessionPrice);
+            $sessionData = ['Price' => $sessionPrice];
+            $signature = request()->cookie('session_signature');
 
-            if(isset($http_response_calculate['error'])){
-                return new Error($http_response_calculate['error']);
+            if (!$signature || !$this->isValidSignature($signature, $sessionData)) {
+                return new Error(HelperService::message($args['lang'], 'error'));
             }
 
-            $params['price'] = $http_response_calculate['primeSumMdl'];
+            if (!$sessionPrice) {
+                return new Error(HelperService::message($args['lang'], 'error'));
+            }
+
+            $params['price'] = $sessionPrice;
             return Order::create($params);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return new Error(HelperService::message($args['lang'], 'error'));
         }
+    }
+
+    private function isValidSignature($signature, $sessionData)
+    {
+        $secretKey = env('HASH_SECRET_KEY');
+        $calculatedSignature = hash_hmac('sha256', json_encode($sessionData), $secretKey);
+        return $signature === $calculatedSignature;
     }
 }
