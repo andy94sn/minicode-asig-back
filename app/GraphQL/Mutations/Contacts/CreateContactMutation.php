@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Mutations\Contacts;
 
-use App\Enums\PageType;
+use App\Enums\PagesType;
 use App\Mail\ContactMail;
 use App\Models\Contact;
 use App\Models\Page;
@@ -23,7 +23,7 @@ class CreateContactMutation extends Mutation
     protected $attributes = [
         'name' => 'createContact',
         'description' => 'Create Contact Form',
-        'model' => Order::class
+        'model' => Contact::class
     ];
 
     public function type(): Type
@@ -73,7 +73,7 @@ class CreateContactMutation extends Mutation
 
         try {
             $page = Page::where('slug', $args['page'])->first();
-            $pages = PageType::values();
+            $pages = PagesType::values();
             $setting = Setting::where('group', 'admin')->first();
             $arrayAdmins = array();
 

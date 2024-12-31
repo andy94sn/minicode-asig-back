@@ -7,6 +7,7 @@ use App\Services\HelperService;
 use App\Services\JwtService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
@@ -53,18 +54,40 @@ class RefreshTokenMutation extends Mutation
     {
         $lang = $args['lang'] ?? 'ro';
 
-        try{
+        try {
             $refreshToken = HelperService::clean($args['refresh_token']);
             $accessToken = HelperService::clean($args['access_token']);
 
-            $token = $this->jwtService->decodeJwtWithoutValidation($accessToken);
-            $admin = Admin::find($token['sub']);
+            $decodedAccessToken = $this->jwtService->decodeJwt($accessToken);
 
-            if(!$admin){
-                return new Error(HelperService::message($lang, 'denied'));
+            if ($decodedAccessToken && isset($decodedAccessToken['sub'])) {
+                $admin = Admin::find($decodedAccessToken['sub']);
+                if (!$admin) {
+                    throw new AuthenticationException(HelperService::message($lang, 'denied'));
+                }
+
+                $admin->role = $admin->roles->first();
+                return [
+                    'access_token' => $accessToken,
+                    'refresh_token' => $refreshToken,
+                    'expires_at' => env('JWT_TOKEN_EXPIRATION'),
+                    'admin' => $admin
+                ];
+            }
+
+            $decodedRefreshToken = $this->jwtService->decodeJwt($refreshToken);
+
+            if (!$decodedRefreshToken || !isset($decodedRefreshToken['sub'])) {
+                throw new AuthenticationException(HelperService::message($lang, 'denied'));
+            }
+
+            $admin = Admin::find($decodedRefreshToken['sub']);
+            if (!$admin) {
+                throw new AuthenticationException(HelperService::message($lang, 'denied'));
             }
 
             $tokens = $this->jwtService->refreshToken($refreshToken, $admin);
+            $admin->role = $admin->roles->first();
 
             return [
                 'access_token' => $tokens['access_token'],
@@ -72,9 +95,10 @@ class RefreshTokenMutation extends Mutation
                 'expires_at' => env('JWT_TOKEN_EXPIRATION'),
                 'admin' => $admin
             ];
-        }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-            return new Error(HelperService::message($lang, 'error'));
+
+        } catch (\Exception $exception) {
+            Log::error('Token Error: ' . $exception->getMessage());
+            throw new AuthenticationException(HelperService::message($lang, 'error'));
         }
     }
 }

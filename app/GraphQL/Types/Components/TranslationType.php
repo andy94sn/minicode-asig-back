@@ -19,21 +19,29 @@ class TranslationType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Language'
             ],
-            'value' => [
-                'type' => Type::string(),
-                'description' => 'Value'
-            ],
-            'caption' => [
-                'type' => Type::string(),
-                'description' => 'Sub-Title Card'
-            ],
             'question' => [
                 'type' => Type::string(),
-                'description' => 'Question FAQ'
+                'description' => 'Question'
             ],
             'answer' => [
                 'type' => Type::string(),
-                'description' => 'Answer FAQ'
+                'description' => 'Question'
+            ],
+            'value' => [
+                'type' => Type::string(),
+                'description' => 'Text'
+            ],
+            'caption' => [
+                'type' => Type::string(),
+                'description' => 'Sub-Title'
+            ],
+            'alt' => [
+                'type' => Type::string(),
+                'description' => 'Alt Image'
+            ],
+            'link' => [
+                'type' => Type::string(),
+                'description' => 'Link Button'
             ],
             'label' => [
                 'type' => Type::string(),
@@ -43,38 +51,30 @@ class TranslationType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Placeholder Input'
             ],
-            'type' => [
-                'type' => Type::string(),
-                'description' => 'Type Input'
+            'background' => [
+                'type' => Type::boolean(),
+                'description' => 'Background Image'
             ],
-            'link' => [
-                'type' => Type::string(),
-                'description' => 'Link Button'
+            'icon' => [
+                'type' => Type::boolean(),
+                'description' => 'Card Icon'
             ],
             'editor' => [
                 'type' => Type::boolean(),
-                'description' => 'Editor Text'
+                'description' => 'Editor'
             ],
             'bold' => [
                 'type' => Type::boolean(),
-                'description' => 'Bold Title'
+                'description' => 'Bold Text'
             ],
             'break' => [
                 'type' => Type::boolean(),
-                'description' => 'Break Line Title',
+                'description' => 'Break line'
             ],
             'blank' => [
                 'type' => Type::boolean(),
-                'description' => 'New Window Button',
-            ],
-            'background' => [
-                'type' => Type::boolean(),
-                'description' => 'Background Media',
-            ],
-            'alt' => [
-                'type' => Type::string(),
-                'description' => 'Alt Media'
-            ],
+                'description' => 'New Window'
+            ]
         ];
     }
 }

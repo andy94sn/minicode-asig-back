@@ -75,7 +75,7 @@ class JwtService
 
 
     /**
-     * Decodifică un JWT și returnează payload-ul
+     * Decode JWT și return payload
      *
      * @param string $jwt
      * @return array|null

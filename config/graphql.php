@@ -20,6 +20,7 @@ use App\GraphQL\Mutations\Orders\DeleteOrderMutation;
 use App\GraphQL\Mutations\Pages\CreatePageMutation;
 use App\GraphQL\Mutations\Pages\DeletePageMutation;
 use App\GraphQL\Mutations\Pages\UpdatePageMutation;
+use App\GraphQL\Mutations\Payment\CreateTransactionMutation;
 use App\GraphQL\Mutations\Roles\CreateRoleMutation;
 use App\GraphQL\Mutations\Roles\DeleteRoleMutation;
 use App\GraphQL\Mutations\Roles\UpdateRoleMutation;
@@ -36,19 +37,28 @@ use App\GraphQL\Queries\Contacts\ContactQuery;
 use App\GraphQL\Queries\Contacts\ContactsQuery;
 use App\GraphQL\Queries\Errors\ErrorsQuery;
 use App\GraphQL\Queries\Languages\LanguagesQuery;
+use App\GraphQL\Queries\LayoutQuery;
+use App\GraphQL\Queries\ModesInsuranceQuery;
 use App\GraphQL\Queries\Orders\OrderQuery;
 use App\GraphQL\Queries\Orders\OrdersQuery;
+use App\GraphQL\Queries\OrderStatusQuery;
+use App\GraphQL\Queries\PageComplexQuery;
 use App\GraphQL\Queries\Pages\PageQuery;
 use App\GraphQL\Queries\Pages\PagesQuery;
 use App\GraphQL\Queries\Pages\PageTypesQuery;
 use App\GraphQL\Queries\Permissions\PermissionQuery;
+use App\GraphQL\Queries\PersonsQuery;
+use App\GraphQL\Queries\PossessionsInsuranceQuery;
 use App\GraphQL\Queries\Roles\RolesQuery;
 use App\GraphQL\Queries\Settings\GroupsQuery;
 use App\GraphQL\Queries\Settings\SettingsQuery;
+use App\GraphQL\Queries\TermsInsuranceQuery;
+use App\GraphQL\Queries\ZonesInsuranceQuery;
 use App\GraphQL\Types\Admins\AdminDeleteType;
 use App\GraphQL\Types\Admins\AdminPaginationType;
 use App\GraphQL\Types\Admins\AdminResponseType;
 use App\GraphQL\Types\Admins\AdminType;
+use App\GraphQL\Types\ComponentComplexType;
 use App\GraphQL\Types\Components\ComponentFieldsType;
 use App\GraphQL\Types\Components\ComponentFieldType;
 use App\GraphQL\Types\Components\ComponentInputType;
@@ -63,15 +73,20 @@ use App\GraphQL\Types\Contacts\ContactResponseType;
 use App\GraphQL\Types\Contacts\ContactType;
 use App\GraphQL\Types\Enums\ComponentEnumType;
 use App\GraphQL\Types\Enums\ContactEnumType;
+use App\GraphQL\Types\Enums\EnumInsuranceType;
+use App\GraphQL\Types\Enums\EnumLanguageType;
+use App\GraphQL\Types\Enums\EnumPageType;
 use App\GraphQL\Types\Enums\GroupEnumType;
 use App\GraphQL\Types\Enums\InsuranceEnumType;
 use App\GraphQL\Types\Enums\LanguageEnumType;
 use App\GraphQL\Types\Enums\PageEnumType;
 use App\GraphQL\Types\Enums\TranslationEnumType;
 use App\GraphQL\Types\Errors\ErrorType;
+use App\GraphQL\Types\ModeType;
 use App\GraphQL\Types\Orders\OrderPaginationType;
 use App\GraphQL\Types\Orders\OrderResponseType;
 use App\GraphQL\Types\Orders\OrderType;
+use App\GraphQL\Types\PageComplexType;
 use App\GraphQL\Types\Pages\PageDeleteType;
 use App\GraphQL\Types\Pages\PagePaginationType;
 use App\GraphQL\Types\Pages\PageResponseType;
@@ -79,14 +94,21 @@ use App\GraphQL\Types\Pages\PageTranslationInputType;
 use App\GraphQL\Types\Pages\PageTranslationType;
 use App\GraphQL\Types\Pages\PageType;
 use App\GraphQL\Types\Pagination\PaginationType;
+use App\GraphQL\Types\Payment\TransactionResponseType;
+use App\GraphQL\Types\Payment\TransactionType;
 use App\GraphQL\Types\Permissions\PermissionInputType;
 use App\GraphQL\Types\Permissions\PermissionType;
+use App\GraphQL\Types\PersonType;
+use App\GraphQL\Types\PossessionType;
 use App\GraphQL\Types\Roles\RoleType;
+use App\GraphQL\Types\SectionComplexType;
 use App\GraphQL\Types\Sections\SectionType;
 use App\GraphQL\Types\Settings\SettingPaginationType;
 use App\GraphQL\Types\Settings\SettingType;
 use App\GraphQL\Types\Settings\ValueInputType;
 use App\GraphQL\Types\Settings\ValueResponseType;
+use App\GraphQL\Types\TermType;
+use App\GraphQL\Types\ZoneType;
 use App\Http\Middleware\Authorization;
 use App\Http\Middleware\JwtAuth;
 use Rebing\GraphQL\Support\UploadType;
@@ -108,16 +130,48 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'getLanguages' => LanguagesQuery::class
+                'getLanguages' => LanguagesQuery::class,
+                'statusOrder'    => OrderStatusQuery::class,
+                'getTerms'       => TermsInsuranceQuery::class,
+                'getZones'       => ZonesInsuranceQuery::class,
+                'getModes'       => ModesInsuranceQuery::class,
+                'getPossessions' => PossessionsInsuranceQuery::class,
+                'getPersons'     => PersonsQuery::class,
+                'getPage'        => PageComplexQuery::class,
+                'getLayout'      => LayoutQuery::class,
             ],
             'mutation' => [
                 'loginAdmin' => LoginAdminMutation::class,
-                'refreshToken' => RefreshTokenMutation::class
+                'refreshToken' => RefreshTokenMutation::class,
+                'createContact' => CreateContactMutation::class,
+                'createOrder' => CreateOrderMutation::class,
+                'transactionMutation' => CreateTransactionMutation::class,
             ],
             'types' => [
                 'AdminResponse' => AdminResponseType::class,
                 'Admin' => AdminType::class,
-                'Role' => RoleType::class
+                'Role' => RoleType::class,
+                'EnumPage' => EnumPageType::class,
+                'EnumInsurance' => EnumInsuranceType::class,
+                'EnumLanguage'  => EnumLanguageType::class,
+                'ContactResponse'   => ContactResponseType::class,
+                'OrderResponse'   => OrderResponseType::class,
+                'Permission'      => PermissionType::class,
+                'Term' => TermType::class,
+                'Zone' => ZoneType::class,
+                'Mode' => ModeType::class,
+                'Person' => PersonType::class,
+                'Possession' => PossessionType::class,
+                'Translation'  => TranslationType::class,
+                'PageComplex'  => PageComplexType::class,
+                'PageTranslation'  => PageTranslationType::class,
+                'SectionComplex'   => SectionComplexType::class,
+                'ComponentComplex' => ComponentComplexType::class,
+
+                //Payment
+                'Transaction'    => TransactionType::class,
+                'TransactionResponse' => TransactionResponseType::class
+                // End
             ],
             'middleware' => [
                 Authorization::class
@@ -139,7 +193,6 @@ return [
                 'getSettings'    => SettingsQuery::class,
                 'getOrders'      => OrdersQuery::class,
                 'getGroups'      => GroupsQuery::class,
-                'getLanguages'   => LanguagesQuery::class,
                 'getPageTypes'   => PageTypesQuery::class,
                 'getOrder'       => OrderQuery::class,
                 'getContact'     => ContactQuery::class,
@@ -157,7 +210,6 @@ return [
                 'deleteComponent' => DeleteComponentMutation::class,
                 'updateSection' => UpdateSectionMutation::class,
                 'deleteSection' => DeleteSectionMutation::class,
-                'createContact' => CreateContactMutation::class,
                 'deleteContact' => DeleteContactMutation::class,
                 'createAdmin' => CreateAdminMutation::class,
                 'updateAdmin' => UpdateAdminMutation::class,
@@ -168,7 +220,6 @@ return [
                 'createSetting' => CreateSettingMutation::class,
                 'updateSetting' => UpdateSettingMutation::class,
                 'deleteSetting' => DeleteSettingMutation::class,
-                'createOrder' => CreateOrderMutation::class,
                 'deleteOrder' => DeleteOrderMutation::class,
                 'resetPassword' => ResetPasswordMutation::class,
                 'deleteAdmin'   => DeleteAdminMutation::class
@@ -201,7 +252,6 @@ return [
                 'PermissionInput'   => PermissionInputType::class,
                 'Field'             => FieldType::class,
                 'Contact'           => ContactType::class,
-                'ContactResponse'   => ContactResponseType::class,
                 'ContactDelete'     => ContactDeleteType::class,
                 'ContactPagination' => ContactPaginationType::class,
                 'AdminPagination'   => AdminPaginationType::class,
@@ -211,7 +261,6 @@ return [
                 'SettingPagination' => SettingPaginationType::class,
                 'PagePagination'    => PagePaginationType::class,
                 'Order'             => OrderType::class,
-                'OrderResponse'     => OrderResponseType::class,
                 'Upload'            => UploadType::class,
                 'UploadResponse'    => UploadResponseType::class,
                 'ValueInput'        => ValueInputType::class,

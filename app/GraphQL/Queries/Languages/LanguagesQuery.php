@@ -3,8 +3,7 @@
 namespace App\GraphQL\Queries\Languages;
 
 use App\Enums\LanguageType;
-use App\Models\Admin;
-use App\Services\HelperService;
+use Exception;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +13,8 @@ class LanguagesQuery extends Query
 {
     protected $attributes = [
         'name' => 'getLanguages',
-        'description' => 'Return Languages'
+        'description' => 'Return Languages',
+        'model' => LanguageType::class
     ];
 
     public function type(): Type
@@ -27,19 +27,15 @@ class LanguagesQuery extends Query
      */
     public function resolve($root, $args)
     {
-        $lang = $args['lang'] ?? 'ro';
-
-        try{
-            $auth = Admin::find(request()->auth['sub']);
-
-            if (!$auth) {
-                return new Error(HelperService::message($lang, 'denied'));
-            }
-
+        try {
             return LanguageType::values();
-        }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-            return new Error(HelperService::message($lang, 'error'));
+        } catch (Exception $exception) {
+            Log::error('Error: ' . $exception->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Error: ' . $exception->getMessage(),
+                'data' => null,
+            ];
         }
     }
 }

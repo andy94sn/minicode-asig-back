@@ -1,12 +1,18 @@
 <?php
 
-return[
-    'paths' => ['api/*', 'graphql'],
+return [
+    'paths' => [
+        'api/*',
+        'graphql',
+        'graphql/*',
+        'graphql/user'
+    ],
+
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
-    'exposed_headers' => false,
-    'max_age' => false,
-    'supports_credentials' => false,
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => true
 ];

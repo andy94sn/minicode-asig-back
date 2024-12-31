@@ -41,7 +41,7 @@ class OrdersQuery extends Query
                 'description' => 'Search By Policy Number'
             ],
             'type' => [
-                'type' => new nonNull(GraphQL::type('InsuranceEnum')),
+                'type' => Type::string(),
                 'description' => 'Type Orders'
             ],
             'perPage' => [
