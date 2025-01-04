@@ -45,6 +45,10 @@ class AdminsQuery extends Query
             $perPage = $args['perPage'] ?? 10;
             $admins = Admin::with('roles')->paginate($perPage);
 
+            foreach($admins as $key => $admin){
+                $admins[$key]['role'] = $admin->roles->first();
+            }
+
             if (!$auth) {
                 throw new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-admins')) {

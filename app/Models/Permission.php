@@ -8,7 +8,7 @@ use Ramsey\Uuid\Guid\Guid;
 
 class Permission extends Model
 {
-    protected $fillable = ['name', 'guard_name', 'token'];
+    protected $fillable = ['name', 'description', 'guard_name', 'token'];
 
     protected $casts = [
         'token' => 'string',
