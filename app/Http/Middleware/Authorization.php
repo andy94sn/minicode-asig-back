@@ -7,15 +7,12 @@ use Illuminate\Http\Request;
 
 class Authorization
 {
-
     protected array $allowed = [
-        '10.10.1.45',
-        '10.10.1.25',
-        '10.10.1.31',
-        '10.10.1.57',
-        '109.185.173.60'
+        'https://ozoncar.md',
+        'https://admin.ozoncar.md',
+        'http://10.10.1.45:5000',
+        'http://10.10.1.45:4000'
     ];
-
 
     /**
      * Handle an incoming request.
@@ -26,11 +23,12 @@ class Authorization
      */
     public function handle(Request $request, Closure $next)
     {
+        if ($request->header('Origin') && !in_array($request->header('Origin'), $this->allowed)) {
+            return response()->json([
+                'message' => 'Authorization denied'
+            ], 403);
+        }
 
-      if(!in_array($request->ip(), $this->allowed)) {
-            return response()->json(['message' => 'Authorization denied.'], 403);
-      }
-
-       return $next($request);
+        return $next($request);
     }
 }

@@ -1,13 +1,7 @@
 <?php
 
 return [
-    'paths' => [
-        'api/*',
-        'graphql',
-        'graphql/*',
-        'graphql/user'
-    ],
-
+    'paths' => ['*'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'],
     'allowed_origins_patterns' => ['*'],
