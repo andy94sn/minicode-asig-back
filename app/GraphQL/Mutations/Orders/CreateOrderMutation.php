@@ -114,7 +114,6 @@ class CreateOrderMutation extends Mutation
             ];
 
             $sessionPrice = session('Price');
-            Log::info($sessionPrice);
             $sessionData = ['Price' => $sessionPrice];
             $signature = request()->cookie('session_signature');
 

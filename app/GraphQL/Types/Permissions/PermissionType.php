@@ -24,6 +24,10 @@ class PermissionType extends GraphQLType
             'name' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Name'
+            ],
+            'description' => [
+                'type' => Type::string(),
+                'description' => 'Description'
             ]
         ];
     }

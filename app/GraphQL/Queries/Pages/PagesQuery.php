@@ -30,7 +30,7 @@ class PagesQuery extends Query
     {
         return [
             'type' => [
-                'type' => new nonNull(GraphQL::type('PageEnum')),
+                'type' => Type::getNullableType(GraphQL::type('PageEnum')),
                 'description' => 'Type'
             ],
             'perPage' => [
@@ -46,19 +46,21 @@ class PagesQuery extends Query
     public function resolve($root, $args)
     {
         $lang = $args['lang'] ?? 'ro';
+        $type = $args['type'] ?? null;
 
         try{
             $auth = Admin::find(request()->auth['sub']);
             $validTypes = PageType::values();
             $perPage = $args['perPage'] ?? 10;
-            $type = HelperService::clean($args['type']);
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
-            }elseif(!in_array($type, $validTypes)){
-                return new Error('Allowed types: ' . implode(', ', $validTypes));
+            }
+
+            if($type){
+                $type = HelperService::clean($type);
             }
 
             $query = Page::select('token', 'slug', 'status', 'title', 'type')
@@ -66,7 +68,11 @@ class PagesQuery extends Query
                     'translations:id,page_id,language,title,content'
                 ]);
 
-            $pages = $query->where('type', $type)->paginate($perPage);
+            if($type){
+                $pages = $query->where('type', $type)->paginate($perPage);
+            }else{
+                $pages = $query->paginate($perPage);
+            }
 
             return [
                 'data' => $pages->items(),
