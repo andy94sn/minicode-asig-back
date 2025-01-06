@@ -5,6 +5,7 @@ namespace App\GraphQL\Mutations\Orders;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
@@ -18,10 +19,19 @@ class CreateOrderMutation extends Mutation
         'description' => 'Create Order',
         'model' => Order::class
     ];
+    private Client $client;
 
     public function type(): Type
     {
         return GraphQL::type('OrderResponse');
+    }
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => env('API_RCA_EXTERNAL'),
+            'timeout' => 10,
+        ]);
     }
 
     public function args(): array
@@ -95,6 +105,8 @@ class CreateOrderMutation extends Mutation
 
     public function resolve($root, $args)
     {
+        $lang = $args['lang'] ?? 'ro';
+
         try {
             $params = [
                 'email' => trim($args['email']),
@@ -113,30 +125,29 @@ class CreateOrderMutation extends Mutation
                 ]
             ];
 
-            $sessionPrice = session('Price');
-            $sessionData = ['Price' => $sessionPrice];
-            $signature = request()->cookie('session_signature');
+            $params['lang'] = $lang;
 
-            if (!$signature || !$this->isValidSignature($signature, $sessionData)) {
-                return new Error(HelperService::message($args['lang'], 'error'));
+            $response = $this->client->post('api/calculate', [
+                'json' => $params,
+                'headers' => [
+                    'Accept' => 'application/json'
+                ],
+            ]);
+
+            $http_response = json_decode($response->getBody()->getContents(), true);
+
+            if(isset($http_response['error'])){
+                return new Error($http_response['error']);
             }
 
-            if (!$sessionPrice) {
-                return new Error(HelperService::message($args['lang'], 'error'));
+            if($http_response){
+                $params['price'] = $http_response['primeSumMdl'];
             }
 
-            $params['price'] = $sessionPrice;
             return Order::create($params);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return new Error(HelperService::message($args['lang'], 'error'));
         }
-    }
-
-    private function isValidSignature($signature, $sessionData)
-    {
-        $secretKey = env('HASH_SECRET_KEY');
-        $calculatedSignature = hash_hmac('sha256', json_encode($sessionData), $secretKey);
-        return $signature === $calculatedSignature;
     }
 }

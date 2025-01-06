@@ -21,6 +21,8 @@ use App\GraphQL\Mutations\Pages\CreatePageMutation;
 use App\GraphQL\Mutations\Pages\DeletePageMutation;
 use App\GraphQL\Mutations\Pages\UpdatePageMutation;
 use App\GraphQL\Mutations\Payment\CreateTransactionMutation;
+use App\GraphQL\Mutations\Rca\CreateCalculateMutation;
+use App\GraphQL\Mutations\Rca\CreateDocumentMutation;
 use App\GraphQL\Mutations\Roles\CreateRoleMutation;
 use App\GraphQL\Mutations\Roles\DeleteRoleMutation;
 use App\GraphQL\Mutations\Roles\UpdateRoleMutation;
@@ -50,6 +52,8 @@ use App\GraphQL\Queries\Permissions\PermissionQuery;
 use App\GraphQL\Queries\PersonsQuery;
 use App\GraphQL\Queries\PossessionsInsuranceQuery;
 use App\GraphQL\Queries\Roles\RolesQuery;
+use App\GraphQL\Queries\Sections\SectionQuery;
+use App\GraphQL\Queries\Sections\SectionsQuery;
 use App\GraphQL\Queries\Settings\GroupsQuery;
 use App\GraphQL\Queries\Settings\SettingsQuery;
 use App\GraphQL\Queries\TermsInsuranceQuery;
@@ -100,8 +104,11 @@ use App\GraphQL\Types\Permissions\PermissionInputType;
 use App\GraphQL\Types\Permissions\PermissionType;
 use App\GraphQL\Types\PersonType;
 use App\GraphQL\Types\PossessionType;
+use App\GraphQL\Types\Rca\CalculateType;
+use App\GraphQL\Types\Rca\DocumentType;
 use App\GraphQL\Types\Roles\RoleType;
 use App\GraphQL\Types\SectionComplexType;
+use App\GraphQL\Types\Sections\SectionPaginationType;
 use App\GraphQL\Types\Sections\SectionType;
 use App\GraphQL\Types\Settings\SettingPaginationType;
 use App\GraphQL\Types\Settings\SettingType;
@@ -145,6 +152,8 @@ return [
                 'refreshToken' => RefreshTokenMutation::class,
                 'createContact' => CreateContactMutation::class,
                 'createOrder' => CreateOrderMutation::class,
+                'calculateMutation'  => CreateCalculateMutation::class,
+                'documentMutation'   => CreateDocumentMutation::class,
                 'transactionMutation' => CreateTransactionMutation::class,
             ],
             'types' => [
@@ -167,6 +176,11 @@ return [
                 'PageTranslation'  => PageTranslationType::class,
                 'SectionComplex'   => SectionComplexType::class,
                 'ComponentComplex' => ComponentComplexType::class,
+
+                //Rca
+                'Calculate'    => CalculateType::class,
+                'Document'     => DocumentType::class,
+                // End
 
                 //Payment
                 'Transaction'    => TransactionType::class,
@@ -196,7 +210,9 @@ return [
                 'getPageTypes'   => PageTypesQuery::class,
                 'getOrder'       => OrderQuery::class,
                 'getContact'     => ContactQuery::class,
-                'getErrors'      => ErrorsQuery::class
+                'getErrors'      => ErrorsQuery::class,
+                'getSections'    => SectionsQuery::class,
+                'getSection'     => SectionQuery::class
             ],
 
             'mutation' => [
@@ -243,6 +259,7 @@ return [
                 'PageTranslationInput' => PageTranslationInputType::class,
                 'PageResponse'      => PageResponseType::class,
                 'Section'           => SectionType::class,
+                'SectionPagination' => SectionPaginationType::class,
                 'Component'         => ComponentType::class,
                 'ComponentFields'   => ComponentFieldsType::class,
                 'ComponentField'    => ComponentFieldType::class,
