@@ -15,6 +15,7 @@ class PaymentController extends Controller
         try {
             $key  = env('MAIB_SIGNATURE_KEY');
             $json = file_get_contents('php://input');
+            Log::info(print_r($json, true));
             $data = json_decode($json, true);
             $sortedDataByKeys = $this->sortByKeyRecursive($data['result']);
             $sortedDataByKeys[] = $key;
@@ -22,9 +23,11 @@ class PaymentController extends Controller
             $sign = base64_encode(hash('sha256', $signString, true));
             $status = null;
 
+            Log::info(print_r($data, true));
+
             if($sign === $data['signature']){
                 $result = $data['result'];
-                $transaction = DB::table('transactions')->where('pay_id', $result['payId'])->first()->toArray();
+                $transaction = DB::table('transactions')->where('pay_id', $result['payId'])->first();
 
                 switch($result['status']){
                     case 'CREATED' :  $status = 'canceled'; break;
@@ -36,7 +39,7 @@ class PaymentController extends Controller
                 Log::info($status);
 
                 if($transaction){
-                    $order = Order::find($transaction['order_id']);
+                    $order = Order::find($transaction->order_id);
                     if($order){
                         $order->status = $status;
                         $order->save();
