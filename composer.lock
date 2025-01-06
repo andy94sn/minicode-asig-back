@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acbb295d61c5bdd35f19ab7ec8d7ff59",
+    "content-hash": "a741f8080f811b2abb276b6c26b6cda8",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -11385,6 +11385,7 @@
         "ext-dom": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
+        "ext-openssl": "*",
         "ext-simplexml": "*",
         "ext-soap": "*"
     },
