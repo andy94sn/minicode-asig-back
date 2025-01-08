@@ -45,12 +45,20 @@ class PageComplexQuery extends Mutation
     public function resolve($root, array $args)
     {
         try{
-            $page = Page::where(['slug' => trim($args['key']), 'type' => 'complex'])
-                ->with(['sections' => function ($query) {
-                    $query->orderBy('order');
-                },'sections.components' => function ($query) {
-                    $query->whereNull('parent_id')->orderBy('order');
-                }])
+            $lang = $args['lang'];
+
+            $page = Page::where(['slug' => trim($args['key'])])
+                ->with([
+                    'sections' => function ($query) {
+                        $query->orderBy('order');
+                    },
+                    'sections.components' => function ($query) {
+                        $query->whereNull('parent_id')->orderBy('order');
+                    },
+                    'translations' => function ($query) use ($lang) {
+                        $query->where('language', $lang);
+                    }
+                ])
                 ->first();
 
             if(!$page){

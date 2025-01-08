@@ -35,6 +35,7 @@ use App\GraphQL\Mutations\Settings\UpdateSettingMutation;
 use App\GraphQL\Queries\Admins\AdminQuery;
 use App\GraphQL\Queries\Admins\AdminsQuery;
 use App\GraphQL\Queries\Components\ComponentFieldsQuery;
+use App\GraphQL\Queries\Components\ComponentTypesQuery;
 use App\GraphQL\Queries\Contacts\ContactQuery;
 use App\GraphQL\Queries\Contacts\ContactsQuery;
 use App\GraphQL\Queries\Errors\ErrorsQuery;
@@ -137,7 +138,7 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'getLanguages' => LanguagesQuery::class,
+                'getLanguages'   => LanguagesQuery::class,
                 'statusOrder'    => OrderStatusQuery::class,
                 'getTerms'       => TermsInsuranceQuery::class,
                 'getZones'       => ZonesInsuranceQuery::class,
@@ -212,7 +213,8 @@ return [
                 'getContact'     => ContactQuery::class,
                 'getErrors'      => ErrorsQuery::class,
                 'getSections'    => SectionsQuery::class,
-                'getSection'     => SectionQuery::class
+                'getSection'     => SectionQuery::class,
+                'getComponentTypes' => ComponentTypesQuery::class
             ],
 
             'mutation' => [
