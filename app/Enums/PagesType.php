@@ -12,6 +12,7 @@ enum PagesType: string
     case CONTACTS  = 'contacts';
     case HEADER    = 'header';
     case FOOTER    = 'footer';
+    case TERMS     = 'terms';
 
     /**
      * Return description
@@ -25,7 +26,8 @@ enum PagesType: string
             self::SUCCESS   => 'success',
             self::CONTACTS  => 'contacts',
             self::HEADER    => 'header',
-            self::FOOTER    => 'footer'
+            self::FOOTER    => 'footer',
+            self::TERMS     => 'terms'
         };
     }
 

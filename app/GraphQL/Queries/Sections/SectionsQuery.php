@@ -30,6 +30,11 @@ class SectionsQuery extends Query
             'perPage' => [
                 'type' => Type::int(),
                 'description' => 'Pagination'
+            ],
+
+            'page' => [
+                'type' => Type::int(),
+                'description' => 'Page number'
             ]
         ];
     }
@@ -44,6 +49,7 @@ class SectionsQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $perPage = $args['perPage'] ?? 10;
+            $page = $args['page'] ?? 1;
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -52,7 +58,7 @@ class SectionsQuery extends Query
             }
 
             $query = Section::select('token', 'slug', 'name', 'order', 'status')->with('components');
-            $sections = $query->paginate($perPage);
+            $sections = $query->paginate($perPage, ['*'], 'page', $page);
 
             return [
                 'data' => $sections->items(),
