@@ -16,10 +16,6 @@ class ComponentFieldType extends GraphQLType
     public function fields(): array
     {
         return [
-            'translations' => [
-                'type' => Type::listOf(GraphQL::type('Translation')),
-                'description' => 'Translations'
-            ],
             'title' => [
                 'type' => GraphQL::type('Field'),
                 'description' => 'Title Field'
@@ -59,6 +55,14 @@ class ComponentFieldType extends GraphQLType
             'answer' => [
                 'type' => GraphQL::type('Field'),
                 'description' => 'Answer Field'
+            ],
+            'placeholder' => [
+                'type' => GraphQL::type('Field'),
+                'description' => 'Placeholder Field'
+            ],
+            'label' => [
+                'type' => GraphQL::type('Field'),
+                'description' => 'Label Field'
             ]
         ];
     }

@@ -217,7 +217,6 @@ class ComponentFieldsQuery extends Query
                     'type' => 'text',
                     'required' => true
                 ],
-
                 'label' => [
                     'label' => 'Label',
                     'type' => 'text',
