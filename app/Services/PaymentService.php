@@ -107,4 +107,60 @@ class PaymentService
             return null;
         }
     }
+
+
+    public function refund(array $args): ?array
+    {
+        try {
+            if (!isset($args['id']) || !isset($args['amount'])) {
+                return ['status' => false, 'message' => 'Invalid input data'];
+            }
+
+            $endpoint = "/{$this->version}/refund";
+            $id = $args['id'];
+            $token = $this->token();
+
+            $payload = [
+                'refundAmount' => $args['amount'],
+                'payId' => $id,
+            ];
+
+            if ($token) {
+                $response = $this->client->post($endpoint, [
+                    'json' => $payload,
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $token,
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ]
+                ]);
+
+                $data = json_decode($response->getBody(), true);
+
+                if (isset($data['ok']) && $data['ok'] && isset($data['result']['payId'])) {
+                    DB::table('transactions')->where([
+                        'pay_id' => $data['result']['payId'],
+                    ])->delete();
+
+                    return [
+                        'status' => $data['ok']
+                    ];
+                } else {
+                    return [
+                        'status' => false,
+                    ];
+                }
+            } else {
+                return [
+                    'status' => false
+                ];
+            }
+        } catch (Exception $exception) {
+            Log::error('Transaction: ' . $exception->getMessage());
+            return [
+                'status' => false
+            ];
+        }
+    }
+
 }

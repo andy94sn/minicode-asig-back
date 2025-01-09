@@ -21,6 +21,7 @@ use App\GraphQL\Mutations\Pages\CreatePageMutation;
 use App\GraphQL\Mutations\Pages\DeletePageMutation;
 use App\GraphQL\Mutations\Pages\UpdatePageMutation;
 use App\GraphQL\Mutations\Payment\CreateTransactionMutation;
+use App\GraphQL\Mutations\Payment\RefundTransactionMutation;
 use App\GraphQL\Mutations\Rca\CreateCalculateMutation;
 use App\GraphQL\Mutations\Rca\CreateDocumentMutation;
 use App\GraphQL\Mutations\Roles\CreateRoleMutation;
@@ -155,7 +156,7 @@ return [
                 'createOrder' => CreateOrderMutation::class,
                 'calculateMutation'  => CreateCalculateMutation::class,
                 'documentMutation'   => CreateDocumentMutation::class,
-                'transactionMutation' => CreateTransactionMutation::class,
+                'transactionMutation' => CreateTransactionMutation::class
             ],
             'types' => [
                 'AdminResponse' => AdminResponseType::class,
@@ -240,7 +241,8 @@ return [
                 'deleteSetting' => DeleteSettingMutation::class,
                 'deleteOrder' => DeleteOrderMutation::class,
                 'resetPassword' => ResetPasswordMutation::class,
-                'deleteAdmin'   => DeleteAdminMutation::class
+                'deleteAdmin'   => DeleteAdminMutation::class,
+                'refundMutation'  => RefundTransactionMutation::class
             ],
 
             'types' => [
