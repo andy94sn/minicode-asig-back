@@ -81,6 +81,9 @@ class RefundTransactionMutation extends Mutation
                 }
 
                 if ($response['status'] === true) {
+                    $order->status = 'cancel';
+                    $order->save();
+
                     return true;
                 }else{
                     return false;
