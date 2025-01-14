@@ -45,7 +45,12 @@ class SectionQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $token = HelperService::clean($args['token']);
-            $section = Section::where('token', $token)->with('components')->first();
+            //$section = Section::where('token', $token)->with('components')->first();
+            $section = Section::where('token', $token)
+                ->with(['components' => function($query) {
+                    $query->orderBy('order', 'asc');
+                }])
+                ->first();
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -55,7 +60,6 @@ class SectionQuery extends Query
                 return new Error(HelperService::message($lang, 'found').' - Page');
             }
 
-            $section->load('components');
             return $section;
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
