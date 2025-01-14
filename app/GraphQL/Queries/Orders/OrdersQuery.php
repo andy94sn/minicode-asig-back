@@ -32,6 +32,10 @@ class OrdersQuery extends Query
                 'type' => Type::string(),
                 'description' => 'Search By Phone'
             ],
+            'status' => [
+                'type' => Type::string(),
+                'description' => 'Search By Status'
+            ],
             'email' => [
                 'type' => Type::string(),
                 'description' => 'Search By Email'
@@ -47,6 +51,10 @@ class OrdersQuery extends Query
             'perPage' => [
                 'type' => Type::int(),
                 'description' => 'Pagination'
+            ],
+            'page' => [
+                'type' => Type::int(),
+                'description' => 'Page'
             ]
         ];
     }
@@ -61,6 +69,7 @@ class OrdersQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $perPage = $args['perPage'] ?? 10;
+            $page = $args['page'] ?? 1;
 
 
             if (!$auth) {
@@ -87,7 +96,11 @@ class OrdersQuery extends Query
                 $query->where('type',  $type);
             }
 
-            $orders = $query->paginate($perPage);
+            if(isset($args['status'])){
+                $query->where('status',  $args['status']);
+            }
+
+            $orders = $query->paginate($perPage, ['*'], 'page', $page);
 
             return [
                 'data' => $orders->items(),
