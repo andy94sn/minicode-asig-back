@@ -56,7 +56,7 @@ class TranslationType extends GraphQLType
                 'description' => 'Background Image'
             ],
             'icon' => [
-                'type' => Type::boolean(),
+                'type' => Type::string(),
                 'description' => 'Card Icon'
             ],
             'editor' => [
