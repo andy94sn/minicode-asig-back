@@ -89,6 +89,7 @@ use App\GraphQL\Types\Enums\PageEnumType;
 use App\GraphQL\Types\Enums\TranslationEnumType;
 use App\GraphQL\Types\Errors\ErrorType;
 use App\GraphQL\Types\ModeType;
+use App\GraphQL\Types\Orders\OrderInfoType;
 use App\GraphQL\Types\Orders\OrderPaginationType;
 use App\GraphQL\Types\Orders\OrderResponseType;
 use App\GraphQL\Types\Orders\OrderType;
@@ -112,6 +113,7 @@ use App\GraphQL\Types\Roles\RoleType;
 use App\GraphQL\Types\SectionComplexType;
 use App\GraphQL\Types\Sections\SectionPaginationType;
 use App\GraphQL\Types\Sections\SectionType;
+use App\GraphQL\Types\Settings\SettingInputType;
 use App\GraphQL\Types\Settings\SettingPaginationType;
 use App\GraphQL\Types\Settings\SettingType;
 use App\GraphQL\Types\Settings\ValueInputType;
@@ -280,8 +282,10 @@ return [
                 'Pagination'        => PaginationType::class,
                 'OrderPagination'   => OrderPaginationType::class,
                 'SettingPagination' => SettingPaginationType::class,
+                'SettingInput'      => SettingInputType::class,
                 'PagePagination'    => PagePaginationType::class,
                 'Order'             => OrderType::class,
+                'OrderInfo'         => OrderInfoType::class,
                 'Upload'            => UploadType::class,
                 'UploadResponse'    => UploadResponseType::class,
                 'ValueInput'        => ValueInputType::class,

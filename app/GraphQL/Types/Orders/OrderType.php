@@ -3,6 +3,7 @@
 namespace App\GraphQL\Types\Orders;
 
 use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class OrderType extends GraphQLType
@@ -23,6 +24,14 @@ class OrderType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Name'
             ],
+            'type' => [
+                'type' => Type::string(),
+                'description' => 'Type'
+            ],
+            'price'  => [
+                'type' => Type::float(),
+                'description' => 'Price'
+            ],
             'email' => [
                 'type' => Type::string(),
                 'description' => 'Email'
@@ -41,7 +50,15 @@ class OrderType extends GraphQLType
             ],
             'refund'  => [
                 'type' => Type::int(),
-                'description' => 'Amount Refund'
+                'description' => 'Refund'
+            ],
+            'info'  => [
+                'type' => GraphQL::type('OrderInfo'),
+                'description' => 'Order Info'
+            ],
+            'created_at'  => [
+                'type' => Type::string(),
+                'description' => 'Date'
             ]
         ];
     }

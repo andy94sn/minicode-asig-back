@@ -42,7 +42,7 @@ class OrdersQuery extends Query
             ],
             'type' => [
                 'type' => Type::string(),
-                'description' => 'Type Orders'
+                'description' => 'Search By Type Orders'
             ],
             'perPage' => [
                 'type' => Type::int(),
@@ -61,7 +61,7 @@ class OrdersQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $perPage = $args['perPage'] ?? 10;
-            $type = HelperService::clean($args['type']);
+
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -82,7 +82,12 @@ class OrdersQuery extends Query
                 $query->where('code', 'like', '%' . $args['policy_number'] . '%');
             }
 
-            $orders = $query->where('type',  $type)->paginate($perPage);
+            if(isset($args['type'])){
+                $type = HelperService::clean($args['type']);
+                $query->where('type',  $type);
+            }
+
+            $orders = $query->paginate($perPage);
 
             return [
                 'data' => $orders->items(),

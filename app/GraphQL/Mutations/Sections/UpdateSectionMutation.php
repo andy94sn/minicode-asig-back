@@ -21,7 +21,7 @@ class UpdateSectionMutation extends Mutation
 
     public function type(): Type
     {
-        return GraphQL::type('Page');
+        return GraphQL::type('Section');
     }
 
     public function args(): array
@@ -31,6 +31,11 @@ class UpdateSectionMutation extends Mutation
                 'name' => 'token',
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Token'
+            ],
+            'name' => [
+                'name' => 'name',
+                'type' => Type::string(),
+                'description' => 'Name'
             ],
             'order' => [
                 'name' => 'order',
@@ -65,7 +70,7 @@ class UpdateSectionMutation extends Mutation
                 return new Error(HelperService::message($lang, 'found').'Section');
             }elseif(!$page) {
                 return new Error(HelperService::message($lang, 'found').'Page');
-            }elseif ($page->type !== 'complex'){
+            }elseif ($page->type != 'complex' &&  $page->type != 'general'){
                 return new Error(HelperService::message($lang, 'invalid'));
             }
 
@@ -74,7 +79,8 @@ class UpdateSectionMutation extends Mutation
                 'status' => $args['status'] ?? $section->status
             ]);
 
-            return $page;
+            $section->load('components');
+            return $section;
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));

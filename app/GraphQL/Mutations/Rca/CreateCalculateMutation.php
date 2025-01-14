@@ -76,28 +76,14 @@ class CreateCalculateMutation extends Mutation
         $lang = trim($args['lang']);
 
         try{
-//            $response = $this->client->post('/api/calculate', [
-//                'json' => $args,
-//                'headers' => [
-//                    'Accept' => 'application/json'
-//                ],
-//            ]);
-//
-//            $http_response = json_decode($response->getBody()->getContents(), true);
+            $response = $this->client->post('/api/calculate', [
+                'json' => $args,
+                'headers' => [
+                    'Accept' => 'application/json'
+                ]
+            ]);
 
-            $http_response = [
-                'primeSumMdl'  => 700,
-                'primeSumEuro' => 0,
-                'exchangeRate' => null,
-                'personName'   => 'TA***** ȚA**',
-                'bonusMalusClass'   => 0,
-                'firstName'   => 'TA*****',
-                'lastName'   => 'ȚA**',
-                'vehicleMark'      => 'FORD',
-                'vehicleModel'     => 'TRANSIT 460 ED',
-                'vehicleRegistrationNumber'  => 'X*H**8',
-                'expirationLastContract'  => null
-            ];
+            $http_response = json_decode($response->getBody()->getContents(), true);
 
             if(isset($http_response['error'])){
                 return new Error($http_response['error']);

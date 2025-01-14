@@ -27,10 +27,6 @@ class CalculateType extends GraphQLType
                 'type' => Type::float(),
                 'description' => 'Exchange Rate',
             ],
-            'personName' => [
-                'type' => Type::string(),
-                'description' => 'Person Name',
-            ],
             'vehicleCategory' => [
                 'type' => Type::string(),
                 'description' => 'Vehicle Category',

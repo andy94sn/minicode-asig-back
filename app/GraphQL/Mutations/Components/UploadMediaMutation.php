@@ -3,11 +3,11 @@
 namespace App\GraphQL\Mutations\Components;
 
 use App\Models\Admin;
-use App\Models\Component;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
@@ -27,11 +27,6 @@ class UploadMediaMutation extends Mutation
     public function args(): array
     {
         return [
-            'token' => [
-                'name' => 'token',
-                'type' => Type::nonNull(Type::string()),
-                'description' => 'Token Component'
-            ],
             'file' => [
                 'name' => 'file',
                 'type' => GraphQL::type('Upload'),
@@ -50,9 +45,8 @@ class UploadMediaMutation extends Mutation
 
         try{
             $auth = Admin::find(request()->auth['sub']);
-            $token = HelperService::clean($args['token']);
-            $component = Component::where('token', $token)->first();
-            $file = trim($args['file']);
+            $file = $args['file'];
+            Log::info(print_r($file, true));
 
             $validator = Validator::make(['file' => $file], [
                 'file' => 'required|file|mimes:jpeg,jpg,png,gif|max:2048'
@@ -62,16 +56,18 @@ class UploadMediaMutation extends Mutation
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-content')) {
                 return new Error(HelperService::message($lang, 'permission'));
-            }elseif ($validator->fails()) {
-                return new Error(HelperService::message($lang, 'invalid'));
-            }elseif($component){
-                return new Error(HelperService::message($lang, 'found').'Component');
             }
 
-            $media = $component->addMedia($file)->toMediaCollection('media');
+            if ($validator->fails()) {
+                return new Error(HelperService::message($lang, 'invalid'));
+            }
+
+
+            $filename = time().'-'.$file->getClientOriginalName();
+            $path = Storage::disk('public')->putFileAs('', $file, $filename);
 
             return [
-                'path' => $media->getUrl(),
+                'path' => 'uploads/'.$path,
             ];
         }catch(\Exception $exception){
             Log::info($exception->getMessage());

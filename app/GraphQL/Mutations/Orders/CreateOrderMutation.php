@@ -127,32 +127,18 @@ class CreateOrderMutation extends Mutation
 
             $params['lang'] = $lang;
 
-//            $response = $this->client->post('api/calculate', [
-//                'json' => $params,
-//                'headers' => [
-//                    'Accept' => 'application/json'
-//                ],
-//            ]);
-//
-//            $http_response = json_decode($response->getBody()->getContents(), true);
+            $response = $this->client->post('api/calculate', [
+                'json' => $params,
+                'headers' => [
+                    'Accept' => 'application/json'
+                ],
+            ]);
+
+            $http_response = json_decode($response->getBody()->getContents(), true);
 
             if(isset($http_response['error'])){
                 return new Error($http_response['error']);
             }
-
-            $http_response = [
-                'primeSumMdl'  => 700,
-                'primeSumEuro' => 0,
-                'exchangeRate' => null,
-                'personName'   => 'TA***** ȚA**',
-                'bonusMalusClass'   => 0,
-                'firstName'   => 'TA*****',
-                'lastName'   => 'ȚA**',
-                'vehicleMark'      => 'FORD',
-                'vehicleModel'     => 'TRANSIT 460 ED',
-                'vehicleRegistrationNumber'  => 'X*H**8',
-                'expirationLastContract'  => null
-            ];
 
             if($http_response){
                 $params['price'] = $http_response['primeSumMdl'];

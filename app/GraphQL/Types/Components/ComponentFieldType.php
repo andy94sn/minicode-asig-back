@@ -20,6 +20,10 @@ class ComponentFieldType extends GraphQLType
                 'type' => GraphQL::type('Field'),
                 'description' => 'Title Field'
             ],
+            'caption' => [
+                'type' => GraphQL::type('Field'),
+                'description' => 'Caption Field'
+            ],
             'bold' => [
                 'type' => GraphQL::type('Field'),
                 'description' => 'Bold Field'
@@ -63,6 +67,10 @@ class ComponentFieldType extends GraphQLType
             'label' => [
                 'type' => GraphQL::type('Field'),
                 'description' => 'Label Field'
+            ],
+            'icon' => [
+                'type' => GraphQL::type('Field'),
+                'description' => 'Icon Field'
             ]
         ];
     }

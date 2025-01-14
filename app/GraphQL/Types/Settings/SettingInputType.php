@@ -1,19 +1,16 @@
 <?php
 
-
 namespace App\GraphQL\Types\Settings;
 
-use App\Models\Setting;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use Rebing\GraphQL\Support\Type as GraphQLType;
+use Rebing\GraphQL\Support\InputType;
 
-class SettingType extends GraphQLType
+class SettingInputType extends InputType
 {
     protected $attributes = [
-        'name' => 'Setting',
-        'description' => 'Settings Data',
-        'model' => Setting::class
+        'name' => 'SettingInput',
+        'description' => 'Setting Input Data'
     ];
 
     public function fields(): array
@@ -32,7 +29,7 @@ class SettingType extends GraphQLType
                 'description' => 'Group'
             ],
             'values' => [
-                'type' => Type::listOf(GraphQL::type('ValueResponse')),
+                'type' => Type::listOf(GraphQL::type('ValueInput')),
                 'description' => 'Values Response'
             ],
             'description' => [

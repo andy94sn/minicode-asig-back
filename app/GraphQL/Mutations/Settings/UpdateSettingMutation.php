@@ -16,36 +16,26 @@ class UpdateSettingMutation extends Mutation
 {
     protected $attributes = [
         'name' => 'updateSetting',
-        'description' => 'Update Setting'
+        'description' => 'Update Settings'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('Setting');
+        return Type::boolean();
     }
 
     public function args(): array
     {
         return [
-            'token' => [
-                'name' => 'token',
-                'type' => Type::nonNull(Type::string()),
-                'description' => 'Token'
-            ],
-            'value' => [
-                'name' => 'value',
-                'type' => Type::listOf(GraphQL::type('ValueInput')),
-                'description' => 'Values'
-            ],
             'group' => [
                 'name' => 'group',
-                'type' => new nonNull(GraphQL::type('GroupEnum')),
+                'type' => Type::string(),
                 'description' => 'Group'
             ],
-            'status' => [
-                'name' => 'status',
-                'type' => Type::boolean(),
-                'description' => 'Status'
+            'settings' => [
+                'name' => 'settings',
+                'type' => Type::listOf(GraphQL::type('SettingInput')),
+                'description' => 'Settings'
             ]
         ];
     }
@@ -59,11 +49,8 @@ class UpdateSettingMutation extends Mutation
 
         try{
             $auth = Admin::find(request()->auth['sub']);
-            $token = HelperService::clean($args['token']);
             $group = HelperService::clean($args['group']);
-            $setting = Setting::where('token', $token)->first();
-            $status = (boolean)$args['status'] ?? true;
-            $value = $args['value'] ?? [];
+            $settings = $args['settings'];
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -71,17 +58,25 @@ class UpdateSettingMutation extends Mutation
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!GroupType::validate($args['group'])) {
                 return new Error(HelperService::message($lang, 'invalid').'Group');
-            }elseif(!$setting){
-                return new Error(HelperService::message($lang, 'found').'Setting');
             }
 
-            $setting->update([
-                'value' => $value,
-                'group' => $group,
-                'status' => $status,
-            ]);
+            if($settings){
+                foreach ($settings as $setting){
+                    $existSetting = Setting::where('token', HelperService::clean($setting['token']))->first();
 
-            return $setting;
+                    if($existSetting){
+                        $existSetting->update([
+                            'values' => $setting['values'],
+                            'group' => $group,
+                            'status' => $setting['status'],
+                        ]);
+                    }else{
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }catch (\Exception $exception) {
            Log::info($exception->getMessage());
            return new Error(HelperService::message($lang, 'error'));

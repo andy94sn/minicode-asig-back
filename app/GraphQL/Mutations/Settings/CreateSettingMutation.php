@@ -29,11 +29,11 @@ class CreateSettingMutation extends Mutation
         return [
             'group' => [
                 'name' => 'group',
-                'type' => GraphQL::type('GroupEnum'),
+                'type' => Type::string(),
                 'description' => 'Group'
             ],
-            'value' => [
-                'name' => 'value',
+            'values' => [
+                'name' => 'values',
                 'type' => Type::listOf(GraphQL::type('ValueInput')),
                 'description' => 'Value'
             ],
@@ -61,7 +61,7 @@ class CreateSettingMutation extends Mutation
             $auth = Admin::find(request()->auth['sub']);
             $key = HelperService::slugify(HelperService::clean($args['description']));
             $isSetting = Setting::where('key', $key)->exists();
-            $value = $args['value'];
+            $values = $args['values'];
             $group = HelperService::clean($args['group']);
             $description = HelperService::clean($args['description']);
             $status = (boolean)$args['status'] ?? true;
@@ -79,7 +79,7 @@ class CreateSettingMutation extends Mutation
             return Setting::create([
                 'key' => $key,
                 'group' => $group,
-                'value' => $value,
+                'values' => $values,
                 'description' => $description,
                 'status' => $status
             ]);

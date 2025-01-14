@@ -13,14 +13,14 @@ class Setting extends Model
         'token',
         'key',
         'group',
-        'value',
+        'values',
         'description',
         'status',
     ];
 
 
     protected $casts = [
-        'value' => 'array'
+        'values' => 'array'
     ];
 
     public static function boot()
