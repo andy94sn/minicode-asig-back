@@ -36,6 +36,10 @@ class PagesQuery extends Query
             'perPage' => [
                 'type' => Type::int(),
                 'description' => 'Pagination'
+            ],
+            'page' => [
+                'type' => Type::int(),
+                'description' => 'Page number'
             ]
         ];
     }
@@ -50,8 +54,8 @@ class PagesQuery extends Query
 
         try{
             $auth = Admin::find(request()->auth['sub']);
-            $validTypes = PageType::values();
             $perPage = $args['perPage'] ?? 10;
+            $page = $args['page'] ?? 1;
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -69,9 +73,9 @@ class PagesQuery extends Query
                 ]);
 
             if($type){
-                $pages = $query->where('type', $type)->paginate($perPage);
+                $pages = $query->where('type', $type)->paginate($perPage, ['*'], 'page', $page);
             }else{
-                $pages = $query->paginate($perPage);
+                $pages = $query->paginate($perPage, ['*'], 'page', $page);
             }
 
             return [

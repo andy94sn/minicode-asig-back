@@ -22,7 +22,7 @@ class SettingsQuery extends Query
 
     public function type(): Type
     {
-        return GraphQL::type('SettingPagination');
+        return Type::listOf(GraphQL::type('Setting'));
     }
 
     public function args(): array
@@ -32,10 +32,6 @@ class SettingsQuery extends Query
                 'name' => 'group',
                 'type' => Type::string(),
                 'description' => 'Search By Group'
-            ],
-            'perPage' => [
-                'type' => Type::int(),
-                'description' => 'Pagination'
             ]
         ];
     }
@@ -50,7 +46,6 @@ class SettingsQuery extends Query
 
         try{
             $auth = Admin::find(request()->auth['sub']);
-            $group = HelperService::clean($args['group']);
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -59,24 +54,13 @@ class SettingsQuery extends Query
             }
 
             $query = Setting::query();
-            $perPage = $args['perPage'] ?? 10;
 
-            if ($group) {
+            if (isset($args['group'])) {
+                $group = HelperService::clean($args['group']);
                 $query->where('group', $group);
             }
 
-            $settings = $query->paginate($perPage);
-            return [
-                'data' => $settings->items(),
-                'meta' => [
-                    'total' => $settings->total(),
-                    'current_page' => $settings->currentPage(),
-                    'last_page' => $settings->lastPage(),
-                    'per_page' => $settings->perPage(),
-                    'from' => $settings->firstItem(),
-                    'to' => $settings->lastItem()
-                ]
-            ];
+            return $query->get();
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));

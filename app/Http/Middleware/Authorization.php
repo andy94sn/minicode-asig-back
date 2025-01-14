@@ -32,7 +32,6 @@ class Authorization
                 'message' => 'Authorization denied'
             ], 403);
         }
-
         return $next($request);
     }
 }

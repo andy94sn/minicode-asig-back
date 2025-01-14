@@ -45,7 +45,7 @@ class PageQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $token = HelperService::clean($args['token']);
-            $page = Page::where('token', $token)->with('sections')->first();
+            $page = Page::where('token', $token)->with(['sections', 'translations'])->first();
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
@@ -53,10 +53,6 @@ class PageQuery extends Query
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$page) {
                 return new Error(HelperService::message($lang, 'found').' - Page');
-            }
-
-            if($page->type == 'complex'){
-                $page->translations = null;
             }
 
             $page->load('sections');

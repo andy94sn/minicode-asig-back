@@ -11,7 +11,6 @@ enum ComponentType: string
     case MEDIA  = 'media';
     case FAQ    = 'faq';
     case CARD   = 'card';
-    case LINK   = 'link';
     case FORM   = 'form';
     case INPUT  = 'input';
     case SELECT  = 'select';
@@ -29,7 +28,6 @@ enum ComponentType: string
             self::MEDIA  => 'media',
             self::FAQ    => 'faq',
             self::CARD   => 'card',
-            self::LINK   => 'link',
             self::FORM   => 'form',
             self::INPUT  => 'input',
             self::SELECT  => 'select'

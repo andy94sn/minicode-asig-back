@@ -31,11 +31,15 @@ class CreatePageMutation extends Mutation
         return [
             'title' => [
                 'name' => 'title',
-                'type' => new NonNull(Type::string()),
+                'type' => new NonNull(Type::string())
             ],
             'type' => [
                 'type' => new NonNull(GraphQL::type('PageEnum')),
-                'description' => 'Type',
+                'description' => 'Type'
+            ],
+            'status' => [
+                'type' => Type::boolean(),
+                'description' => 'Status'
             ]
         ];
     }

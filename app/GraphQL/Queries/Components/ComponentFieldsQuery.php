@@ -3,7 +3,6 @@
 namespace App\GraphQL\Queries\Components;
 
 use App\Enums\ComponentType;
-use App\Enums\LanguageType;
 use App\Models\Admin;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
@@ -44,7 +43,6 @@ class ComponentFieldsQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $type = HelperService::clean($args['type']);
-            $languages = LanguageType::values();
 
             if (!$auth) {
                 throw new Error(HelperService::message($lang, 'denied'));
@@ -52,7 +50,7 @@ class ComponentFieldsQuery extends Query
                 throw new Error(HelperService::message($lang, 'permission'));
             }
 
-            return $this->getComponentFields($type, $languages);
+            return $this->getComponentFields($type);
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
@@ -67,37 +65,17 @@ class ComponentFieldsQuery extends Query
      * @return array
      * @throws Error
      */
-    private function getComponentFields(string $type, array $languages): array
+    private function getComponentFields(string $type): array
     {
-        $translations = [];
-        foreach ($languages as $lang) {
-            $translations[] = [
-                'lang'     => $lang,
-                'value'    => null,
-                'caption'  => null,
-                'link'     => null,
-                'question' => null,
-                'answer'   => null,
-                'icon'     => null,
-                'placeholder' => null,
-                'background' => false,
-                'editor'   => $this->shouldUseEditor($type),
-                'bold'     => false,
-                'break'    => false,
-                'type'     => null
-            ];
-        }
-
         $fields = match ($type) {
             ComponentType::TITLE->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
                     'required' => true
                 ],
                 'bold' => [
-                    'label' => 'Bold',
+                    'label' => 'Title Bold',
                     'type' => 'checkbox',
                     'required' => true
                 ],
@@ -108,7 +86,6 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::TEXT->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'checkbox',
@@ -121,7 +98,6 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::BUTTON->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
@@ -139,14 +115,13 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::MEDIA->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
                     'required' => true
                 ],
                 'background' => [
-                    'label' => 'Background',
+                    'label' => 'Background Image',
                     'type' => 'checkbox',
                     'required' => true
                 ],
@@ -157,7 +132,6 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::FAQ->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
@@ -180,7 +154,6 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::CARD->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
@@ -198,7 +171,6 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::FORM->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
@@ -211,7 +183,6 @@ class ComponentFieldsQuery extends Query
                 ]
             ],
             ComponentType::INPUT->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
@@ -236,7 +207,6 @@ class ComponentFieldsQuery extends Query
                 ],
             ],
             ComponentType::SELECT->value => [
-                'translations' => $translations,
                 'title' => [
                     'label' => 'Title',
                     'type' => 'text',
