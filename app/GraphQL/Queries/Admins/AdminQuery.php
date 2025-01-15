@@ -27,7 +27,8 @@ class AdminQuery extends Query
     {
         return [
             'token' => [
-                'type' => Type::nonNull(Type::int()),
+                'name' => 'token',
+                'type' => Type::nonNull(Type::string()),
                 'description' => 'Token'
             ]
         ];
@@ -50,7 +51,10 @@ class AdminQuery extends Query
                 return new Error(HelperService::message($lang, 'permission'));
             }
 
-            return Admin::where('token', $token)->first();
+            $admin = Admin::where('token', $token)->first();
+            $admin->role = $admin->roles->first();
+
+            return $admin;
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));

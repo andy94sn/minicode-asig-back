@@ -41,6 +41,16 @@ class UpdateAdminMutation extends Mutation
                 'type' => Type::boolean(),
                 'description' => 'Status'
             ],
+            'password' => [
+                'name' => 'password',
+                'type' => Type::string(),
+                'description' => 'Password'
+            ],
+            'password_confirmation' => [
+                'name' => 'password_confirmation',
+                'type' => Type::string(),
+                'description' => 'Password Confirmation'
+            ],
             'role' => [
                 'name' => 'role',
                 'type' => Type::nonNull(Type::string()),
@@ -62,6 +72,9 @@ class UpdateAdminMutation extends Mutation
             $roleName = HelperService::clean($args['role']);
             $name = HelperService::clean($args['name']);
             $status = $args['status'] ?? true;
+            Log::info($status);
+            $password = $args['password'] ?? null;
+            $passwordConfirmation = $args['password_confirmation'] ?? null;
 
             $admin = Admin::where('token', $token)->first();
             $role = Role::where('name', $roleName)->first();
@@ -77,12 +90,24 @@ class UpdateAdminMutation extends Mutation
             }
 
 
+            if ($password && $password !== $passwordConfirmation) {
+                return new Error(HelperService::message($lang, 'password_mismatch'));
+            }
+
+
             $admin->update([
                 'name' => $name,
                 'status' => $status
             ]);
 
+            if ($password) {
+                $admin->update([
+                    'password' => bcrypt($password)
+                ]);
+            }
+
             $admin->assignRole($args['role']);
+
             return $admin;
         }catch(\Exception $exception){
             Log::info($exception->getMessage());

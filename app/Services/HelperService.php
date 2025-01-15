@@ -58,6 +58,7 @@ class HelperService
                 'exists'   => 'Există deja',
                 'permission' => 'Nu aveți permisiune',
                 'found'    => 'Nu a fost găsit',
+                'password_mismatch'    => 'Parolele nu se potrivesc',
             ],
             'en' => [
                 'invalid'  => 'Invalid data',
@@ -68,6 +69,7 @@ class HelperService
                 'exists'   => 'It already exists - ',
                 'permission' => 'No permission',
                 'found'     => 'Not found -',
+                'password_mismatch'  => 'The passwords do not match',
             ],
             'ru' => [
                 'invalid'  => 'Неверные данные',
@@ -77,7 +79,8 @@ class HelperService
                 'failed'   => 'Авторизация не удалась',
                 'exists'   => 'Уже существует - ',
                 'permission' => 'Нет разрешения',
-                'found'     => 'Не найдено -'
+                'found'     => 'Не найдено -',
+                'password_mismatch'  => 'Пароли не совпадают',
             ]
         ];
 
