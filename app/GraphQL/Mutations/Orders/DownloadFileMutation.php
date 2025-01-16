@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DownloadFileMutation extends Mutation
 {

@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\GraphQL\Types;
+    namespace App\GraphQL\Types\Orders;
 
     use GraphQL\Type\Definition\Type;
     use Rebing\GraphQL\Support\Type as GraphQLType;
