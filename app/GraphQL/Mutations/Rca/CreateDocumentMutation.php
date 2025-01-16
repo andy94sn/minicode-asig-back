@@ -86,8 +86,6 @@ class CreateDocumentMutation extends Mutation
             }
 
             if($http_response){
-                $data['contract_number'] = $http_response['contract_number'];
-
                 foreach($http_response['documents'] as $key => $document){
                     $fileName = $document['document'] . '-' . $http_response['contract_number'] . '.pdf';
                     $directory = 'documents';
