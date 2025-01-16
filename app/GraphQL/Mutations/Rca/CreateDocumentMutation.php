@@ -87,17 +87,12 @@ class CreateDocumentMutation extends Mutation
             }
 
             if($http_response){
-                foreach($http_response['documents'] as $key => $document){
-                    $fileName = $document['document'] . '-' . $http_response['contract_number'] . '.pdf';
-                    $directory = 'documents';
-                    if (!Storage::exists($directory)) {
-                        Storage::makeDirectory($directory);
-                    }
-                    Storage::disk('public')->put($directory.'/'.$fileName, $document['content']);
-                    $data[$key] = $fileName;
+                Log::info(print_r($http_response, true));
 
+                foreach($http_response['documents'] as $key => $document){
+                    $data[$key] = $document;
                     if($key == 'policy'){
-                        $data['link'] = env('APP_URL').'/storage/documents/'.$fileName;
+                        $data['link'] = env('APP_URL').'/storage/documents/'.$document;
                     }
                 }
 
