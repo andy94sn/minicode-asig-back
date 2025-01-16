@@ -27,7 +27,9 @@ class Order extends Model
         'info',
         'contract',
         'policy',
-        'demand'
+        'demand',
+        'contract_number',
+        'link'
     ];
 
     protected $casts = [
