@@ -17,7 +17,8 @@ use App\GraphQL\Mutations\Contacts\CreateContactMutation;
 use App\GraphQL\Mutations\Contacts\DeleteContactMutation;
 use App\GraphQL\Mutations\Orders\CreateOrderMutation;
 use App\GraphQL\Mutations\Orders\DeleteOrderMutation;
-use App\GraphQL\Mutations\Pages\CreatePageMutation;
+    use App\GraphQL\Mutations\Orders\DownloadFileMutation;
+    use App\GraphQL\Mutations\Pages\CreatePageMutation;
 use App\GraphQL\Mutations\Pages\DeletePageMutation;
 use App\GraphQL\Mutations\Pages\UpdatePageMutation;
 use App\GraphQL\Mutations\Payment\CreateTransactionMutation;
@@ -77,7 +78,8 @@ use App\GraphQL\Types\Contacts\ContactDeleteType;
 use App\GraphQL\Types\Contacts\ContactPaginationType;
 use App\GraphQL\Types\Contacts\ContactResponseType;
 use App\GraphQL\Types\Contacts\ContactType;
-use App\GraphQL\Types\Enums\ComponentEnumType;
+    use App\GraphQL\Types\DownloadResponseType;
+    use App\GraphQL\Types\Enums\ComponentEnumType;
 use App\GraphQL\Types\Enums\ContactEnumType;
 use App\GraphQL\Types\Enums\EnumInsuranceType;
 use App\GraphQL\Types\Enums\EnumLanguageType;
@@ -158,7 +160,8 @@ return [
                 'createOrder' => CreateOrderMutation::class,
                 'calculateMutation'  => CreateCalculateMutation::class,
                 'documentMutation'   => CreateDocumentMutation::class,
-                'transactionMutation' => CreateTransactionMutation::class
+                'transactionMutation' => CreateTransactionMutation::class,
+                'downloadFileMutation' => DownloadFileMutation::class
             ],
             'types' => [
                 'AdminResponse' => AdminResponseType::class,
@@ -169,6 +172,7 @@ return [
                 'EnumLanguage'  => EnumLanguageType::class,
                 'ContactResponse'   => ContactResponseType::class,
                 'OrderResponse'   => OrderResponseType::class,
+                'DownloadResponse'   => DownloadResponseType::class,
                 'Permission'      => PermissionType::class,
                 'Term' => TermType::class,
                 'Zone' => ZoneType::class,
