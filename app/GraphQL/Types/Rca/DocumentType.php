@@ -60,11 +60,6 @@ class DocumentType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Possession Vehicle Right'
             ],
-            'category' => [
-                'name' => 'category',
-                'type' => Type::string(),
-                'description' => 'Category Vehicle'
-            ],
             'link' => [
                 'name' => 'link',
                 'type' => Type::string(),
