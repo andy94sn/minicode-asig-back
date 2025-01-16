@@ -92,7 +92,7 @@ class CreateDocumentMutation extends Mutation
                 foreach($http_response['documents'] as $key => $document){
                     $data[$key] = $document;
                     if($key == 'policy'){
-                        $data['link'] = env('APP_URL').'/storage/documents/'.$document;
+                        $data['link'] = env('RCA_APP_URL').'/storage/documents/'.$document;
                     }
                 }
 
