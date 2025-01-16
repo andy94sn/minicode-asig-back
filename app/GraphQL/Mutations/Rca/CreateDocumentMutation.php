@@ -77,6 +77,7 @@ class CreateDocumentMutation extends Mutation
                 'headers' => [
                     'Accept' => 'application/json'
                 ],
+                'timeout' => 30
             ]);
 
             $http_response = json_decode($response->getBody()->getContents(), true);
