@@ -60,7 +60,7 @@ class OrderMail extends Mailable
 
 
         $mail =  $this->subject($subject)
-            ->markdown('vendor.mail.html.message')
+            ->markdown('vendor.mail.html.order')
             ->with([
                 'url'   => 'https://ozoncar.md',
                 'image' => asset('storage/images/ozoncar.png'),
