@@ -45,10 +45,9 @@ class SectionQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $token = HelperService::clean($args['token']);
-            //$section = Section::where('token', $token)->with('components')->first();
             $section = Section::where('token', $token)
                 ->with(['components' => function($query) {
-                    $query->orderBy('order', 'asc');
+                    $query->where('parent_id', null)->orderBy('order', 'asc');
                 }])
                 ->first();
 

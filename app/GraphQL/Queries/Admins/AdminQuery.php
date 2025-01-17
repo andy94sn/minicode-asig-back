@@ -47,8 +47,6 @@ class AdminQuery extends Query
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-admins')) {
-                return new Error(HelperService::message($lang, 'permission'));
             }
 
             $admin = Admin::where('token', $token)->first();
