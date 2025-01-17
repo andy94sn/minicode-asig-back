@@ -21,10 +21,7 @@ class AdminSeeder extends Seeder
         $permissions = [
             'manage-admins',
             'manage-permissions',
-            'manage-users',
             'manage-orders',
-            'manage-orders-rca',
-            'manage-orders-green-card',
             'manage-content',
             'manage-pages',
             'manage-contacts',
@@ -44,7 +41,7 @@ class AdminSeeder extends Seeder
         $admin = Admin::create([
             'name' => 'Dev Admin',
             'email' => 'admin@example.com',
-            'password' => 'password',
+            'password' => 'cRv*n0F8cvbG',
             'is_super' => true
         ]);
 
