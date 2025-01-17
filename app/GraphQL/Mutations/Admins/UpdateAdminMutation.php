@@ -72,7 +72,6 @@ class UpdateAdminMutation extends Mutation
             $roleName = HelperService::clean($args['role']);
             $name = HelperService::clean($args['name']);
             $status = $args['status'] ?? true;
-            Log::info($status);
             $password = $args['password'] ?? null;
             $passwordConfirmation = $args['password_confirmation'] ?? null;
 
@@ -89,11 +88,9 @@ class UpdateAdminMutation extends Mutation
                 return new Error(HelperService::message($lang, 'permission'));
             }
 
-
             if ($password && $password !== $passwordConfirmation) {
                 return new Error(HelperService::message($lang, 'password_mismatch'));
             }
-
 
             $admin->update([
                 'name' => $name,
