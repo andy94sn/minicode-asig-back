@@ -6,22 +6,25 @@
     @endslot
     {{-- End Header --}}
 
-   {{ $welcome }}
+    {{ $welcome }}
 
+    {{-- Body --}}
+    {{ $slot }}
+    {{-- End Body --}}
 
-   {{ $caption }}
+    {{ $caption }}
 
+    {{ $textPhone }}
 
-   {{ $textPhone }}
 
     @foreach($phones as $phone)
         {{ $phone }}
     @endforeach
 
 
-   {{ $textEmail }}
-   {{ $email }}
+    {{ $textEmail }}
 
+    **{{ $email }}**
 
     {{-- Subcopy --}}
     @slot('subcopy')
@@ -41,4 +44,3 @@
     @endslot
 @endcomponent
 {{-- End Footer --}}
-
