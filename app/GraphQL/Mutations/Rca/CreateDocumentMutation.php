@@ -124,15 +124,15 @@ class CreateDocumentMutation extends Mutation
 
         $files = array();
         $type  = $order->type;
-        $files[] = storage_path('app/public/documents/' . $order->policy);
-        $files[] = storage_path('app/public/documents/' . $order->contract);
+        $files[] =  env('RCA_APP_URL').'/storage/documents/' . $order->policy;
+        $files[] =  env('RCA_APP_URL').'/storage/documents/'. $order->contract;
 
         if($to === 'client'){
             Mail::to($order->email)->send(new OrderMail($files, $type, $lang));
         }
 
         if($to === 'admin'){
-            $files[] = '/documents/'.$order->demand;
+            $files[] = env('RCA_APP_URL').'/storage/documents/'.$order->demand;
             if(count($emails) > 0){
                 foreach($emails as $email){
                     Mail::to($email)->send(new OrderMail($files, $type, $lang));
