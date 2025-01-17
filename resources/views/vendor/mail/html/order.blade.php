@@ -6,30 +6,29 @@
     @endslot
     {{-- End Header --}}
 
-    @slot('subcopy')
-    {{ $welcome }}
-    @endslot
+    <div style="display: block;margin:0 auto;text-align:center">
+        <h3>{{ $welcome }}</h3>
+    </div>
 
-    @slot('subcopy')
-    {{ $caption }}
-    @endslot
+    <p style="line-height:1.5em;text-align:center;font-size:16px">{{ $caption }}</p>
 
-    @slot('subcopy')
-    {{ $textPhone }}
-    @endslot
+    <p style="line-height:1.5em;text-align:center;font-size:16px">{{ $textPhone }}</p>
 
-    @slot('subcopy')
+    <div style="display: block;margin:0 auto;text-align:center">
         @foreach($phones as $phone)
             {{ $phone }}
         @endforeach
-        {{ $textEmail }}
-        {{ $email }}
-    @endslot
+    </div>
+
+    <p style="line-height:1.5em;text-align:center;font-size:16px">{{ $textEmail }}</p>
+
+    <p style="line-height:1.5em;text-align:center;font-size:16px">{{ $email }}</p>
+
 
     {{-- Subcopy --}}
     @slot('subcopy')
         @component('mail::subcopy')
-            {{ $thanks }}
+            <p style="line-height:1.5em;text-align:center;font-size:16px">{{ $thanks }}</p>
         @endcomponent
     @endslot
     {{-- Endcopy --}}
