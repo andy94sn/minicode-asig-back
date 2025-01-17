@@ -8,10 +8,6 @@
 
     {{ $welcome }}
 
-    {{-- Body --}}
-    {{ $slot }}
-    {{-- End Body --}}
-
     {{ $caption }}
 
     {{ $textPhone }}
@@ -24,7 +20,7 @@
 
     {{ $textEmail }}
 
-    **{{ $email }}**
+    {{ $email }}
 
     {{-- Subcopy --}}
     @slot('subcopy')
