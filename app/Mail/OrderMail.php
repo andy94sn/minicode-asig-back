@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class OrderMail extends Mailable
 {
@@ -77,6 +78,8 @@ class OrderMail extends Mailable
                 'thanks' => $thanks,
                 'footer' => nl2br($footer)
             ]);
+
+        Log::info(print_r($this->files, true));
 
         foreach ($this->files as $file) {
             if (file_exists($file)) {

@@ -1,7 +1,7 @@
-<table role="presentation" style="width: 100%; background-color: #f4f4f4; padding: 20px;">
-    <tr>
-        <td style="text-align: center; font-size: 24px; font-weight: bold; color: #333;">
-            Reset Password
-        </td>
-    </tr>
-</table>
+<tr>
+    <td class="header">
+        <a href="{{ $url }}" style="display: inline-block;">
+            <img src="{{ $image }}" class="logo" alt="{{ config('app.url') }}">
+        </a>
+    </td>
+</tr>
