@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class OrderMail extends Mailable
@@ -63,6 +64,11 @@ class OrderMail extends Mailable
 
         $mail =  $this->subject($subject)
             ->markdown('vendor.mail.html.order')
+            ->attachData($this->contract, 'contract.pdf', [
+                'mime' => 'application/pdf',
+            ])->attachData($this->policy, 'policy.pdf', [
+                'mime' => 'application/pdf',
+            ])
             ->with([
                 'url'   => 'https://ozoncar.md',
                 'image' => asset('storage/uploads/logo.png'),
@@ -80,8 +86,9 @@ class OrderMail extends Mailable
         Log::info(print_r($this->files, true));
 
         foreach ($this->files as $file) {
-            if (file_exists($file)){
-                $fileContent = file_get_contents($file);
+            $response = Http::get($file);
+            if ($response->successful()) {
+                $fileContent = $response->body();
                 $mail->attachData($fileContent, uniqid() . '.pdf', [
                     'mime' => 'application/pdf',
                 ]);
