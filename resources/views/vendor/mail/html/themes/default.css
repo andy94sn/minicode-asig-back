@@ -4,8 +4,13 @@ body,
 body *:not(html):not(style):not(br):not(tr):not(code) {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     position: relative;
+}
+
+code {
+    font-weight: bold;
+    font-size: 15px;
 }
 
 body {
@@ -63,7 +68,7 @@ p {
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
-    text-align: left;
+    text-align: center;
 }
 
 p.sub {
@@ -72,8 +77,6 @@ p.sub {
 
 img {
     max-width: 100%;
-    width: 100% !important;
-    height: 100% !important;
 }
 
 /* Layout */
@@ -82,6 +85,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
+    background-color: #edf2f7;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -113,9 +117,7 @@ img {
 /* Logo */
 
 .logo {
-    height: 75px;
     max-height: 75px;
-    width: 75px;
 }
 
 /* Body */
@@ -191,6 +193,10 @@ img {
     width: 100%;
 }
 
+table tr{
+    text-align: center;
+}
+
 .table th {
     border-bottom: 1px solid #edeff2;
     margin: 0;
@@ -220,7 +226,6 @@ img {
     padding: 0;
     text-align: center;
     width: 100%;
-    float: unset;
 }
 
 .button {
