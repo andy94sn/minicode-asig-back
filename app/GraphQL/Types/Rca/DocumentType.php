@@ -59,12 +59,7 @@ class DocumentType extends GraphQLType
                 'name' => 'possession',
                 'type' => Type::string(),
                 'description' => 'Possession Vehicle Right'
-            ],
-            'link' => [
-                'name' => 'link',
-                'type' => Type::string(),
-                'description' => 'Link Download Rca Document'
-            ],
+            ]
         ];
     }
 }

@@ -63,7 +63,6 @@ class CreateDocumentMutation extends Mutation
 
         try{
             $order = Order::where('token', $token)->first();
-            $data = [];
 
             if(!$order){
                 return new Error(HelperService::message($lang, 'found'));
@@ -88,6 +87,9 @@ class CreateDocumentMutation extends Mutation
 
             if($http_response){
                 Log::info(print_r($http_response, true));
+                $data = [];
+                $data['name'] = $http_response['name'];
+                $data['contract_number'] = $http_response['contract_number'];
 
                 foreach($http_response['documents'] as $key => $document){
                     $data[$key] = $document;
