@@ -70,7 +70,13 @@ class ContactsQuery extends Query
                 $query->where('page', 'like', '%' . $args['group'] . '%');
             }
 
+
             $contacts = $query->paginate($perPage, ['*'], 'page', $page);
+
+            $contacts->getCollection()->transform(function ($contact) {
+                $contact->group = $contact->page;
+                return $contact;
+            });
 
             return [
                 'data' => $contacts->items(),
