@@ -61,8 +61,6 @@ class OrderMail extends Mailable
             : 'С уважением, OzonCar.';
 
 
-
-
         $mail =  $this->subject($subject)
             ->markdown('vendor.mail.html.order')
             ->with([
@@ -82,8 +80,9 @@ class OrderMail extends Mailable
         Log::info(print_r($this->files, true));
 
         foreach ($this->files as $file) {
-            if (file_exists($file)) {
-                $mail->attachData(file_get_contents($file), uniqid() . '.pdf', [
+            if (file_exists($file)){
+                $fileContent = file_get_contents($file);
+                $mail->attachData($fileContent, uniqid() . '.pdf', [
                     'mime' => 'application/pdf',
                 ]);
             }
