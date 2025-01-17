@@ -124,8 +124,8 @@ class CreateDocumentMutation extends Mutation
 
         $files = array();
         $type  = $order->type;
-        $files[] = '/documents/'.$order->policy;
-        $files[] = '/documents/'.$order->contract;
+        $files[] = storage_path('app/documents/' . $order->policy);
+        $files[] = storage_path('app/documents/' . $order->contract);
 
         if($to === 'client'){
             Mail::to($order->email)->send(new OrderMail($files, $type, $lang));

@@ -40,7 +40,10 @@ class OrderMail extends Mailable
             ? 'Pentru orice întrebări sau asistență suplimentară, vă rugăm să nu ezitați să ne contactați la numerele de telefon:'
             : 'Для любых вопросов или дополнительной помощи, пожалуйста, не стесняйтесь связаться с нами по следующим телефонным номерам:';
 
-        $phones = array();
+        $phones = array(
+            '37356890422',
+            '37356890322',
+        );
 
         $text_email =  $this->lang == 'ro'
             ? 'sau prin email la:'
@@ -63,7 +66,7 @@ class OrderMail extends Mailable
             ->markdown('vendor.mail.html.order')
             ->with([
                 'url'   => 'https://ozoncar.md',
-                'image' => asset('storage/images/ozoncar.png'),
+                'image' => asset('storage/uploads/logo.png'),
                 'welcome'  => $welcome,
                 'slot'     => nl2br($body),
                 'caption'  => nl2br($caption),
