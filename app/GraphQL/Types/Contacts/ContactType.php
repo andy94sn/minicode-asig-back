@@ -40,6 +40,10 @@ class ContactType extends GraphQLType
             'message' => [
                 'type' => Type::string(),
                 'description' => 'Message'
+            ],
+            'created_at' => [
+                'type' => Type::string(),
+                'description' => 'Date'
             ]
         ];
     }
