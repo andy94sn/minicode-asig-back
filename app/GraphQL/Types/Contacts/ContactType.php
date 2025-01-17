@@ -33,7 +33,7 @@ class ContactType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Email'
             ],
-            'page' => [
+            'group' => [
                 'type' => GraphQL::type('ContactEnum'),
                 'description' => 'Page Type'
             ],
