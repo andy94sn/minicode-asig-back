@@ -10,6 +10,7 @@ enum ContactType: string
     case BLOG   = 'blog';
     case ABOUT  = 'about';
     case FAQ    = 'faq';
+    case FOOTER    = 'footer';
 
     /**
      * Return description
@@ -21,7 +22,8 @@ enum ContactType: string
             self::CONTACTS   => 'contacts',
             self::BLOG => 'blog',
             self::ABOUT  => 'about',
-            self::FAQ    => 'faq'
+            self::FAQ    => 'faq',
+            self::FOOTER   => 'footer'
         };
     }
 

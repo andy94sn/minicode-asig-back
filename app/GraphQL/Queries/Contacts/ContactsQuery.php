@@ -27,7 +27,7 @@ class ContactsQuery extends Query
     public function args(): array
     {
         return [
-            'page' => [
+            'group' => [
                 'name' => 'group',
                 'type' => Type::string(),
                 'description' => 'Group',
@@ -37,6 +37,11 @@ class ContactsQuery extends Query
                 'type' => Type::int(),
                 'description' => 'Number Pages',
                 'defaultValue' => 10
+            ],
+            'page' => [
+                'name' => 'page',
+                'type' => Type::int(),
+                'defaultValue' => 1
             ],
         ];
     }
@@ -51,19 +56,21 @@ class ContactsQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $perPage = $args['perPage'] ?? 10;
+            $page = $args['page'] ?? 1;
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-contacts')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }
+
             $query = Contact::query();
 
-            if (isset($args['page'])) {
-                $query->where('page', 'like', '%' . $args['page'] . '%');
+            if (isset($args['group'])) {
+                $query->where('page', 'like', '%' . $args['group'] . '%');
             }
 
-            $contacts = $query->paginate($perPage);
+            $contacts = $query->paginate($perPage, ['*'], 'page', $page);
 
             return [
                 'data' => $contacts->items(),
