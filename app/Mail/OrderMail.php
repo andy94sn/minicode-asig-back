@@ -64,11 +64,6 @@ class OrderMail extends Mailable
 
         $mail =  $this->subject($subject)
             ->markdown('vendor.mail.html.order')
-            ->attachData($this->contract, 'contract.pdf', [
-                'mime' => 'application/pdf',
-            ])->attachData($this->policy, 'policy.pdf', [
-                'mime' => 'application/pdf',
-            ])
             ->with([
                 'url'   => 'https://ozoncar.md',
                 'image' => asset('storage/uploads/logo.png'),
