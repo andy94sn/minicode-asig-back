@@ -6,21 +6,25 @@
     @endslot
     {{-- End Header --}}
 
+    @slot('subcopy')
     {{ $welcome }}
+    @endslot
 
+    @slot('subcopy')
     {{ $caption }}
+    @endslot
 
+    @slot('subcopy')
     {{ $textPhone }}
+    @endslot
 
-
-    @foreach($phones as $phone)
-        {{ $phone }}
-    @endforeach
-
-
-    {{ $textEmail }}
-
-    {{ $email }}
+    @slot('subcopy')
+        @foreach($phones as $phone)
+            {{ $phone }}
+        @endforeach
+        {{ $textEmail }}
+        {{ $email }}
+    @endslot
 
     {{-- Subcopy --}}
     @slot('subcopy')
