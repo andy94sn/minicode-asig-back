@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
@@ -53,7 +54,7 @@ class UpdateAdminMutation extends Mutation
             ],
             'role' => [
                 'name' => 'role',
-                'type' => Type::nonNull(Type::string()),
+                'type' => Type::string(),
                 'description' => 'Role'
             ]
         ];
@@ -99,11 +100,13 @@ class UpdateAdminMutation extends Mutation
 
             if ($password) {
                 $admin->update([
-                    'password' => bcrypt($password)
+                    'password' => Hash::make($password)
                 ]);
             }
 
-            $admin->assignRole($args['role']);
+            if($args['role']){
+                $admin->assignRole($args['role']);
+            }
 
             return $admin;
         }catch(\Exception $exception){
