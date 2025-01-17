@@ -1,4 +1,4 @@
-<table role="presentation" style="width: 100%; padding: 20px; background-color: #00000c;">
+<table role="presentation" style="width:570px; padding:0; background-color: #00000c">
     <tr>
         <td class="header">
             <a href="{{ $url }}" style="display: inline-block;">
