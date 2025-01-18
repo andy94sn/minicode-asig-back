@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Guid\Guid;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Model
 {
     use HasRoles;
-    use SoftDeletes;
 
     protected $table = 'admins';
 
@@ -31,8 +29,6 @@ class Admin extends Model
     protected $casts = [
         'token' => 'string',
     ];
-
-    protected $dates = ['deleted_at'];
 
     public static function boot()
     {
