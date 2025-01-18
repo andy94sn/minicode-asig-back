@@ -2,15 +2,12 @@
 
 namespace App\GraphQL\Mutations\Admins;
 
-use App\Mail\PasswordMail;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
@@ -39,6 +36,16 @@ class CreateAdminMutation extends Mutation
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Email'
             ],
+            'password' => [
+                'name' => 'password',
+                'type' => Type::string(),
+                'description' => 'Password'
+            ],
+            'password_confirmation' => [
+                'name' => 'password_confirmation',
+                'type' => Type::string(),
+                'description' => 'Confirmation Password'
+            ],
             'status' => [
                 'name' => 'status',
                 'type' => Type::boolean(),
@@ -64,6 +71,9 @@ class CreateAdminMutation extends Mutation
             $role  = Role::where('name', trim($args['role']))->first();
             $name  = HelperService::clean($args['name']);
             $email = HelperService::clean($args['email']);
+            $password = HelperService::clean($args['password']);
+            $status  = $args['status'];
+            Log::info($status);
 
             if(Admin::where('email', $email)->exists()) {
                 return new Error(HelperService::message($lang, 'exists'));
@@ -77,16 +87,14 @@ class CreateAdminMutation extends Mutation
                 return new Error(HelperService::message($lang, 'invalid'));
             }
 
-            $password = Str::random(12);
             $admin = Admin::create([
                 'name' => $name,
                 'email' => $email,
                 'password' => $password,
-                'status' => $args['status'] ?? 1
+                'status' => $status
             ]);
 
             $admin->assignRole($role);
-            Mail::to($admin->email)->send(new PasswordMail($password));
 
             return $admin;
         }catch(\Exception $exception){
