@@ -4,10 +4,12 @@ namespace App\GraphQL\Queries\Orders;
 
 use App\Models\Admin;
 use App\Models\Order;
+use App\Models\Translation;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
@@ -101,6 +103,12 @@ class OrdersQuery extends Query
             }
 
             $orders = $query->paginate($perPage, ['*'], 'page', $page);
+
+            $orders->getCollection()->transform(function ($order) {
+                $transaction = DB::table('transactions')->where('order_id', $order->id)->first();
+                $order->transaction = $transaction ? $transaction->pay_id : null;
+                return $order;
+            });
 
             return [
                 'data' => $orders->items(),

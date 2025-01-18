@@ -63,7 +63,11 @@ class OrderType extends GraphQLType
             'created_at'  => [
                 'type' => Type::string(),
                 'description' => 'Date'
-            ]
+            ],
+            'transaction'  => [
+                'type' => Type::string(),
+                'description' => 'Transaction'
+            ],
         ];
     }
 }
