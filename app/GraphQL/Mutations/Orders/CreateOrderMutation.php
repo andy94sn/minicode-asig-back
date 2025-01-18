@@ -157,7 +157,7 @@ class CreateOrderMutation extends Mutation
             Log::info(print_r($http_response, true));
 
             if($http_response){
-                $data['info']['person_type'] = isset($http_response['firstname']) ? 1 : 2;
+                $data['info']['person_type'] = isset($http_response['firstname']) &&  count($http_response['firstname']) > 2 ? 1 : 2;
                 $data['price'] = $http_response['primeSumMdl'];
             }
 
