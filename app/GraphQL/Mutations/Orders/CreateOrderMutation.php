@@ -155,6 +155,7 @@ class CreateOrderMutation extends Mutation
             ];
 
             if($http_response){
+                $data['info']['person_type'] = $http_response['lastName'] ? 1 : 2;
                 $data['price'] = $http_response['primeSumMdl'];
             }
 
