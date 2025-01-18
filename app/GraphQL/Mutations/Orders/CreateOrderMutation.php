@@ -105,10 +105,38 @@ class CreateOrderMutation extends Mutation
 
     public function resolve($root, $args)
     {
-        $lang = $args['lang'] ?? 'ro';
-
         try {
             $params = [
+                'email' => trim($args['email']),
+                'phone' => trim($args['phone']),
+                'code' => trim($args['code']),
+                'certificate' => trim($args['certificate']),
+                'type' => trim($args['type']),
+                'zone' => $args['zone'] ?? null,
+                'term' => $args['term'] ?? null,
+                'mode' => $args['mode'] ?? null,
+                'validity' => $args['start'] ?? null,
+                'possession' => $args['possession'] ?? null,
+                'person_type' => $args['person'] ?? null,
+                'name' => $args['person'] ?? null,
+                'lang' => $args['lang']
+            ];
+
+            $response = $this->client->post('api/calculate', [
+                'json' => $params,
+                'headers' => [
+                    'Accept' => 'application/json'
+                ],
+            ]);
+
+            $http_response = json_decode($response->getBody()->getContents(), true);
+            Log::info($http_response['primeSumMdl']);
+
+            if(isset($http_response['error'])){
+                return new Error($http_response['error']);
+            }
+
+            $data = [
                 'email' => trim($args['email']),
                 'phone' => trim($args['phone']),
                 'code' => trim($args['code']),
@@ -122,29 +150,15 @@ class CreateOrderMutation extends Mutation
                     'possession' => $args['possession'] ?? null,
                     'person_type' => $args['person'] ?? null,
                     'name' => $args['person'] ?? null
-                ]
+                ],
+                'lang' => $args['lang']
             ];
 
-            $params['lang'] = $lang;
-
-            $response = $this->client->post('api/calculate', [
-                'json' => $params,
-                'headers' => [
-                    'Accept' => 'application/json'
-                ],
-            ]);
-
-            $http_response = json_decode($response->getBody()->getContents(), true);
-
-            if(isset($http_response['error'])){
-                return new Error($http_response['error']);
-            }
-
             if($http_response){
-                $params['price'] = $http_response['primeSumMdl'];
+                $data['price'] = $http_response['primeSumMdl'];
             }
 
-            return Order::create($params);
+            return Order::create($data);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return new Error(HelperService::message($args['lang'], 'error'));
