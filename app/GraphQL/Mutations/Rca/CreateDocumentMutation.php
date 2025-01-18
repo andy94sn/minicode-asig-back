@@ -115,12 +115,10 @@ class CreateDocumentMutation extends Mutation
 
     private function sendEmail($order, $lang, $to): void
     {
-        $setting = Setting::where('group', 'admin')->first();
-        $emails = array();
-
-        if($setting){
-            $emails = $setting->value;
-        }
+        $emails = [
+            'carwash.leova@mail.ru',
+            'chiosatudor90@gmail.com'
+        ];
 
         $files = array();
         $type  = $order->type;
