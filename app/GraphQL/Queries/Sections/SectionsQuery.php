@@ -53,7 +53,7 @@ class SectionsQuery extends Query
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-content')){
+            }elseif(!$auth->hasPermissionTo('manage-sections')){
                 return new Error(HelperService::message($lang, 'permission'));
             }
 

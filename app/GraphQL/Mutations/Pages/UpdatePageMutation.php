@@ -73,7 +73,7 @@ class UpdatePageMutation extends Mutation
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(($page->type == 'complex' || $page->type == 'general') && !$auth->is_super) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-content')) {
+            }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }
 

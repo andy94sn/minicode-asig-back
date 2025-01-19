@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 use App\GraphQL\Mutations\Admins\CreateAdminMutation;
 use App\GraphQL\Mutations\Admins\DeleteAdminMutation;
-use App\GraphQL\Mutations\Admins\LoginAdminMutation;
+    use App\GraphQL\Mutations\Admins\DeleteProfileMutation;
+    use App\GraphQL\Mutations\Admins\LoginAdminMutation;
 use App\GraphQL\Mutations\Admins\RefreshTokenMutation;
 use App\GraphQL\Mutations\Admins\ResetPasswordMutation;
 use App\GraphQL\Mutations\Admins\UpdateAdminMutation;
-use App\GraphQL\Mutations\Components\CopyComponentMutation;
+    use App\GraphQL\Mutations\Admins\UpdateProfileMutation;
+    use App\GraphQL\Mutations\Components\CopyComponentMutation;
 use App\GraphQL\Mutations\Components\CreateComponentMutation;
 use App\GraphQL\Mutations\Components\DeleteComponentMutation;
 use App\GraphQL\Mutations\Components\UpdateComponentMutation;
@@ -36,7 +38,8 @@ use App\GraphQL\Mutations\Settings\DeleteSettingMutation;
 use App\GraphQL\Mutations\Settings\UpdateSettingMutation;
 use App\GraphQL\Queries\Admins\AdminQuery;
 use App\GraphQL\Queries\Admins\AdminsQuery;
-use App\GraphQL\Queries\Components\ComponentFieldsQuery;
+    use App\GraphQL\Queries\Admins\ProfileQuery;
+    use App\GraphQL\Queries\Components\ComponentFieldsQuery;
 use App\GraphQL\Queries\Components\ComponentTypesQuery;
 use App\GraphQL\Queries\Contacts\ContactQuery;
 use App\GraphQL\Queries\Contacts\ContactsQuery;
@@ -206,6 +209,7 @@ return [
             'query' => [
                 'getAdmins'      => AdminsQuery::class,
                 'getAdmin'       => AdminQuery::class,
+                'getProfile'     => ProfileQuery::class,
                 'getPages'       => PagesQuery::class,
                 'getPage'        => PageQuery::class,
                 'getComponentFields' => ComponentFieldsQuery::class,
@@ -242,6 +246,7 @@ return [
                 'deleteContact' => DeleteContactMutation::class,
                 'createAdmin' => CreateAdminMutation::class,
                 'updateAdmin' => UpdateAdminMutation::class,
+                'updateProfile' => UpdateProfileMutation::class,
                 'createRole' => CreateRoleMutation::class,
                 'deleteRole' => DeleteRoleMutation::class,
                 'updateRole' => UpdateRoleMutation::class,
@@ -252,6 +257,7 @@ return [
                 'deleteOrder' => DeleteOrderMutation::class,
                 'resetPassword' => ResetPasswordMutation::class,
                 'deleteAdmin'   => DeleteAdminMutation::class,
+                'deleteProfile'   => DeleteProfileMutation::class,
                 'refundMutation'  => RefundTransactionMutation::class
             ],
 

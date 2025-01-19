@@ -40,6 +40,14 @@ class PagesQuery extends Query
             'page' => [
                 'type' => Type::int(),
                 'description' => 'Page number'
+            ],
+            'status' => [
+                'type' => Type::boolean(),
+                'description' => 'Status'
+            ],
+            'name' => [
+                'type' => Type::string(),
+                'description' => 'Name'
             ]
         ];
     }
@@ -50,7 +58,6 @@ class PagesQuery extends Query
     public function resolve($root, $args)
     {
         $lang = $args['lang'] ?? 'ro';
-        $type = $args['type'] ?? null;
 
         try{
             $auth = Admin::find(request()->auth['sub']);
@@ -63,20 +70,24 @@ class PagesQuery extends Query
                 return new Error(HelperService::message($lang, 'permission'));
             }
 
-            if($type){
-                $type = HelperService::clean($type);
-            }
-
-            $query = Page::select('token', 'slug', 'status', 'title', 'type')
+            $query = Page::query()->select('token', 'slug', 'status', 'title', 'type')
                 ->with([
                     'translations:id,page_id,language,title,content'
                 ]);
 
-            if($type){
-                $pages = $query->where('type', $type)->paginate($perPage, ['*'], 'page', $page);
-            }else{
-                $pages = $query->paginate($perPage, ['*'], 'page', $page);
+            if (isset($args['name'])) {
+                $query->where('title', 'like', '%' . $args['name'] . '%');
             }
+
+            if(isset($args['status'])){
+                $query->where('status', $args['status']);
+            }
+
+            if($args['type']){
+                $query->where('type', $args['type']);
+            }
+
+            $pages = $query->paginate($perPage, ['*'], 'page', $page);
 
             return [
                 'data' => $pages->items(),

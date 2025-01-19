@@ -62,12 +62,19 @@ class LoginAdminMutation extends Mutation
             }
 
             $jwt = $this->jwtService->generateTokens($admin);
-            $admin->role = $admin->roles->first();
+            $admin->role = $admin->roles->first()->permissions;
+
             return [
                 'access_token' => $jwt['access_token'],
                 'refresh_token' => $jwt['refresh_token'],
                 'expires_at' => env('JWT_TOKEN_EXPIRATION'),
-                'admin' => $admin
+                'admin' => [
+                    'token' => $admin->token,
+                    'name' => $admin->name,
+                    'email' => $admin->email,
+                    'role' => $admin->roles->first(),
+                    'permissions' => $admin->roles->first()->permissions
+                ]
             ];
         }catch(\Exception $exception){
             Log::info($exception->getMessage());

@@ -36,7 +36,7 @@ class ComponentTypesQuery extends Query
 
             if (!$auth) {
                 throw new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-content')) {
+            }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 throw new Error(HelperService::message($lang, 'permission'));
             }
 

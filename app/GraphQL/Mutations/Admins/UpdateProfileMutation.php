@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
-class UpdateAdminMutation extends Mutation
+class UpdateProfileMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'updateAdmin',
-        'description' => 'Update Admin'
+        'name' => 'updateProfile',
+        'description' => 'Update Profile'
     ];
 
     public function type(): Type
@@ -73,8 +73,8 @@ class UpdateAdminMutation extends Mutation
             $roleName = HelperService::clean($args['role']);
             $name = HelperService::clean($args['name']);
             $status = $args['status'] ?? true;
-            $password = $args['password'] ?? '';
-            $passwordConfirmation = $args['password_confirmation'] ?? '';
+            $password = $args['password'] ?? null;
+            $passwordConfirmation = $args['password_confirmation'] ?? null;
 
             $admin = Admin::where('token', $token)->first();
             $role = Role::where('name', $roleName)->first();
@@ -85,8 +85,6 @@ class UpdateAdminMutation extends Mutation
                 return new Error(HelperService::message($lang, 'found').' - Role');
             }elseif(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-admins')){
-                return new Error(HelperService::message($lang, 'permission'));
             }
 
             if ($password && $password !== $passwordConfirmation) {

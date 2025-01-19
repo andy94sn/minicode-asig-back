@@ -48,7 +48,7 @@ class ContactQuery extends Query
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-admins')) {
+            }elseif(!$auth->hasPermissionTo('manage-contacts')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }
 
