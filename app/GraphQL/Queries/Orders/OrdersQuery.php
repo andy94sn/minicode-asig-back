@@ -102,6 +102,7 @@ class OrdersQuery extends Query
                 $query->where('status',  $args['status']);
             }
 
+            $query->orderBy('created_at', 'desc');
             $orders = $query->paginate($perPage, ['*'], 'page', $page);
 
             $orders->getCollection()->transform(function ($order) {
