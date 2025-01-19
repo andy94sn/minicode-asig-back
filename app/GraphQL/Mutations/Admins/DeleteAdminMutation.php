@@ -50,7 +50,7 @@ class DeleteAdminMutation extends Mutation
                 return new Error(HelperService::message($lang, 'found'));
             }elseif(!$auth && !$auth->is_super) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-contacts')) {
+            }elseif(!$auth->hasPermissionTo('manage-admins')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }
 

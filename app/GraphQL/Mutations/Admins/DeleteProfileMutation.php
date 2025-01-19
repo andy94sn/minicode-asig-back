@@ -1,36 +1,36 @@
 <?php
 
-namespace App\GraphQL\Queries\Admins;
+namespace App\GraphQL\Mutations\Admins;
 
 use App\Models\Admin;
+use App\Models\Contact;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use Rebing\GraphQL\Support\Query;
+use Rebing\GraphQL\Support\Mutation;
 
-class AdminQuery extends Query
+class DeleteProfileMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'getAdmin',
-        'description' => 'Admin',
+        'name' => 'deleteProfile',
+        'description' => 'Delete Profile',
         'model' => Admin::class
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('Admin');
+        return GraphQL::type('AdminDelete');
     }
 
     public function args(): array
     {
         return [
             'token' => [
-                'name' => 'token',
                 'type' => Type::nonNull(Type::string()),
-                'description' => 'Token'
-            ]
+                'description' => 'Token Value'
+            ],
         ];
     }
 
@@ -44,21 +44,26 @@ class AdminQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
             $token = HelperService::clean($args['token']);
+            $admin = Admin::where('token', $token)->first();
 
-            if (!$auth){
+            if(!$admin) {
+                return new Error(HelperService::message($lang, 'found'));
+            }elseif(!$auth && !$auth->is_super) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-admins')) {
-                throw new Error(HelperService::message($lang, 'permission'));
             }
 
-            $admin = Admin::where('token', $token)->first();
-            $admin->role = $admin->roles->first();
+            if($admin->delete()){
+                return [
+                    'status' => true
+                ];
+            }
 
-            return $admin;
+            return [
+                'status' => false
+            ];
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
-
     }
 }

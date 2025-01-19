@@ -73,7 +73,6 @@ class CreateAdminMutation extends Mutation
             $email = HelperService::clean($args['email']);
             $password = HelperService::clean($args['password']);
             $status  = $args['status'];
-            Log::info($status);
 
             if(Admin::where('email', $email)->exists()) {
                 return new Error(HelperService::message($lang, 'exists'));

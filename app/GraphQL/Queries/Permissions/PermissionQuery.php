@@ -36,7 +36,7 @@ class PermissionQuery extends Query
 
             if(!$auth && $auth->is_super){
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-admins')) {
+            }elseif(!$auth->hasPermissionTo('manage-permissions')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }
 

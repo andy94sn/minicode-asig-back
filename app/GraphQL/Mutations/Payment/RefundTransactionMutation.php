@@ -62,6 +62,8 @@ class RefundTransactionMutation extends Mutation
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$order){
                 return new Error(HelperService::message($lang, 'found'));
+            }elseif(!$auth->hasPermissionTo('manage-refund')) {
+                return new Error(HelperService::message($lang, 'permission'));
             }
 
             if($order->status === 'completed'){
