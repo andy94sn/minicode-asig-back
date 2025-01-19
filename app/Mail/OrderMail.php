@@ -42,7 +42,7 @@ class OrderMail extends Mailable
             ? 'Pentru orice întrebări sau asistență suplimentară, vă rugăm să nu ezitați să ne contactați la numerele de telefon:'
             : 'Для любых вопросов или дополнительной помощи, пожалуйста, не стесняйтесь связаться с нами по следующим телефонным номерам:';
 
-        $phones = array('022 854 855','069 805 855');
+        $phones = array('+373 600 30 421','+373 79 250 564','079 250 564');
 
         $text_email =  $this->lang == 'ro'
             ? 'sau prin email la:'
