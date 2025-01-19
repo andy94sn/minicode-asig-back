@@ -62,8 +62,7 @@ class PaymentService
             $id = $args['id'];
             $token = $this->token();
             $payload = [
-//                'amount'   => $args['amount'],
-                'amount'   => 1,
+                'amount'   => $args['amount'],
                 'currency' => $args['currency'],
                 'description' => env('APP_NAME'),
                 'clientIp' => $args['client'],

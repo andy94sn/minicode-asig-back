@@ -69,7 +69,6 @@ class AdminsQuery extends Query
             $auth = Admin::find(request()->auth['sub']);
             $perPage = $args['perPage'] ?? 10;
             $page = $args['page'] ?? 1;
-            $query = Admin::query();
 
             if (!$auth) {
                 throw new Error(HelperService::message($lang, 'denied'));
@@ -77,17 +76,28 @@ class AdminsQuery extends Query
                 throw new Error(HelperService::message($lang, 'permission'));
             }
 
+
+            $query = Admin::query();
             if (isset($args['name'])) {
                 $query->where('name', 'like', '%' . $args['name'] . '%');
             }
+
             if (isset($args['email'])) {
                 $query->where('email', 'like', '%' . $args['email'] . '%');
             }
+
             if(isset($args['status'])){
                 $query->where('status', $args['status']);
             }
 
-            $admins = $query->paginate($perPage, ['*'], 'page', $page);
+            if (isset($args['role'])) {
+                $query->join('model_has_roles', 'admins.id', '=', 'model_has_roles.model_id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->where('roles.name', $args['role']);
+            }
+
+            $query->orderBy('admins.created_at', 'desc');
+            $admins = $query->paginate($perPage, ['admins.*'], 'page', $page);
 
             $admins->getCollection()->transform(function ($admin) {
                 $admin['role'] = $admin->roles->first();
