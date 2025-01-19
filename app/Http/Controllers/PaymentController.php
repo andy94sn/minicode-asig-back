@@ -15,7 +15,6 @@ class PaymentController extends Controller
         try {
             $key  = env('MAIB_SIGNATURE_KEY');
             $json = file_get_contents('php://input');
-            Log::info(print_r($json, true));
             $data = json_decode($json, true);
             $sortedDataByKeys = $this->sortByKeyRecursive($data['result']);
             $sortedDataByKeys[] = $key;
