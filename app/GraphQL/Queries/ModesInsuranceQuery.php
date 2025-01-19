@@ -3,7 +3,6 @@
 namespace App\GraphQL\Queries;
 
 use App\Services\ModeService;
-use App\Services\ZoneService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Log;
