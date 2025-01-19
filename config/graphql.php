@@ -17,8 +17,8 @@ use App\GraphQL\Mutations\Contacts\CreateContactMutation;
 use App\GraphQL\Mutations\Contacts\DeleteContactMutation;
 use App\GraphQL\Mutations\Orders\CreateOrderMutation;
 use App\GraphQL\Mutations\Orders\DeleteOrderMutation;
-    use App\GraphQL\Mutations\Orders\DownloadFileMutation;
-    use App\GraphQL\Mutations\Pages\CreatePageMutation;
+use App\GraphQL\Mutations\Orders\DownloadFileMutation;
+use App\GraphQL\Mutations\Pages\CreatePageMutation;
 use App\GraphQL\Mutations\Pages\DeletePageMutation;
 use App\GraphQL\Mutations\Pages\UpdatePageMutation;
 use App\GraphQL\Mutations\Payment\CreateTransactionMutation;
@@ -174,9 +174,6 @@ return [
                 'OrderResponse'   => OrderResponseType::class,
                 'DownloadResponse'   => DownloadResponseType::class,
                 'Permission'      => PermissionType::class,
-                'Term' => TermType::class,
-                'Zone' => ZoneType::class,
-                'Mode' => ModeType::class,
                 'Person' => PersonType::class,
                 'Possession' => PossessionType::class,
                 'Translation'  => TranslationType::class,
@@ -184,6 +181,9 @@ return [
                 'PageTranslation'  => PageTranslationType::class,
                 'SectionComplex'   => SectionComplexType::class,
                 'ComponentComplex' => ComponentComplexType::class,
+                'Term'              => TermType::class,
+                'Zone'              => ZoneType::class,
+                'Mode'              => ModeType::class,
 
                 //Rca
                 'Calculate'    => CalculateType::class,
@@ -221,7 +221,11 @@ return [
                 'getErrors'      => ErrorsQuery::class,
                 'getSections'    => SectionsQuery::class,
                 'getSection'     => SectionQuery::class,
-                'getComponentTypes' => ComponentTypesQuery::class
+                'getComponentTypes' => ComponentTypesQuery::class,
+                'getTerms'       => TermsInsuranceQuery::class,
+                'getZones'       => ZonesInsuranceQuery::class,
+                'getModes'       => ModesInsuranceQuery::class,
+                'getPossessions' => PossessionsInsuranceQuery::class,
             ],
 
             'mutation' => [
@@ -295,7 +299,11 @@ return [
                 'ValueInput'        => ValueInputType::class,
                 'ValueResponse'     => ValueResponseType::class,
                 'Setting'           => SettingType::class,
-                'Error'             => ErrorType::class
+                'Error'             => ErrorType::class,
+                'Term'              => TermType::class,
+                'Zone'              => ZoneType::class,
+                'Mode'              => ModeType::class,
+                'Possession'        => PossessionType::class,
             ],
 
             'middleware' => [
