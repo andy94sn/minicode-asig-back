@@ -20,10 +20,6 @@ class ModeService
     {
         $data =  [
             'Usual'     => ['ro' => 'STANDARD', 'ru' => 'ОБЫЧНЫЙ']
-//            'Minibus'   => ['ro' => 'MICROBUZ', 'ru' => 'АВТОБУС'],
-//            'Intercity' => ['ro' => 'INTERURBAN', 'ru' => 'МЕЖДУНАРОДНЫЙ'],
-//            'Taxi'      => ['ro' => 'TAXI', 'ru' => 'ТАКСИ'],
-//            'Rentcar'   => ['ro' => 'ÎNCHIRIERE', 'ru' => 'АРЕНДА']
         ];
 
         if (!array_key_exists($this->lang, current($data))) {
