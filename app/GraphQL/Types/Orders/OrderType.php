@@ -52,6 +52,10 @@ class OrderType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Contract Number'
             ],
+            'policy' => [
+                'type' => Type::string(),
+                'description' => 'Contract Number'
+            ],
             'refund'  => [
                 'type' => Type::int(),
                 'description' => 'Refund'
@@ -67,6 +71,10 @@ class OrderType extends GraphQLType
             'transaction'  => [
                 'type' => Type::string(),
                 'description' => 'Transaction'
+            ],
+            'link' => [
+                'type' => Type::string(),
+                'description' => 'Contract Number'
             ],
         ];
     }
