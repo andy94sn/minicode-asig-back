@@ -73,8 +73,8 @@ class UpdateProfileMutation extends Mutation
             $roleName = HelperService::clean($args['role']);
             $name = HelperService::clean($args['name']);
             $status = $args['status'] ?? true;
-            $password = $args['password'] ?? null;
-            $passwordConfirmation = $args['password_confirmation'] ?? null;
+            $password = $args['password'] ?? '';
+            $passwordConfirmation = $args['password_confirmation'] ?? '';
 
             $admin = Admin::where('token', $token)->first();
             $role = Role::where('name', $roleName)->first();
