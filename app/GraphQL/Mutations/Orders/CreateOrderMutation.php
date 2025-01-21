@@ -96,6 +96,10 @@ class CreateOrderMutation extends Mutation
                 'type' => Type::nonNull(Type::int()),
                 'description' => 'Person Type'
             ],
+            'name' => [
+                'type' => Type::string(),
+                'description' => 'Person Name'
+            ],
             'lang' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Language'
@@ -118,7 +122,7 @@ class CreateOrderMutation extends Mutation
                 'validity' => $args['start'] ?? null,
                 'possession' => $args['possession'] ?? null,
                 'person_type' => $args['person'] ?? null,
-                'name' => $args['person'] ?? null,
+                'name' => $args['name'] ?? null,
                 'lang' => $args['lang']
             ];
 
