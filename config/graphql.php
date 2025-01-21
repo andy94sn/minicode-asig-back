@@ -61,7 +61,8 @@ use App\GraphQL\Queries\Roles\RolesQuery;
 use App\GraphQL\Queries\Sections\SectionQuery;
 use App\GraphQL\Queries\Sections\SectionsQuery;
 use App\GraphQL\Queries\Settings\GroupsQuery;
-use App\GraphQL\Queries\Settings\SettingsQuery;
+    use App\GraphQL\Queries\Settings\SettingsGroupsQuery;
+    use App\GraphQL\Queries\Settings\SettingsQuery;
 use App\GraphQL\Queries\TermsInsuranceQuery;
 use App\GraphQL\Queries\ZonesInsuranceQuery;
 use App\GraphQL\Types\Admins\AdminDeleteType;
@@ -155,6 +156,7 @@ return [
                 'getPersons'     => PersonsQuery::class,
                 'getPage'        => PageComplexQuery::class,
                 'getLayout'      => LayoutQuery::class,
+                'getSettingsGroups' => SettingsGroupsQuery::class,
             ],
             'mutation' => [
                 'loginAdmin' => LoginAdminMutation::class,
@@ -187,6 +189,8 @@ return [
                 'Term'              => TermType::class,
                 'Zone'              => ZoneType::class,
                 'Mode'              => ModeType::class,
+                'Setting'           => SettingType::class,
+                'ValueResponse'     => ValueResponseType::class,
 
                 //Rca
                 'Calculate'    => CalculateType::class,
