@@ -88,7 +88,11 @@ class CreateDocumentMutation extends Mutation
             if($http_response){
                 Log::info(print_r($http_response, true));
                 $data = [];
-                $data['name'] = $http_response['name'];
+
+                if(!isset($order->name)){
+                    $data['name'] = $http_response['name'];
+                }
+
                 $data['contract_number'] = $http_response['contract_number'];
 
                 foreach($http_response['documents'] as $key => $document){
