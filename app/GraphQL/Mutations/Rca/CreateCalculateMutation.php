@@ -80,7 +80,8 @@ class CreateCalculateMutation extends Mutation
                 'json' => $args,
                 'headers' => [
                     'Accept' => 'application/json'
-                ]
+                ],
+                'timeout' => 30
             ]);
 
             $http_response = json_decode($response->getBody()->getContents(), true);
