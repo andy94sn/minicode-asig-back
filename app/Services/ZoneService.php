@@ -19,7 +19,7 @@ class ZoneService
     {
         $data =  [
             'Z3' => ['ro' => 'Țările din sistemul “Carte Verde” (Europa)', 'ru' => 'Все страны << Зеленой Карты >> (Европа)'],
-            'Z1' => ['ro' => 'Ucraina, Belorus', 'ru' => 'Украина и Беларусь']
+            'Z1' => ['ro' => 'Ucraina', 'ru' => 'Украина']
         ];
 
         if (!array_key_exists($this->lang, current($data))) {
