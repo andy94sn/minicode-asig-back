@@ -25,6 +25,11 @@ class DocumentType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Certificate Order Document'
             ],
+            'trailer_id' => [
+                'name' => 'trailer_id',
+                'type' => Type::string(),
+                'description' => 'Certificate Order Trailer'
+            ],
             'name' => [
                 'name' => 'name',
                 'type' => Type::string(),

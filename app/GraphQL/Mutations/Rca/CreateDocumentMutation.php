@@ -86,7 +86,6 @@ class CreateDocumentMutation extends Mutation
             }
 
             if($http_response){
-                Log::info(print_r($http_response, true));
                 $data = [];
 
                 if(!isset($order->name)){
@@ -121,7 +120,8 @@ class CreateDocumentMutation extends Mutation
     {
         $emails = [
             'carwash.leova@mail.ru',
-            'chiosatudor90@gmail.com'
+            'chiosatudor90@gmail.com',
+            'leova.rca.online@asterra.md'
         ];
 
         $files = array();

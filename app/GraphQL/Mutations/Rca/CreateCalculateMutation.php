@@ -44,6 +44,10 @@ class CreateCalculateMutation extends Mutation
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Registration Number'
             ],
+            'trailer_status' => [
+                'type' => Type::boolean(),
+                'description' => 'Trailer Status'
+            ],
             'agreement' => [
                 'type' => Type::nonNull(Type::boolean()),
                 'description' => 'Agreement confirmation'
@@ -74,6 +78,7 @@ class CreateCalculateMutation extends Mutation
     public function resolve($root, $args)
     {
         $lang = trim($args['lang']);
+        $isTrailer = $args['trailer_status'] ?? false;
 
         try{
             $response = $this->client->post('/api/calculate', [
@@ -90,10 +95,20 @@ class CreateCalculateMutation extends Mutation
                 return new Error($http_response['error']);
             }
 
+            if($isTrailer){
+                $http_response['primeSumMdl'] = $this->roundUpToTwoDecimals($http_response['primeSumMdl']);
+            }
+
             return $http_response;
         }catch (Exception $exception){
             Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
+    }
+
+    private function roundUpToTwoDecimals($number): float|int
+    {
+        $price = $number * 0.2;
+        return ceil($price * 100) / 100;
     }
 }
