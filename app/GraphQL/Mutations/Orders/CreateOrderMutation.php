@@ -47,6 +47,10 @@ class CreateOrderMutation extends Mutation
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Registration Number'
             ],
+            'trailer_id' => [
+                'type' => Type::string(),
+                'description' => 'Trailer ID'
+            ],
             'agreement' => [
                 'name' => 'agreement',
                 'type' => Type::nonNull(Type::boolean()),
@@ -110,10 +114,13 @@ class CreateOrderMutation extends Mutation
     public function resolve($root, $args)
     {
         try {
+            $isTrailer = (bool)$args['trailer_id'];
+
             $params = [
                 'email' => trim($args['email']),
                 'phone' => trim($args['phone']),
                 'code' => trim($args['code']),
+                'trailer_id' => trim($args['trailer_id']),
                 'certificate' => trim($args['certificate']),
                 'type' => trim($args['type']),
                 'zone' => $args['zone'] ?? null,
@@ -153,16 +160,23 @@ class CreateOrderMutation extends Mutation
                     'validity' => $args['start'] ?? null,
                     'possession' => $args['possession'] ?? null,
                     'person_type' => $args['person'] ?? null,
-                    'name' => $args['person'] ?? null
+                    'name' => $args['person'] ?? null,
+                    'trailer_id' => trim($args['trailer_id'])
                 ],
                 'lang' => $args['lang']
             ];
 
             Log::info(print_r($http_response, true));
 
+
             if($http_response){
                 $data['info']['person_type'] = isset($http_response['firstName']) ? 1 : 2;
-                $data['price'] = $http_response['primeSumMdl'];
+
+                if($isTrailer){
+                    $data['price'] = $this->roundUpToTwoDecimals($http_response['primeSumMdl']);
+                }else{
+                    $data['price'] = $http_response['primeSumMdl'];
+                }
             }
 
             return Order::create($data);
@@ -170,5 +184,11 @@ class CreateOrderMutation extends Mutation
             Log::error($exception->getMessage());
             return new Error(HelperService::message($args['lang'], 'error'));
         }
+    }
+
+    private function roundUpToTwoDecimals($number): float|int
+    {
+        $price = $number * 0.2;
+        return ceil($price * 100) / 100;
     }
 }
