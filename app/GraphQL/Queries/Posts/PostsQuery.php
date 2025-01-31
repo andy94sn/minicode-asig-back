@@ -47,13 +47,20 @@
                     'description' => 'Name'
                 ],
                 'orderBy' => [
+                    'name' => 'orderBy',
                     'type' => Type::string(),
                     'description' => 'Order By'
                 ],
                 'sortBy' => [
+                    'name' => 'sortBy',
                     'type' => Type::string(),
                     'description' => 'Sort By'
-                ]
+                ],
+                'category' => [
+                    'name' => 'category',
+                    'type' => Type::string(),
+                    'description' => 'Category Token'
+                ],
             ];
         }
 
@@ -76,6 +83,14 @@
 
                 if (isset($args['name'])) {
                     $query->where('name', 'like', '%' . $args['name'] . '%');
+                }
+
+                if (!empty($args['category'])) {
+                    $category = Category::where('token', $args['category'])->first();
+
+                    if($category){
+                        $query->where('category_id', $category->id);
+                    }
                 }
 
                 if(!empty($args['orderBy']) && !empty($args['sortBy'])){
