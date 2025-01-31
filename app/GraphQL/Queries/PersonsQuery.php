@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Services\HelperService;
 use App\Services\PersonsService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
@@ -14,7 +15,7 @@ class PersonsQuery extends Mutation
 {
     protected $attributes = [
         'name' => 'getPersons',
-        'description' => 'Return Person Types'
+        'description' => 'Return Person Types (Returnează tipurile  persoanelor asigurate)'
     ];
 
     public function type(): Type
@@ -34,12 +35,14 @@ class PersonsQuery extends Mutation
 
     public function resolve($root, array $args)
     {
+        $lang = $args['lang'];
+
         try {
             $service = new PersonsService($args['lang']);
             return $service->types();
         } catch (Exception $exception) {
-            Log::error('Error: ' . $exception->getMessage());
-            return new Error('Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 }

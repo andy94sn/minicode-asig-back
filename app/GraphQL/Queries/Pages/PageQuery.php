@@ -15,7 +15,7 @@ class PageQuery extends Query
 {
     protected $attributes = [
         'name' => 'getPage',
-        'description' => 'Single Page',
+        'description' => 'Return Page Data',
         'model' => Page::class
     ];
 
@@ -58,7 +58,7 @@ class PageQuery extends Query
             $page->load('sections');
             return $page;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
 

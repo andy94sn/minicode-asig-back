@@ -3,6 +3,7 @@
 namespace App\GraphQL\Queries;
 
 use App\Models\Page;
+use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\Type;
@@ -38,18 +39,20 @@ class LayoutQuery extends Mutation
 
     public function resolve($root, array $args)
     {
+        $lang = $args['lang'];
+
         try{
             return Page::where(['type' => 'general'])
                 ->with(['sections' => function ($query) {
                     $query->orderBy('order');
                 }, 'sections.components' => function ($query) {
-                    $query->whereNull('parent_id')->orderBy('order');
+                    $query->orderBy('order');
                 }])
                 ->orderBy('order')
                 ->get();
         }catch(Exception $exception){
-            Log::error('Error: ' . $exception->getMessage());
-            return new Error($exception->getMessage());
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 }

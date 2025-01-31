@@ -15,7 +15,7 @@ class OrderQuery extends Query
 {
     protected $attributes = [
         'name' => 'getOrder',
-        'description' => 'View Order Details',
+        'description' => 'View Order Details (Detalii despre comandă)',
         'model' => Order::class
     ];
 
@@ -60,7 +60,7 @@ class OrderQuery extends Query
 
             return $order;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

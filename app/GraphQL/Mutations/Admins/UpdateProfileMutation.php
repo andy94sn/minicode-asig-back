@@ -70,19 +70,15 @@ class UpdateProfileMutation extends Mutation
         try{
             $auth = Admin::find(request()->auth['sub']);
             $token = HelperService::clean($args['token']);
-            $roleName = HelperService::clean($args['role']);
             $name = HelperService::clean($args['name']);
             $status = $args['status'] ?? true;
             $password = $args['password'] ?? '';
             $passwordConfirmation = $args['password_confirmation'] ?? '';
 
             $admin = Admin::where('token', $token)->first();
-            $role = Role::where('name', $roleName)->first();
 
             if(!$admin){
                 return new Error(HelperService::message($lang, 'found'));
-            }elseif(!$role) {
-                return new Error(HelperService::message($lang, 'found').' - Role');
             }elseif(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
             }
@@ -97,13 +93,9 @@ class UpdateProfileMutation extends Mutation
                 'password' => $password
             ]);
 
-            if($args['role']){
-                $admin->assignRole($args['role']);
-            }
-
             return $admin;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

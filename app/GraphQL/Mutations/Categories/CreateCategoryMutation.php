@@ -4,8 +4,6 @@ namespace App\GraphQL\Mutations\Categories;
 
 use App\Models\Admin;
 use App\Models\Category;
-use App\Models\Page;
-use App\Models\Role;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
@@ -61,15 +59,14 @@ class CreateCategoryMutation extends Mutation
      */
     public function resolve($root, $args)
     {
-        try{
-            $lang = $args['lang'] ?? 'ro';
+        $lang = $args['lang'] ?? 'ro';
 
+        try{
             $auth    = Admin::find(request()->auth['sub']);
             $name    = HelperService::clean($args['name']);
             $slug    = HelperService::slugify($name);
             $status  = $args['status'] ? 1 : 0;
             $order   = $args['order'] ?? 1;
-            $page    = Page::where('slug', 'blog')->first();
 
             if(Admin::where('name', $name)->exists()) {
                 return new Error(HelperService::message($lang, 'exists'));
@@ -79,8 +76,6 @@ class CreateCategoryMutation extends Mutation
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(empty($name)){
                 return new Error(HelperService::message($lang, 'invalid'));
-            }elseif(!$page){
-                return new Error(HelperService::message($lang, 'blog'));
             }
 
             if($args['path']){
@@ -90,7 +85,6 @@ class CreateCategoryMutation extends Mutation
             }
 
             $category = Category::create([
-                'page_id' => $page->id,
                 'name' => $name,
                 'image' => $image,
                 'slug' => $slug,
@@ -112,9 +106,7 @@ class CreateCategoryMutation extends Mutation
 
             return $category;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-
-            $lang = $args['lang'] ?? 'ro';
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

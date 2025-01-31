@@ -57,7 +57,7 @@ class DeleteComponentMutation extends Mutation
             $component->delete();
             return $section;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

@@ -158,7 +158,6 @@ class CreateOrderMutation extends Mutation
                     'mode' => $args['mode'] ?? null,
                     'validity' => $args['start'] ?? null,
                     'possession' => $args['possession'] ?? null,
-                    'person_type' => $args['person'] ?? null,
                     'name' => $args['person'] ?? null,
                     'trailer_id' => trim($args['trailer_id'])
                 ],

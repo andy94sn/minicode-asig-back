@@ -16,7 +16,7 @@ class CategoriesQuery extends Query
 {
     protected $attributes = [
         'name' => 'getCategories',
-        'description' => 'Return Categories',
+        'description' => 'Return Categories Blog Page',
         'model' => Category::class
     ];
 
@@ -69,7 +69,7 @@ class CategoriesQuery extends Query
 
             $query = Category::query();
 
-            if (isset($args['name'])) {
+            if(!empty($args['name'])){
                 $query->where('name', 'like', '%' . $args['name'] . '%');
             }
 
@@ -91,7 +91,7 @@ class CategoriesQuery extends Query
                 ]
             ];
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

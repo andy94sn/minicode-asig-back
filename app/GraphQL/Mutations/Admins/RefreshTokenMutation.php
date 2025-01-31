@@ -97,7 +97,7 @@ class RefreshTokenMutation extends Mutation
             ];
 
         } catch (\Exception $exception) {
-            Log::error('Token Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
             throw new AuthenticationException(HelperService::message($lang, 'error'));
         }
     }

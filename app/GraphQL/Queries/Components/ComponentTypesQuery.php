@@ -15,7 +15,7 @@ class ComponentTypesQuery extends Query
 {
     protected $attributes = [
         'name' => 'getComponentTypes',
-        'description' => 'Component Types'
+        'description' => 'Return Component Types (Returnează tipurile de componente)'
     ];
 
     public function type(): Type

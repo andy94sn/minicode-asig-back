@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Services\HelperService;
 use App\Services\ModeService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
@@ -14,7 +15,7 @@ class ModesInsuranceQuery extends Mutation
 {
     protected $attributes = [
         'name' => 'getModes',
-        'description' => 'Return Modes Insurances'
+        'description' => 'Return Modes Insurances (Returnează modurile de utilizare a asigurărilor)'
     ];
 
     public function type(): Type
@@ -34,12 +35,14 @@ class ModesInsuranceQuery extends Mutation
 
     public function resolve($root, array $args)
     {
+        $lang = $args['lang'];
+
         try {
             $service = new ModeService($args['lang']);
             return $service->zones();
         } catch (Exception $exception) {
-            Log::error('Error: ' . $exception->getMessage());
-            return new Error('Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 }

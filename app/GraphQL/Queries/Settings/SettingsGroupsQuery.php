@@ -16,7 +16,7 @@ class SettingsGroupsQuery extends Query
 {
     protected $attributes = [
         'name' => 'getSettingsGroups',
-        'description' => 'Return Settings Groups',
+        'description' => 'Return Settings By Group',
         'model' => Setting::class
     ];
 
@@ -37,9 +37,6 @@ class SettingsGroupsQuery extends Query
     }
 
 
-    /**
-     * @throws Error
-     */
     public function resolve($root, $args)
     {
         $lang = $args['lang'] ?? 'ro';
@@ -54,7 +51,7 @@ class SettingsGroupsQuery extends Query
 
             return $query->get();
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

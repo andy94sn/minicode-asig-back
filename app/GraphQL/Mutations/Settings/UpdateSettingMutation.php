@@ -78,7 +78,7 @@ class UpdateSettingMutation extends Mutation
 
             return true;
         }catch (\Exception $exception) {
-           Log::info($exception->getMessage());
+           Log::error($exception->getMessage());
            return new Error(HelperService::message($lang, 'error'));
         }
 

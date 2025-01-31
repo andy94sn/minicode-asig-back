@@ -30,10 +30,10 @@ class LanguagesQuery extends Query
         try {
             return LanguageType::values();
         } catch (Exception $exception) {
-            Log::error('Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
             return [
                 'success' => false,
-                'message' => 'Error: ' . $exception->getMessage(),
+                'message' => $exception->getMessage(),
                 'data' => null,
             ];
         }

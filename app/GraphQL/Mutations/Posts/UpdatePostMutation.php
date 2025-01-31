@@ -75,8 +75,9 @@ class UpdatePostMutation extends Mutation
      */
     public function resolve($root, $args)
     {
+        $lang   = $args['lang'] ?? 'ro';
+
         try{
-            $lang   = $args['lang'] ?? 'ro';
             $token  = HelperService::clean($args['token']);
             $categoryToken  = $args['category'];
             $slug  = HelperService::clean($args['slug']);
@@ -138,9 +139,7 @@ class UpdatePostMutation extends Mutation
 
             return $post;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-
-            $lang   = $args['lang'] ?? 'ro';
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

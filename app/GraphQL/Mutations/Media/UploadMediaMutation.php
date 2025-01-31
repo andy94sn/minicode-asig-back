@@ -16,7 +16,7 @@ class UploadMediaMutation extends Mutation
 {
     protected $attributes = [
         'name' => 'uploadMedia',
-        'description' => 'Upload Media'
+        'description' => 'Upload Image'
     ];
 
     public function type(): Type
@@ -66,7 +66,7 @@ class UploadMediaMutation extends Mutation
                 'path' => 'uploads/'.$path,
             ];
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

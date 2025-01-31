@@ -66,8 +66,9 @@ class UpdateCategoryMutation extends Mutation
      */
     public function resolve($root, $args)
     {
+        $lang   = $args['lang'] ?? 'ro';
+
         try{
-            $lang   = $args['lang'] ?? 'ro';
             $auth   = Admin::find(request()->auth['sub']);
             $token  = HelperService::clean($args['token']);
             $status = (bool)$args['status'];
@@ -118,7 +119,7 @@ class UpdateCategoryMutation extends Mutation
 
             return $category;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

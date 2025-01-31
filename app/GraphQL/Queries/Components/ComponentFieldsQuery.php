@@ -15,7 +15,7 @@ class ComponentFieldsQuery extends Query
 {
     protected $attributes = [
         'name' => 'getComponentFields',
-        'description' => 'Component Fields'
+        'description' => 'Return Components Fields (Returnează campurile necesare pentru fiecare tip de componenta)'
     ];
 
     public function type(): Type

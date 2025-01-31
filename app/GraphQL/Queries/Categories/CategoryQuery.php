@@ -15,7 +15,7 @@ class CategoryQuery extends Query
 {
     protected $attributes = [
         'name' => 'getCategory',
-        'description' => 'Category',
+        'description' => 'Return Category Data',
         'model' => Category::class
     ];
 
@@ -56,7 +56,7 @@ class CategoryQuery extends Query
                 $query->orderBy('order', 'asc');
             }])->where('token', $token)->first();
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
 

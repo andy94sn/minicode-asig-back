@@ -57,7 +57,7 @@ class DeleteSettingMutation extends Mutation
             $setting->delete();
             return $setting;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

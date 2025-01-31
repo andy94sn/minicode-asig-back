@@ -81,13 +81,13 @@ class UpdateComponentMutation extends Mutation
                 'type'  => $type,
                 'content' => $translations,
                 'status' => $status,
-                'order' => (integer)$args['order'] ?? 1
+                'order' => (int)$args['order'] ?? 1
             ]);
 
             $section->load('components');
             return $section;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

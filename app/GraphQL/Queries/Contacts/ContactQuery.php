@@ -15,7 +15,7 @@ class ContactQuery extends Query
 {
     protected $attributes = [
         'name' => 'getContact',
-        'description' => 'Contact',
+        'description' => 'Return Contact Data',
         'model' => Contact::class
     ];
 
@@ -54,7 +54,7 @@ class ContactQuery extends Query
 
             return Contact::where('token', $token)->first();
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

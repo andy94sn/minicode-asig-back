@@ -53,9 +53,7 @@ class CreateDocumentMutation extends Mutation
         ];
     }
 
-    /**
-     * @throws Error
-     */
+
     public function resolve($root, $args)
     {
         $lang = trim($args['lang']);
@@ -112,7 +110,7 @@ class CreateDocumentMutation extends Mutation
             return $http_response;
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
-            throw new Error(HelperService::message($lang, 'error'));
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 

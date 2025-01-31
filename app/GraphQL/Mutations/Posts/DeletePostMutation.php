@@ -41,8 +41,9 @@ class DeletePostMutation extends Mutation
      */
     public function resolve($root, $args)
     {
+        $lang     = $args['lang'] ?? 'ro';
+
         try{
-            $lang     = $args['lang'] ?? 'ro';
             $auth     = Admin::find(request()->auth['sub']);
             $token    = HelperService::clean($args['token']);
             $post     = Post::where('token', $token)->first();
@@ -65,9 +66,7 @@ class DeletePostMutation extends Mutation
                 'status' => false
             ];
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-
-            $lang = $args['lang'] ?? 'ro';
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

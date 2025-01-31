@@ -15,7 +15,7 @@ class RolesQuery extends Query
 {
     protected $attributes = [
         'name' => 'getRoles',
-        'description' => 'Return Roles',
+        'description' => 'Return All Roles',
         'model' => Role::class
     ];
 
@@ -34,9 +34,9 @@ class RolesQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
 
-            if (!$auth && !$auth->is_super){
+            if (!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-permissions')) {
+            }elseif(!$auth->hasPermissionTo('manage-permissions')){
                 return new Error(HelperService::message($lang, 'permission'));
             }
 

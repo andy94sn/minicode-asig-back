@@ -7,7 +7,6 @@ declare(strict_types = 1);
     use App\GraphQL\Mutations\Admins\DeleteProfileMutation;
     use App\GraphQL\Mutations\Admins\LoginAdminMutation;
     use App\GraphQL\Mutations\Admins\RefreshTokenMutation;
-    use App\GraphQL\Mutations\Admins\ResetPasswordMutation;
     use App\GraphQL\Mutations\Admins\UpdateAdminMutation;
     use App\GraphQL\Mutations\Admins\UpdateProfileMutation;
     use App\GraphQL\Mutations\Categories\CreateCategoryMutation;
@@ -51,7 +50,6 @@ declare(strict_types = 1);
     use App\GraphQL\Queries\Components\ComponentTypesQuery;
     use App\GraphQL\Queries\Contacts\ContactQuery;
     use App\GraphQL\Queries\Contacts\ContactsQuery;
-    use App\GraphQL\Queries\Errors\ErrorsQuery;
     use App\GraphQL\Queries\Languages\LanguagesQuery;
     use App\GraphQL\Queries\LayoutQuery;
     use App\GraphQL\Queries\ModesInsuranceQuery;
@@ -70,7 +68,6 @@ declare(strict_types = 1);
     use App\GraphQL\Queries\Posts\PostsQuery;
     use App\GraphQL\Queries\Roles\RolesQuery;
     use App\GraphQL\Queries\Sections\SectionQuery;
-    use App\GraphQL\Queries\Sections\SectionsQuery;
     use App\GraphQL\Queries\Settings\GroupsQuery;
     use App\GraphQL\Queries\Settings\SettingsGroupsQuery;
     use App\GraphQL\Queries\Settings\SettingsQuery;
@@ -257,8 +254,6 @@ declare(strict_types = 1);
                 'getPageTypes'   => PageTypesQuery::class,
                 'getOrder'       => OrderQuery::class,
                 'getContact'     => ContactQuery::class,
-                'getErrors'      => ErrorsQuery::class,
-                'getSections'    => SectionsQuery::class,
                 'getSection'     => SectionQuery::class,
                 'getComponentTypes' => ComponentTypesQuery::class,
                 'getTerms'       => TermsInsuranceQuery::class,
@@ -295,7 +290,6 @@ declare(strict_types = 1);
                 'updateSetting'   => UpdateSettingMutation::class,
                 'deleteSetting'   => DeleteSettingMutation::class,
                 'deleteOrder'     => DeleteOrderMutation::class,
-                'resetPassword'   => ResetPasswordMutation::class,
                 'deleteAdmin'     => DeleteAdminMutation::class,
                 'deleteProfile'   => DeleteProfileMutation::class,
                 'refundMutation'  => RefundTransactionMutation::class,

@@ -14,7 +14,7 @@ class ProfileQuery extends Query
 {
     protected $attributes = [
         'name' => 'getProfile',
-        'description' => 'Profile',
+        'description' => 'Return Profile Data',
         'model' => Admin::class
     ];
 
@@ -54,7 +54,7 @@ class ProfileQuery extends Query
 
             return $admin;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
 

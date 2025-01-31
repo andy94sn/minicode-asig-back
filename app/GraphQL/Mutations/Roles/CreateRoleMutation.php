@@ -50,9 +50,9 @@ class CreateRoleMutation extends Mutation
             $auth = Admin::find(request()->auth['sub']);
             $name = HelperService::slugify(HelperService::clean($args['name']));
 
-            $isRole = Role::where('name', $name)->exists();
+            $isRole      = Role::where('name', $name)->exists();
             $description = HelperService::clean($args['name']);
-            $inputs = $args['permissions'] ?? [];
+            $inputs      = $args['permissions'] ?? [];
             $permissions = array();
 
             if($isRole) {
@@ -81,7 +81,7 @@ class CreateRoleMutation extends Mutation
 
             return $role;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

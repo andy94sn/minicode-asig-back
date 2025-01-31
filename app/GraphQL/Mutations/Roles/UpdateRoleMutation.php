@@ -59,7 +59,7 @@ class UpdateRoleMutation extends Mutation
         }elseif (!$auth->hasPermissionTo('manage-permissions')){
             return new Error(HelperService::message($lang, 'permission'));
         }elseif(!$role){
-            return new Error(HelperService::message($lang, 'found').'- Role');
+            return new Error(HelperService::message($lang, 'found'));
         }
 
         try{
@@ -79,7 +79,7 @@ class UpdateRoleMutation extends Mutation
 
             return $role;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error('Something went wrong');
         }
     }

@@ -64,7 +64,7 @@ class DeleteAdminMutation extends Mutation
                 'status' => false
             ];
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

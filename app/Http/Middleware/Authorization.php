@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Log;
 class Authorization
 {
     protected array $allowed = [
-        'https://ozoncar.md',
-        'https://admin.ozoncar.md',
         'http://10.10.1.45:5000',
-        'http://10.10.1.45:4000',
         'http://10.10.1.31:5173',
         'http://10.10.1.45:5173'
     ];

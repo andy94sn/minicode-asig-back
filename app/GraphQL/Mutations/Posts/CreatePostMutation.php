@@ -76,9 +76,9 @@ class CreatePostMutation extends Mutation
      */
     public function resolve($root, $args)
     {
-        try{
-            $lang = $args['lang'] ?? 'ro';
+        $lang = $args['lang'] ?? 'ro';
 
+        try{
             $auth     = Admin::find(request()->auth['sub']);
             $name    = HelperService::clean($args['name']);
             $author   = HelperService::clean($args['author']);
@@ -96,8 +96,6 @@ class CreatePostMutation extends Mutation
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-blog')) {
                 return new Error(HelperService::message($lang, 'permission'));
-            }elseif(empty($name)){
-                return new Error(HelperService::message($lang, 'invalid'));
             }
 
             $author = Admin::where('token', $author)->first();
@@ -137,9 +135,7 @@ class CreatePostMutation extends Mutation
 
             return $post;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-
-            $lang = $args['lang'] ?? 'ro';
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

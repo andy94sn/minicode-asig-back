@@ -55,7 +55,7 @@ class DeleteRoleMutation extends Mutation
             }elseif(!$auth->hasPermissionTo('manage-permissions')){
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$role){
-                return new Error(HelperService::message($lang, 'found').'- Role');
+                return new Error(HelperService::message($lang, 'found'));
             }elseif($adminWithRole) {
                 return new Error(HelperService::message($lang, 'role'));
             }
@@ -63,7 +63,7 @@ class DeleteRoleMutation extends Mutation
             $role->delete();
             return $role;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

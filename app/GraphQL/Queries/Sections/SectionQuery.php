@@ -15,7 +15,7 @@ class SectionQuery extends Query
 {
     protected $attributes = [
         'name' => 'getSection',
-        'description' => 'Single Section',
+        'description' => 'Return Section Data',
         'model' => Section::class
     ];
 
@@ -56,12 +56,12 @@ class SectionQuery extends Query
             }elseif(!$auth->hasPermissionTo('manage-pages')){
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$section){
-                return new Error(HelperService::message($lang, 'found').' - Page');
+                return new Error(HelperService::message($lang, 'found'));
             }
 
             return $section;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
 

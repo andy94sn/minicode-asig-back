@@ -15,7 +15,7 @@ class PermissionQuery extends Query
 {
     protected $attributes = [
         'name' => 'getPermissions',
-        'description' => 'Return Permissions',
+        'description' => 'Return All Permissions',
         'model' => Permission::class
     ];
 
@@ -34,7 +34,7 @@ class PermissionQuery extends Query
         try{
             $auth = Admin::find(request()->auth['sub']);
 
-            if(!$auth && $auth->is_super){
+            if(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-permissions')) {
                 return new Error(HelperService::message($lang, 'permission'));
@@ -42,7 +42,7 @@ class PermissionQuery extends Query
 
             return Permission::all();
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

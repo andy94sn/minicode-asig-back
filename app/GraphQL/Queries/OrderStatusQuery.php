@@ -60,7 +60,7 @@ class OrderStatusQuery extends Query
 
             return false;
         }catch (Exception $exception){
-            Log::error('Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

@@ -16,7 +16,7 @@ class PostQuery extends Query
 {
     protected $attributes = [
         'name' => 'getPost',
-        'description' => 'Post',
+        'description' => 'Return Post Data',
         'model' => Post::class
     ];
 
@@ -63,7 +63,7 @@ class PostQuery extends Query
 
             return $post;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
 

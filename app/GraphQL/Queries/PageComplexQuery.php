@@ -17,7 +17,7 @@ class PageComplexQuery extends Mutation
 
     protected $attributes = [
         'name' => 'getComplexPage',
-        'description' => 'Return Page With Sections and Components',
+        'description' => 'Return Page Complex With Sections and Components',
         'model' => Page::class
     ];
 
@@ -53,7 +53,7 @@ class PageComplexQuery extends Mutation
                         $query->orderBy('order');
                     },
                     'sections.components' => function ($query) {
-                        $query->whereNull('parent_id')->orderBy('order');
+                        $query->orderBy('order');
                     },
                     'translations' => function ($query) use ($lang) {
                         $query->where('language', $lang);
@@ -67,8 +67,8 @@ class PageComplexQuery extends Mutation
 
             return $page;
         }catch(Exception $exception){
-            Log::error('Error: ' . $exception->getMessage());
-            return new Error($exception->getMessage());
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 }

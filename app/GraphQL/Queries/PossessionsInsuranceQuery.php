@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Services\HelperService;
 use App\Services\ModeService;
 use App\Services\PossessionService;
 use App\Services\ZoneService;
@@ -16,7 +17,7 @@ class PossessionsInsuranceQuery extends Mutation
 {
     protected $attributes = [
         'name' => 'getPossessions',
-        'description' => 'Return Possessions Insurances'
+        'description' => 'Return Possessions Rights Insurances (Dreptul de posesiune a autovehiculului)'
     ];
 
     public function type(): Type
@@ -36,12 +37,14 @@ class PossessionsInsuranceQuery extends Mutation
 
     public function resolve($root, array $args)
     {
+        $lang = $args['lang'];
+
         try {
             $service = new PossessionService($args['lang']);
             return $service->possessions();
         } catch (Exception $exception) {
-            Log::error('Error: ' . $exception->getMessage());
-            return new Error('Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 }

@@ -14,7 +14,7 @@ class AdminQuery extends Query
 {
     protected $attributes = [
         'name' => 'getAdmin',
-        'description' => 'Admin',
+        'description' => 'Return Admin Data',
         'model' => Admin::class
     ];
 
@@ -56,7 +56,7 @@ class AdminQuery extends Query
 
             return $admin;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
 

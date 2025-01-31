@@ -15,7 +15,7 @@ class AuthPermissionsQuery extends Query
 {
     protected $attributes = [
         'name' => 'getAuthPermissions',
-        'description' => 'Return Auth Permissions',
+        'description' => 'Return Auth Permissions (Returnarea Permisiunilor Administratorului Autentificat)',
         'model' => Permission::class
     ];
 
@@ -29,10 +29,10 @@ class AuthPermissionsQuery extends Query
      */
     public function resolve($root, $args)
     {
+        $lang = $args['lang'] ?? 'ro';
 
         try{
             $auth = Admin::find(request()->auth['sub']);
-            $lang = $args['lang'] ?? 'ro';
 
             if(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
@@ -48,9 +48,7 @@ class AuthPermissionsQuery extends Query
                 ];
             })->toArray();
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-            $lang = $args['lang'] ?? 'ro';
-
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Services\HelperService;
 use App\Services\ZoneService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
@@ -14,7 +15,7 @@ class ZonesInsuranceQuery extends Mutation
 {
     protected $attributes = [
         'name' => 'getZones',
-        'description' => 'Return Zones GreenCard Insurances'
+        'description' => 'Return Zones GreenCard Insurances (Returnează zonelor asigurate pentru Cartea Verde)'
     ];
 
     public function type(): Type
@@ -34,12 +35,14 @@ class ZonesInsuranceQuery extends Mutation
 
     public function resolve($root, array $args)
     {
+        $lang = $args['lang'];
+
         try {
             $service = new ZoneService($args['lang']);
             return $service->zones();
         } catch (Exception $exception) {
-            Log::error('Error: ' . $exception->getMessage());
-            return new Error('Error: ' . $exception->getMessage());
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
         }
     }
 }

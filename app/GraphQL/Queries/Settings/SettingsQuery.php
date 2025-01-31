@@ -16,7 +16,7 @@ class SettingsQuery extends Query
 {
     protected $attributes = [
         'name' => 'getSettings',
-        'description' => 'Return Settings',
+        'description' => 'Return Settings Data',
         'model' => Setting::class
     ];
 
@@ -35,7 +35,6 @@ class SettingsQuery extends Query
             ]
         ];
     }
-
 
     /**
      * @throws Error
@@ -62,7 +61,7 @@ class SettingsQuery extends Query
 
             return $query->get();
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }
