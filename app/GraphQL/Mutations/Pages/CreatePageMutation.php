@@ -62,9 +62,7 @@ class CreatePageMutation extends Mutation
 
             if($page){
                 return new Error(HelperService::message($lang, 'exists'));
-            }elseif(!$auth) {
-                return new Error(HelperService::message($lang, 'denied'));
-            }elseif(($type == 'complex' || $type == 'general') && !$auth->is_super) {
+            }elseif(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));

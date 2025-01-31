@@ -81,8 +81,6 @@ class UpdateAdminMutation extends Mutation
 
             if(!$admin){
                 return new Error(HelperService::message($lang, 'found'));
-            }elseif(!$role) {
-                return new Error(HelperService::message($lang, 'found').' - Role');
             }elseif(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-admins')){

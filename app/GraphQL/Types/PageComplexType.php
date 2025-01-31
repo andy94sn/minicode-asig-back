@@ -52,6 +52,34 @@ class PageComplexType extends GraphQLType
                 'resolve' => function ($root, $args) {
                     return $root->sections;
                 }
+            ],
+            'categories' => [
+                'type' => Type::listOf(GraphQL::type('Category')),
+                'description' => 'Category Page Blog',
+                'args' => [
+                    'lang' => [
+                        'name' => 'lang',
+                        'type' => new nonNull(GraphQL::type('EnumLanguage')),
+                        'description' => 'Language Page'
+                    ]
+                ],
+                'resolve' => function ($root, $args) {
+                    return $root->categories;
+                }
+            ],
+            'posts' => [
+                'type' => Type::listOf(GraphQL::type('Post')),
+                'description' => 'Posts Page Blog',
+                'args' => [
+                    'lang' => [
+                        'name' => 'lang',
+                        'type' => new nonNull(GraphQL::type('EnumLanguage')),
+                        'description' => 'Language Page'
+                    ]
+                ],
+                'resolve' => function ($root, $args) {
+                    return $root->posts;
+                }
             ]
         ];
     }

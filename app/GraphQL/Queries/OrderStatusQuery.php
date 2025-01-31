@@ -14,7 +14,7 @@ class OrderStatusQuery extends Query
 {
     protected $attributes = [
         'name'        => 'statusOrder',
-        'description' => 'Return Order Status',
+        'description' => 'Return Order Status (State Payment Transaction)',
         'model'       => Order::class
     ];
 

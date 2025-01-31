@@ -46,14 +46,12 @@ class DeleteComponentMutation extends Mutation
             $component = Component::where('token', $token)->first();
             $section = $component->section;
 
-            if (!$auth && !$auth->is_super) {
+            if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-content')) {
+            }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$component){
-                return new Error(HelperService::message($lang, 'found').'Component');
-            }elseif(!$section){
-                throw new Error(HelperService::message($lang, 'found').'Section');
+                return new Error(HelperService::message($lang, 'found'));
             }
 
             $component->delete();

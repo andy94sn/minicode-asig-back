@@ -22,16 +22,28 @@ class AdminSeeder extends Seeder
             'manage-admins',
             'manage-permissions',
             'manage-orders',
-            'manage-content',
             'manage-pages',
             'manage-contacts',
             'manage-settings',
-            'manage-refund'
+            'manage-refund',
+            'manage-blog'
         ];
 
-        foreach ($permissions as $permission) {
+        $permissionsDescriptions = [
+            'Manage Admins',
+            'Manage Permissions',
+            'Manage Orders',
+            'Manage Pages',
+            'Manage Contacts',
+            'Manage Settings',
+            'Manage Refund',
+            'Manage Blog'
+        ];
+
+        foreach ($permissions as $key => $permission) {
             Permission::create([
                 'name' => $permission,
+                'description' => $permissionsDescriptions[$key],
                 'guard_name' => 'api'
             ]);
         }
@@ -40,9 +52,8 @@ class AdminSeeder extends Seeder
 
         $admin = Admin::create([
             'name' => 'Dev Admin',
-            'email' => 'admin@example.com',
-            'password' => 'cRv*n0F8cvbG',
-            'is_super' => true
+            'email' => 'dev@minicode.md',
+            'password' => 'cRv*n0F8cvbG'
         ]);
 
         $admin->assignRole('dev-admin');

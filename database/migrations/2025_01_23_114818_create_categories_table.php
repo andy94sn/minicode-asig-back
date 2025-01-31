@@ -11,20 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('name');
+            $table->string('token');
+            $table->string('name')->unique();
+            $table->string('slug');
+            $table->string('image')->nullable();
+            $table->integer('order')->default(1);
             $table->boolean('status')->default(1);
-            $table->integer('order')->default(0);
-            $table->text('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
-
-            $table->index('status');
-            $table->index('order');
         });
-
     }
 
     /**
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('categories');
     }
 };

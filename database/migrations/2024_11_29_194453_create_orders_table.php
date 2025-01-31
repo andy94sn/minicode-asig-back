@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('contract_number')->nullable();
             $table->string('token');
+            $table->string('name')->nullable();
             $table->string('email');
             $table->string('code');
             $table->string('certificate');
@@ -28,6 +30,7 @@ return new class extends Migration
             $table->string('contract')->nullable();
             $table->string('policy')->nullable();
             $table->string('demand')->nullable();
+            $table->string('link')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -77,12 +77,12 @@ class CreateAdminMutation extends Mutation
             if(Admin::where('email', $email)->exists()) {
                 return new Error(HelperService::message($lang, 'exists'));
             }elseif(!$role) {
-                return new Error(HelperService::message($lang, 'found').' - Role');
+                return new Error(HelperService::message($lang, 'found'));
             }elseif (!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-admins') || ($role == 'dev-admin' && !$auth->is_super)) {
+            }elseif(!$auth->hasPermissionTo('manage-admins')) {
                 return new Error(HelperService::message($lang, 'permission'));
-            }elseif(empty($email) || empty($name) ){
+            }elseif(empty($email) || empty($name)){
                 return new Error(HelperService::message($lang, 'invalid'));
             }
 

@@ -28,7 +28,7 @@ class DeleteContactMutation extends Mutation
         return [
             'token' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => 'Token Value'
+                'description' => 'Token'
             ],
         ];
     }
@@ -46,7 +46,7 @@ class DeleteContactMutation extends Mutation
             $contact = Contact::where('token', $token)->first();
 
             if(!$contact) {
-                return new Error(HelperService::message($lang, 'found').' - Contact');
+                return new Error(HelperService::message($lang, 'found'));
             }elseif(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-contacts')) {
@@ -62,7 +62,7 @@ class DeleteContactMutation extends Mutation
                 'status' => false
             ];
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

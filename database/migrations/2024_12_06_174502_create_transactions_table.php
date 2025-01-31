@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('pay_id', 255);
             $table->integer('order_id');
             $table->string('status')->default('Pending');
-            $table->timestamps();
         });
     }
 

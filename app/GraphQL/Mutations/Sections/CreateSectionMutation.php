@@ -65,18 +65,18 @@ class CreateSectionMutation extends Mutation
             $slug = HelperService::slugify($name);
 
             $page = Page::with('sections.components')->where('token', $token)->first();
-            $section = Section::where(['slug' => $slug, 'page_id' => $page->id])->exists();
+            $section = Section::where(['slug' => $slug])->exists();
 
-            if (!$auth && !$auth->is_super) {
+            if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$page) {
-                return  new Error(HelperService::message($lang, 'found').'Page');
+                return  new Error(HelperService::message($lang, 'found'));
             }elseif($page->type !== 'complex' && $page->type !== 'general'){
                 return new Error(HelperService::message($lang, 'invalid'));
-            }elseif($section) {
-                return new Error(HelperService::message($lang, 'exists').'Section');
+            }elseif($section){
+                return new Error(HelperService::message($lang, 'exists'));
             }
 
             Section::create([

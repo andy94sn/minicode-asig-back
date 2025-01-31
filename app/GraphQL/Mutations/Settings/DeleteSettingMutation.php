@@ -51,7 +51,7 @@ class DeleteSettingMutation extends Mutation
             }elseif(!$auth->hasPermissionTo('manage-settings')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$setting){
-                return new Error(HelperService::message($lang, 'found').' - Setting');
+                return new Error(HelperService::message($lang, 'found'));
             }
 
             $setting->delete();

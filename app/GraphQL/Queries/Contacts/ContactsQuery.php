@@ -43,6 +43,14 @@ class ContactsQuery extends Query
                 'type' => Type::int(),
                 'defaultValue' => 1
             ],
+            'orderBy' => [
+                'type' => Type::string(),
+                'description' => 'Order By'
+            ],
+            'sortBy' => [
+                'type' => Type::string(),
+                'description' => 'Sort By'
+            ]
         ];
     }
 
@@ -70,6 +78,11 @@ class ContactsQuery extends Query
                 $query->where('page', 'like', '%' . $args['group'] . '%');
             }
 
+            if(!empty($args['orderBy']) && !empty($args['sortBy'])){
+                $query->orderBy($args['sortBy'], $args['orderBy']);
+            }else{
+                $query->orderBy('created_at', 'desc');
+            }
 
             $contacts = $query->paginate($perPage, ['*'], 'page', $page);
 

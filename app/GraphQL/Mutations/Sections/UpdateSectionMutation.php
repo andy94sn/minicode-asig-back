@@ -62,14 +62,14 @@ class UpdateSectionMutation extends Mutation
             $section = Section::where('token', trim($args['token']))->first();
             $page = $section->page;
 
-            if (!$auth && !$auth->is_super) {
+            if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$section){
-                return new Error(HelperService::message($lang, 'found').'Section');
+                return new Error(HelperService::message($lang, 'found'));
             }elseif(!$page) {
-                return new Error(HelperService::message($lang, 'found').'Page');
+                return new Error(HelperService::message($lang, 'found'));
             }elseif ($page->type != 'complex' &&  $page->type != 'general'){
                 return new Error(HelperService::message($lang, 'invalid'));
             }

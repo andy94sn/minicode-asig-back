@@ -49,12 +49,12 @@ class DeleteSectionMutation extends Mutation
             $section = Section::where('token', $token)->first();
             $page = $section->page;
 
-            if (!$auth && !$auth->is_super) {
+            if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$section){
-                return new Error(HelperService::message($lang, 'found').'Section');
+                return new Error(HelperService::message($lang, 'found'));
             }
 
             $section->delete();

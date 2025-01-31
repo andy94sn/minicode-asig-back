@@ -47,7 +47,7 @@ class DeletePageMutation extends Mutation
 
             if(!$page){
                 return new Error(HelperService::message($lang, 'found'));
-            }elseif(!$auth && !$auth->is_super){
+            }elseif(!$auth){
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')){
                 return new Error(HelperService::message($lang, 'permission'));
@@ -63,7 +63,7 @@ class DeletePageMutation extends Mutation
                'status' => false
             ];
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }

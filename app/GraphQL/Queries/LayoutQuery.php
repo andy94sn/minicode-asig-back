@@ -16,7 +16,7 @@ class LayoutQuery extends Mutation
 
     protected $attributes = [
         'name' => 'getLayout',
-        'description' => 'Layout Pages With Sections and Components',
+        'description' => 'Layout Pages (Header and Footer) With Sections and Components',
         'model' => Page::class
     ];
 

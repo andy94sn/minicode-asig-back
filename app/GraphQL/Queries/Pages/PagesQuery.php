@@ -45,9 +45,17 @@ class PagesQuery extends Query
                 'type' => Type::boolean(),
                 'description' => 'Status'
             ],
-            'name' => [
+            'title' => [
                 'type' => Type::string(),
-                'description' => 'Name'
+                'description' => 'title'
+            ],
+            'orderBy' => [
+                'type' => Type::string(),
+                'description' => 'Order By'
+            ],
+            'sortBy' => [
+                'type' => Type::string(),
+                'description' => 'Sort By'
             ]
         ];
     }
@@ -75,8 +83,8 @@ class PagesQuery extends Query
                     'translations:id,page_id,language,title,content'
                 ]);
 
-            if (isset($args['name'])) {
-                $query->where('title', 'like', '%' . $args['name'] . '%');
+            if (isset($args['title'])) {
+                $query->where('title', 'like', '%' . $args['title'] . '%');
             }
 
             if(isset($args['status'])){
@@ -85,6 +93,12 @@ class PagesQuery extends Query
 
             if($args['type']){
                 $query->where('type', $args['type']);
+            }
+
+            if(!empty($args['orderBy']) && !empty($args['sortBy'])){
+                $query->orderBy($args['sortBy'], $args['orderBy']);
+            }else{
+                $query->orderBy('created_at', 'desc');
             }
 
             $pages = $query->paginate($perPage, ['*'], 'page', $page);

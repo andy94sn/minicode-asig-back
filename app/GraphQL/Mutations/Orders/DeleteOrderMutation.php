@@ -51,7 +51,7 @@ class DeleteOrderMutation extends Mutation
             }elseif(!$auth->hasPermissionTo('manage-orders')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!$order) {
-                return new Error(HelperService::message($lang, 'found').' - Order');
+                return new Error(HelperService::message($lang, 'found'));
             }
 
             $order->delete();

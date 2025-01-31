@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('token');
             $table->string('key')->unique();
             $table->enum('group', GroupType::values())->default(GroupType::default());
-            $table->json('value');
+            $table->json('values');
             $table->string('description')->nullable();
             $table->boolean('serialized')->default(0);
             $table->boolean('status')->default(1);

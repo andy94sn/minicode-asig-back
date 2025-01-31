@@ -57,7 +57,7 @@ class CreateRoleMutation extends Mutation
 
             if($isRole) {
                 return new Error(HelperService::message($lang, 'exists'));
-            }elseif(!$auth && $auth->is_super) {
+            }elseif(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-permissions')){
                 return new Error(HelperService::message($lang, 'permission'));

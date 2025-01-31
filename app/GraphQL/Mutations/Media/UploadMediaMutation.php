@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Mutations\Components;
+namespace App\GraphQL\Mutations\Media;
 
 use App\Models\Admin;
 use App\Services\HelperService;
@@ -46,22 +46,18 @@ class UploadMediaMutation extends Mutation
         try{
             $auth = Admin::find(request()->auth['sub']);
             $file = $args['file'];
-            Log::info(print_r($file, true));
 
             $validator = Validator::make(['file' => $file], [
                 'file' => 'required|file|mimes:jpeg,jpg,png,gif|max:2048'
             ]);
 
-            if(!$auth && !$auth->is_super) {
+            if(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-pages')) {
-                return new Error(HelperService::message($lang, 'permission'));
             }
 
             if ($validator->fails()) {
                 return new Error(HelperService::message($lang, 'invalid'));
             }
-
 
             $filename = time().'-'.$file->getClientOriginalName();
             $path = Storage::disk('public')->putFileAs('', $file, $filename);

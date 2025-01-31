@@ -26,7 +26,6 @@ class Authorization
      */
     public function handle(Request $request, Closure $next)
     {
-        Log::info($request->header('Origin'));
         if ($request->header('Origin') && !in_array($request->header('Origin'), $this->allowed)) {
             return response()->json([
                 'message' => 'Authorization denied'

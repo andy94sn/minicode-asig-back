@@ -55,6 +55,14 @@ class AdminsQuery extends Query
                 'type' => Type::string(),
                 'description' => 'Role'
             ],
+            'orderBy' => [
+                'type' => Type::string(),
+                'description' => 'Order By'
+            ],
+            'sortBy' => [
+                'type' => Type::string(),
+                'description' => 'Sort By'
+            ]
         ];
     }
 
@@ -96,7 +104,12 @@ class AdminsQuery extends Query
                 ->where('roles.name', $args['role']);
             }
 
-            $query->orderBy('admins.created_at', 'desc');
+            if(!empty($args['orderBy']) && !empty($args['sortBy'])){
+                $query->orderBy($args['sortBy'], $args['orderBy']);
+            }else{
+                $query->orderBy('created_at', 'desc');
+            }
+
             $admins = $query->paginate($perPage, ['admins.*'], 'page', $page);
 
             $admins->getCollection()->transform(function ($admin) {

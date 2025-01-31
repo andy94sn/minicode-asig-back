@@ -57,6 +57,14 @@ class OrdersQuery extends Query
             'page' => [
                 'type' => Type::int(),
                 'description' => 'Page'
+            ],
+            'orderBy' => [
+                'type' => Type::string(),
+                'description' => 'Order By'
+            ],
+            'sortBy' => [
+                'type' => Type::string(),
+                'description' => 'Sort By'
             ]
         ];
     }
@@ -102,7 +110,12 @@ class OrdersQuery extends Query
                 $query->where('status',  $args['status']);
             }
 
-            $query->orderBy('created_at', 'desc');
+            if(!empty($args['orderBy']) && !empty($args['sortBy'])){
+                $query->orderBy($args['sortBy'], $args['orderBy']);
+            }else{
+                $query->orderBy('created_at', 'desc');
+            }
+
             $orders = $query->paginate($perPage, ['*'], 'page', $page);
 
             $orders->getCollection()->transform(function ($order) {

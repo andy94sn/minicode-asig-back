@@ -78,8 +78,7 @@ class RefundTransactionMutation extends Mutation
                 $response = $this->payment->refund($params);
 
                 if(!$response){
-                    $message = $this->message($lang, 'refund');
-                    return new Error($message);
+                    return new Error(HelperService::message($lang, 'refund'));
                 }
 
                 if ($response['status'] === true) {
@@ -96,39 +95,7 @@ class RefundTransactionMutation extends Mutation
             }
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return new Error('Something went wrong');
+            return new Error(HelperService::message($lang, 'error'));
         }
-    }
-
-    private function message($language, string $error): string
-    {
-        $messages = [
-            'ro' => [
-                'invalid' => 'Date invalide',
-                'error' => 'Ceva nu a mers bine',
-                'param' => 'Parametri incorecți',
-                'found' => 'Comanda nu există',
-                'transaction' => 'Transacția a eșuat',
-                'refund' => 'Returnarea plată a eșuat'
-            ],
-            'en' => [
-                'invalid' => 'Invalid data',
-                'error' => 'Something went wrong',
-                'param' => 'Incorrect parameters',
-                'found' => 'Order not exist',
-                'transaction' => 'Transaction has been failed',
-                'refund' => 'Payment return failed'
-            ],
-            'ru' => [
-                'invalid' => 'Неверные данные',
-                'error'   => 'Что-то пошло не так',
-                'param' => 'Неверные параметры',
-                'found'   => 'Comanda nu există',
-                'transaction' => 'Транзакция не удалась',
-                'refund' => 'Возврат платежа не удался'
-            ]
-        ];
-
-        return $messages[$language][$error] ?? $messages['ro']['error'];
     }
 }

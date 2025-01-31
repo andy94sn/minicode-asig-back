@@ -63,11 +63,6 @@ class ComponentComplexType extends GraphQLType
                     }
                     return $translations;
                 }
-            ],
-            'children' => [
-                'name' => 'children',
-                'type' => Type::listOf(GraphQL::type('ComponentComplex')),
-                'description' => 'Component Children'
             ]
         ];
     }

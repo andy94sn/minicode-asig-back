@@ -50,7 +50,7 @@ class DeleteRoleMutation extends Mutation
                 $query->where('roles.id', $role->id);
             })->exists();
 
-            if (!$auth && $auth->is_super) {
+            if(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-permissions')){
                 return new Error(HelperService::message($lang, 'permission'));

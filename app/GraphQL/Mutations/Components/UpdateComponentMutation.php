@@ -51,11 +51,6 @@ class UpdateComponentMutation extends Mutation
                 'name' => 'order',
                 'type' => Type::int(),
                 'description' => 'Component Order'
-            ],
-            'components' => [
-                'name' => 'components',
-                'type' => Type::listOf(GraphQL::type('ComponentInput')),
-                'description' => 'Component Input',
             ]
         ];
     }
@@ -75,23 +70,11 @@ class UpdateComponentMutation extends Mutation
             $status = (boolean)$args['status'] ?? true;
             $translations = $args['translations'] ?? [];
             $type = HelperService::clean($args['type']);
-            $children = array();
 
-            if(!$auth && !$auth->is_super) {
+            if(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
-            }
-
-            if(isset($args['components']) && is_array($args['components'])) {
-                foreach ($args['components'] as $nestedComponent) {
-                    $childComponent = Component::where(['token' => $nestedComponent['token'], 'parent_id' => null])->first();
-                    if (!$childComponent) {
-                        return new Error(HelperService::message($lang, 'found').' - Component');
-                    }else{
-                        $children[] = $childComponent;
-                    }
-                }
             }
 
             $component->update([
@@ -100,11 +83,6 @@ class UpdateComponentMutation extends Mutation
                 'status' => $status,
                 'order' => (integer)$args['order'] ?? 1
             ]);
-
-            foreach($children as $child){
-                $child->parent_id = $component->id;
-                $child->save();
-            }
 
             $section->load('components');
             return $section;

@@ -8,13 +8,18 @@ enum PagesType: string
     case HOME      = 'home';
     case RCAI      = 'rcai';
     case RCAE      = 'rcae';
+
     case SUCCESS   = 'success';
     case CONTACTS  = 'contacts';
     case HEADER    = 'header';
     case FOOTER    = 'footer';
+
     case TERMS     = 'terms';
     case CONSUMER = 'consumer';
-    case ERROR = 'error';
+
+    case ERROR    = 'error';
+
+    case NOT_FOUND = 'not_found';
 
     /**
      * Return description
@@ -31,7 +36,8 @@ enum PagesType: string
             self::FOOTER    => 'footer',
             self::TERMS     => 'terms',
             self::CONSUMER  => 'consumer',
-            self::ERROR     => 'error'
+            self::ERROR     => 'error',
+            self::NOT_FOUND     => 'not_found'
         };
     }
 

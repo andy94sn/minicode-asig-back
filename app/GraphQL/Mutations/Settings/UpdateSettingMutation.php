@@ -57,7 +57,7 @@ class UpdateSettingMutation extends Mutation
             }elseif(!$auth->hasPermissionTo('manage-settings')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }elseif(!GroupType::validate($args['group'])) {
-                return new Error(HelperService::message($lang, 'invalid').'Group');
+                return new Error(HelperService::message($lang, 'invalid'));
             }
 
             if($settings){

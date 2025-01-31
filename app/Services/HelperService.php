@@ -59,6 +59,8 @@ class HelperService
                 'permission' => 'Nu aveți permisiune',
                 'found'    => 'Nu a fost găsit',
                 'password_mismatch'    => 'Parolele nu se potrivesc',
+                'blog'     => 'Nu s-a găsit pagina Blog',
+                'refund' => 'Returnare eșuată'
             ],
             'en' => [
                 'invalid'  => 'Invalid data',
@@ -70,6 +72,8 @@ class HelperService
                 'permission' => 'No permission',
                 'found'     => 'Not found -',
                 'password_mismatch'  => 'The passwords do not match',
+                'blog'      => 'No found Blog Page',
+                'refund'    => 'Payment return failed'
             ],
             'ru' => [
                 'invalid'  => 'Неверные данные',
@@ -81,6 +85,8 @@ class HelperService
                 'permission' => 'Нет разрешения',
                 'found'     => 'Не найдено -',
                 'password_mismatch'  => 'Пароли не совпадают',
+                'blog'      => 'Nu s-a găsit pagina Blog',
+                'refund'    => 'Возврат платежа не удался'
             ]
         ];
 

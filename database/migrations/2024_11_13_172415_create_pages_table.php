@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->string('type', 191);
+            $table->integer('order')->default(1);
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

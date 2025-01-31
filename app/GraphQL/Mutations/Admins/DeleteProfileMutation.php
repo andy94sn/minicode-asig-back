@@ -29,7 +29,7 @@ class DeleteProfileMutation extends Mutation
         return [
             'token' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => 'Token Value'
+                'description' => 'Token'
             ],
         ];
     }
@@ -48,7 +48,7 @@ class DeleteProfileMutation extends Mutation
 
             if(!$admin) {
                 return new Error(HelperService::message($lang, 'found'));
-            }elseif(!$auth && !$auth->is_super) {
+            }elseif(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
             }
 

@@ -54,9 +54,9 @@ class UpdateRoleMutation extends Mutation
         $inputs = $args['permissions'] ?? [];
         $permissions = array();
 
-        if(!$auth && !$auth->is_super){
+        if(!$auth){
             return new Error(HelperService::message($lang, 'denied'));
-        }elseif (!$auth->hasPermissionTo('manage-admins')){
+        }elseif (!$auth->hasPermissionTo('manage-permissions')){
             return new Error(HelperService::message($lang, 'permission'));
         }elseif(!$role){
             return new Error(HelperService::message($lang, 'found').'- Role');

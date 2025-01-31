@@ -141,7 +141,6 @@ class CreateOrderMutation extends Mutation
             ]);
 
             $http_response = json_decode($response->getBody()->getContents(), true);
-            Log::info($http_response['primeSumMdl']);
 
             if(isset($http_response['error'])){
                 return new Error($http_response['error']);
@@ -165,8 +164,6 @@ class CreateOrderMutation extends Mutation
                 ],
                 'lang' => $args['lang']
             ];
-
-            Log::info(print_r($http_response, true));
 
 
             if($http_response){

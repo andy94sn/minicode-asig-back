@@ -20,27 +20,27 @@ class PageTranslationType extends GraphQLType
         return [
             'language' => [
                 'type' => Type::string(),
-                'description' => 'Language Page',
+                'description' => 'Language',
             ],
             'title' => [
                 'type' => Type::string(),
-                'description' => 'Title of the page translation'
+                'description' => 'Title'
             ],
             'content' => [
                 'type' => Type::string(),
-                'description' => 'Content of the page translation'
+                'description' => 'Content'
             ],
             'meta_title' => [
                 'type' => Type::string(),
-                'description' => 'Meta title of the page translation'
+                'description' => 'Meta Title'
             ],
             'meta_description' => [
                 'type' => Type::string(),
-                'description' => 'Meta description of the page translation'
+                'description' => 'Meta Description'
             ],
             'meta_keywords' => [
                 'type' => Type::string(),
-                'description' => 'Meta keywords of the page translation'
+                'description' => 'Meta Keywords'
             ]
         ];
     }

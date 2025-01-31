@@ -57,11 +57,6 @@ class CreateComponentMutation extends Mutation
                 'name' => 'order',
                 'type' => Type::int(),
                 'description' => 'Component Order'
-            ],
-            'components' => [
-                'name' => 'components',
-                'type' => Type::listOf(GraphQL::type('ComponentInput')),
-                'description' => 'Component Children',
             ]
         ];
     }
@@ -81,31 +76,16 @@ class CreateComponentMutation extends Mutation
 
             $section = Section::where('token', $token)->with('components')->first();
             $component = Component::where(['key' => $key, 'section_id' => $section->id])->exists();
-            $children = array();
-            $components = $args['components'] ?? [];
 
-            if(!$auth && !$auth->is_super) {
+            if(!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-content')) {
+            }elseif(!$auth->hasPermissionTo('manage-pages')) {
                 return new Error(HelperService::message($lang, 'permission'));
-            }elseif(!$section) {
-                return new Error(HelperService::message($lang, 'found').'- Section');
             }elseif($component) {
-                return new Error(HelperService::message($lang, 'component'));
+                return new Error(HelperService::message($lang, 'exists'));
             }
 
-            if($components) {
-                foreach ($components as $nestedComponent) {
-                    $childComponent = Component::where(['token' => $nestedComponent['token'], 'parent_id' => null])->first();
-                    if (!$childComponent) {
-                        return new Error(HelperService::message($lang, 'found').' - Component');
-                    }else{
-                        $children[] = $childComponent;
-                    }
-                }
-            }
-
-            $component = Component::create([
+            Component::create([
                 'title' => $args['title'],
                 'type' => $args['type'],
                 'key' => $key,
@@ -115,15 +95,10 @@ class CreateComponentMutation extends Mutation
                 'section_id' => $section->id
             ]);
 
-            foreach($children as $child){
-                $child->parent_id = $component->id;
-                $child->save();
-            }
-
             $section->load('components');
             return $section;
         }catch(\Exception $exception){
-            Log::info($exception->getMessage());
+            Log::error($exception->getMessage());
             return new Error(HelperService::message($lang, 'error'));
         }
     }
