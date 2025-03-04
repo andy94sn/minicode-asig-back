@@ -91,7 +91,7 @@ class CreateContactMutation extends Mutation
 
             $contact = Contact::create([
                  'name' => trim($args['name']),
-                 'phone' => trim($args['phone']),
+                 'phone' => trim($args['phone'] ?? ''),
                  'email' => $args['email'] ?? null,
                  'page' => $page->slug,
                  'message' => $args['message'] ?? null

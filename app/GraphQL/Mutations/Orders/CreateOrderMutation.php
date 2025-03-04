@@ -118,11 +118,11 @@ class CreateOrderMutation extends Mutation
 
             $params = [
                 'email' => trim($args['email']),
-                'phone' => trim($args['phone']),
+                'phone' => trim($args['phone'] ?? ''),
                 'code' => trim($args['code']),
-                'trailer_id' => trim($args['trailer_id']),
+                'trailer_id' => trim($args['trailer_id'] ?? ''),
                 'certificate' => trim($args['certificate']),
-                'type' => trim($args['type']),
+                'type' => trim($args['type' ?? '']),
                 'zone' => $args['zone'] ?? null,
                 'term' => $args['term'] ?? null,
                 'mode' => $args['mode'] ?? null,
@@ -148,10 +148,10 @@ class CreateOrderMutation extends Mutation
 
             $data = [
                 'email' => trim($args['email']),
-                'phone' => trim($args['phone']),
+                'phone' => trim($args['phone'] ?? ''),
                 'code' => trim($args['code']),
                 'certificate' => trim($args['certificate']),
-                'type' => trim($args['type']),
+                'type' => trim($args['type'] ?? ''),
                 'info' => [
                     'zone' => $args['zone'] ?? null,
                     'term' => $args['term'] ?? null,
@@ -159,7 +159,7 @@ class CreateOrderMutation extends Mutation
                     'validity' => $args['start'] ?? null,
                     'possession' => $args['possession'] ?? null,
                     'name' => $args['person'] ?? null,
-                    'trailer_id' => trim($args['trailer_id'])
+                    'trailer_id' => trim($args['trailer_id'] ?? '')
                 ],
                 'lang' => $args['lang']
             ];
