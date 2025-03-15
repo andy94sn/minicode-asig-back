@@ -40,7 +40,7 @@ class JwtAuth
             $key = env('JWT_SECRET_KEY');
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
-            if ($decoded->iss !== 'ozone_car' || $decoded->type !== 'access') {
+            if ($decoded->iss !== 'motoasig' || $decoded->type !== 'access') {
                 return Response::json(['message' => 'Invalid token'], 401);
             }
 

@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Log;
 class Authorization
 {
     protected array $allowed = [
-        'https://primasig.md',
-        'https://admin.primasig.md',
-        'https://api.primasig.md',
-        'http://127.0.0.1:8000'
+        'https://motoasig.md',
+        'https://admin.motoasig.md',
+        'https://api.motoasig.md',
+        'http://127.0.0.1:8000',
+        'http://localhost:5175'
     ];
 
     /**

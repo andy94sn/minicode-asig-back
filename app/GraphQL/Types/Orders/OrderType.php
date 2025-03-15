@@ -57,7 +57,7 @@ class OrderType extends GraphQLType
                 'description' => 'Contract Number'
             ],
             'refund'  => [
-                'type' => Type::int(),
+                'type' => Type::float(),
                 'description' => 'Refund'
             ],
             'info'  => [

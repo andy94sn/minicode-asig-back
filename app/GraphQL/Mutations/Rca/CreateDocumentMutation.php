@@ -116,10 +116,9 @@ class CreateDocumentMutation extends Mutation
 
     private function sendEmail($order, $lang, $to): void
     {
+        #Admin emails
         $emails = [
-            'carwash.leova@mail.ru',
-            'chiosatudor90@gmail.com',
-            'leova.rca.online@asterra.md'
+            'lilian_capatina@yahoo.com'
         ];
 
         $files = array();

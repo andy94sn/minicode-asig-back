@@ -63,4 +63,9 @@ class Order extends Model
 
         return $token;
     }
+
+    public function paymentLink()
+    {
+        return $this->hasOne(PaymentLink::class, 'order_id');
+    }
 }

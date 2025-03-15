@@ -20,7 +20,7 @@ class JwtService
         $refreshTokenTTL = env('JWT_REFRESH_TOKEN_EXPIRATION');
 
         $accessTokenPayload = [
-            'iss' => 'ozone_car',
+            'iss' => 'motoasig',
             'sub' => $admin->id,
             'iat' => $now,
             'exp' => $now + $accessTokenTTL,
@@ -28,7 +28,7 @@ class JwtService
         ];
 
         $refreshTokenPayload = [
-            'iss' => 'ozone_car',
+            'iss' => 'motoasig',
             'sub' => $admin->id,
             'iat' => $now,
             'exp' => $now + $refreshTokenTTL,

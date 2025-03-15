@@ -3,7 +3,8 @@
 declare(strict_types = 1);
 
     use App\GraphQL\Mutations\Admins\CreateAdminMutation;
-    use App\GraphQL\Mutations\Admins\DeleteAdminMutation;
+use App\GraphQL\Mutations\Admins\CreatePaymentMutation;
+use App\GraphQL\Mutations\Admins\DeleteAdminMutation;
     use App\GraphQL\Mutations\Admins\DeleteProfileMutation;
     use App\GraphQL\Mutations\Admins\LoginAdminMutation;
     use App\GraphQL\Mutations\Admins\RefreshTokenMutation;
@@ -53,7 +54,9 @@ declare(strict_types = 1);
     use App\GraphQL\Queries\Languages\LanguagesQuery;
     use App\GraphQL\Queries\LayoutQuery;
     use App\GraphQL\Queries\ModesInsuranceQuery;
-    use App\GraphQL\Queries\Orders\OrderQuery;
+use App\GraphQL\Queries\OrderPaymentQuery;
+// use App\GraphQL\Queries\OrderPaymentQuery;
+use App\GraphQL\Queries\Orders\OrderQuery;
     use App\GraphQL\Queries\Orders\OrdersQuery;
     use App\GraphQL\Queries\OrderStatusQuery;
     use App\GraphQL\Queries\PageComplexQuery;
@@ -177,6 +180,7 @@ declare(strict_types = 1);
                 'getPersons'     => PersonsQuery::class,
                 'getPage'        => PageComplexQuery::class,
                 'getLayout'      => LayoutQuery::class,
+                'getOrderPayment'   => OrderPaymentQuery::class,
                 'getSettingsGroups' => SettingsGroupsQuery::class,
                 'getBlog'        => BlogQuery::class,
             ],
@@ -199,6 +203,8 @@ declare(strict_types = 1);
                 'EnumLanguage'         => EnumLanguageType::class,
                 'ContactResponse'      => ContactResponseType::class,
                 'OrderResponse'        => OrderResponseType::class,
+                'Order'                 => OrderType::class,
+                'OrderInfo'             => OrderInfoType::class,
                 'DownloadResponse'     => DownloadResponseType::class,
                 'Permission'           => PermissionType::class,
                 'Person'               => PersonType::class,
@@ -224,10 +230,10 @@ declare(strict_types = 1);
                 'Calculate'    => CalculateType::class,
                 'Document'     => DocumentType::class,
                 // End
-
+                
                 //Payment
-                'Transaction'    => TransactionType::class,
-                'TransactionResponse' => TransactionResponseType::class
+                'Transaction'           => TransactionType::class,
+                'TransactionResponse'   => TransactionResponseType::class
                 // End
             ],
             'middleware' => [
@@ -282,6 +288,7 @@ declare(strict_types = 1);
                 'createAdmin'     => CreateAdminMutation::class,
                 'updateAdmin'     => UpdateAdminMutation::class,
                 'updateProfile'   => UpdateProfileMutation::class,
+                'createPayment'   => CreatePaymentMutation::class,
                 'createRole'      => CreateRoleMutation::class,
                 'deleteRole'      => DeleteRoleMutation::class,
                 'updateRole'      => UpdateRoleMutation::class,
@@ -298,7 +305,12 @@ declare(strict_types = 1);
 		        'updateCategory'  => UpdateCategoryMutation::class,
 		        'createPost'      => CreatePostMutation::class,
                 'deletePost'      => DeletePostMutation::class,
-                'updatePost'      => UpdatePostMutation::class
+                'updatePost'      => UpdatePostMutation::class,
+
+                //RCA
+                'createOrder'       => CreateOrderMutation::class,
+                'calculateMutation' => CreateCalculateMutation::class,
+                'documentMutation'  => CreateDocumentMutation::class,
             ],
 
             'types' => [
@@ -308,6 +320,7 @@ declare(strict_types = 1);
                 'ComponentEnum'   => ComponentEnumType::class,
                 'GroupEnum'       => GroupEnumType::class,
                 'PageEnum'        => PageEnumType::class,
+                'EnumInsurance'   => EnumInsuranceType::class,
                 'AdminResponse'   => AdminResponseType::class,
                 'Admin'           => AdminType::class,
                 'AdminDelete'     => AdminDeleteType::class,
@@ -361,7 +374,13 @@ declare(strict_types = 1);
 		        'CategoryTranslationInput'  => CategoryTranslationInputType::class,
 		        'PostTranslationInput'  => PostTranslationInputType::class,
                 'TagInput'              => TagInputType::class,
-                'Tag'                   => TagType::class
+                'Tag'                   => TagType::class,
+                'OrderResponse'        => OrderResponseType::class,
+
+                //Rca
+                'Calculate'    => CalculateType::class,
+                'Document'     => DocumentType::class,
+                // End
             ],
 
             'middleware' => [

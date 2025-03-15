@@ -12,11 +12,11 @@ class AdminSeeder extends Seeder
 {
     public function run()
     {
-        $role = Role::create([
-            'name' => 'dev-admin',
-            'description' => 'Dev Admin',
-            'guard_name' => 'api'
-        ]);
+        $role = Role::firstOrCreate(
+            ['name' => 'dev-admin', 'guard_name' => 'api'],
+            ['description' => 'Dev Admin']
+        );
+        
 
         $permissions = [
             'manage-admins',
@@ -26,7 +26,8 @@ class AdminSeeder extends Seeder
             'manage-contacts',
             'manage-settings',
             'manage-refund',
-            'manage-blog'
+            'manage-blog',
+            'manage-payments',
         ];
 
         $permissionsDescriptions = [
@@ -37,24 +38,27 @@ class AdminSeeder extends Seeder
             'Manage Contacts',
             'Manage Settings',
             'Manage Refund',
-            'Manage Blog'
+            'Manage Blog',
+            'Create order payment links'
         ];
 
         foreach ($permissions as $key => $permission) {
-            Permission::create([
-                'name' => $permission,
-                'description' => $permissionsDescriptions[$key],
-                'guard_name' => 'api'
-            ]);
+            Permission::firstOrCreate(
+                ['name' => $permission, 'guard_name' => 'api'],
+                ['description' => $permissionsDescriptions[$key]]
+            );
         }
 
         $role->syncPermissions(Permission::all());
 
-        $admin = Admin::create([
-            'name' => 'Dev Admin',
-            'email' => 'dev@minicode.md',
-            'password' => 'cRv*n0F8cvbG'
-        ]);
+        $admin = Admin::firstOrCreate(
+            ['email' => 'dev@minicode.md'],
+            [
+                'name' => 'Dev Admin',
+                'password' => 'cRv*n0F8cvbG'
+            ]
+        );
+        
 
         $admin->assignRole('dev-admin');
     }

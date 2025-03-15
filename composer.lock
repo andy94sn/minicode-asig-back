@@ -11452,7 +11452,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "8.2.27",
+        "php": "^8.2.27",
         "ext-dom": "*",
         "ext-json": "*",
         "ext-mysqli": "*",

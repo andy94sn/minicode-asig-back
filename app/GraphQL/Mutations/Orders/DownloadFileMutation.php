@@ -48,7 +48,7 @@ class DownloadFileMutation extends Mutation
         $token = $args['token'];
 
         try{
-            $order = Order::find($token);
+            $order = Order::where('token', $token)->first();
 
             if (!$order) {
                 return new Error(HelperService::message($lang, 'found'));

@@ -48,21 +48,21 @@ class OrderMail extends Mailable
             ? 'sau prin email la:'
             : 'или по электронной почте:';
 
-        $email = 'office@ozoncar.md';
+        $email = 'info@primasig.md';
 
         $thanks = $this->lang == 'ro'
             ? 'Vă mulțumim pentru încrederea acordată și vă asigurăm de tot suportul nostru. Drumuri bune și sigure!'
             : 'Спасибо за ваше доверие, мы готовы оказать вам всю необходимую поддержку. Хорошей и безопасной поездки!';
 
         $footer = $this->lang == 'ro'
-            ? 'Cu apreciere, OzonCar.'
-            : 'С уважением, OzonCar.';
+            ? 'Cu apreciere, PrimAsig.'
+            : 'С уважением, PrimAsig.';
 
 
         $mail =  $this->subject($subject)
             ->markdown('vendor.mail.html.order')
             ->with([
-                'url'   => 'https://ozoncar.md',
+                'url'   => 'https://primasig.md',
                 'image' => asset('storage/uploads/logo.png'),
                 'welcome'  => $welcome,
                 'slot'     => nl2br($body),
@@ -96,9 +96,9 @@ class OrderMail extends Mailable
         $string = null;
 
         if($type == 'rca'){
-           $string = $lang == 'ro' ? 'Asigurare RCAI - OzonCar' : 'Страхования ОСАГО - OzonCar';
+           $string = $lang == 'ro' ? 'Asigurare RCAI - PrimAsig' : 'Страхования ОСАГО - PrimAsig';
         }elseif($type =='greenCard'){
-           $string = $lang == 'ro' ? 'Asigurare RCAE - OzonCar' : 'Страхования RCAE - OzonCar';
+           $string = $lang == 'ro' ? 'Asigurare RCAE - PrimAsig' : 'Страхования RCAE - PrimAsig';
         }
 
         return $string;
@@ -109,9 +109,9 @@ class OrderMail extends Mailable
         $string = null;
 
         if($type == 'rca'){
-            $string = $lang == 'ro' ? 'Mulțumim că ați ales OzonCar.MD pentru asigurarea RCAI!' : 'Благодарим вас за выбор OzonCar.MD для страхования ОСАГО';
+            $string = $lang == 'ro' ? 'Mulțumim că ați ales PrimAsig.MD pentru asigurarea RCAI!' : 'Благодарим вас за выбор PrimAsig.MD для страхования ОСАГО';
         }elseif($type =='greenCard'){
-            $string = $lang == 'ro' ? 'Mulțumim că ați ales OzonCar.MD pentru asigurarea RCAE!' : 'Благодарим вас за выбор OzonCar.MD для страхования RCAE!';
+            $string = $lang == 'ro' ? 'Mulțumim că ați ales PrimAsig.MD pentru asigurarea RCAE!' : 'Благодарим вас за выбор PrimAsig.MD для страхования RCAE!';
         }
 
         return $string;
