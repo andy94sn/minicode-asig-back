@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('parent_id')->constrained('components')->onDelete('cascade');
             $table->string('token', 191);
             $table->string('title');
             $table->string('key');
