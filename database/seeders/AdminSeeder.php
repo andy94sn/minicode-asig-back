@@ -28,6 +28,7 @@ class AdminSeeder extends Seeder
             'manage-refund',
             'manage-blog',
             'manage-payments',
+            'manage-all-payments',
         ];
 
         $permissionsDescriptions = [
@@ -39,7 +40,8 @@ class AdminSeeder extends Seeder
             'Manage Settings',
             'Manage Refund',
             'Manage Blog',
-            'Create order payment links'
+            'Create order payment links',
+            "Show all payment links"
         ];
 
         foreach ($permissions as $key => $permission) {

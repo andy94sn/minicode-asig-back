@@ -44,6 +44,10 @@ class OrderType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Status'
             ],
+            'payment_status' => [
+                'type' => Type::boolean(),
+                'description' => 'Payment Link Status'
+            ],
             'contract_number' => [
                 'type' => Type::string(),
                 'description' => 'Contract Number'

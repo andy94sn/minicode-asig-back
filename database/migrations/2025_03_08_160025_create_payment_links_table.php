@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('admin_id');
             $table->timestamps();
-
             $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('set null');
-       
         });
     }
 

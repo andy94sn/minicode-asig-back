@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Queries\Orders;
+namespace App\GraphQL\Queries\PaymentLinks;
 
 use App\Models\Admin;
 use App\Models\Order;
@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 
-class OrdersQuery extends Query
+class PaymentLinksQuery extends Query
 {
     protected $attributes = [
-        'name' => 'getOrders',
-        'description' => 'Return Orders',
+        'name' => 'getPayments',
+        'description' => 'Return Orders with Payment links',
         'model' => Order::class
     ];
 
@@ -84,11 +84,17 @@ class OrdersQuery extends Query
 
             if (!$auth) {
                 return new Error(HelperService::message($lang, 'denied'));
-            }elseif(!$auth->hasPermissionTo('manage-orders')) {
+            }elseif(!$auth->hasPermissionTo('manage-payments')) {
                 return new Error(HelperService::message($lang, 'permission'));
             }
 
-            $query = Order::query()->withoutPayments(); //Show client only orders
+            $query = Order::query()->withPayments(); //Show created as payment links from agents
+            
+            if (!$auth->hasPermissionTo('manage-all-payments')) {
+                $query->whereHas('paymentLink', function ($query) use ($auth) {
+                    $query->where('admin_id', $auth->id);
+                });
+            }
             if (isset($args['phone'])) {
                 $query->where('phone', 'like', '%' . $args['phone'] . '%');
             }

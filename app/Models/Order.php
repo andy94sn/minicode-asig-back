@@ -68,4 +68,19 @@ class Order extends Model
     {
         return $this->hasOne(PaymentLink::class, 'order_id');
     }
+
+    public function scopeWithPayments($query)
+    {
+        return $query->whereHas('paymentLink');
+    }
+
+    public function scopeWithoutPayments($query)
+    {
+        return $query->whereDoesntHave('paymentLink');
+    }
+
+    public function getPaymentStatusAttribute()
+    {
+        return $this->paymentLink ? $this->paymentLink->status : null;
+    }
 }

@@ -117,9 +117,7 @@ class CreateDocumentMutation extends Mutation
     private function sendEmail($order, $lang, $to): void
     {
         #Admin emails
-        $emails = [
-            'lilian_capatina@yahoo.com'
-        ];
+        $emails = explode(',', env('RCA_ADMIN_EMAILS'));
 
         $files = array();
         $type  = $order->type;

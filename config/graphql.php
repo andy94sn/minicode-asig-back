@@ -63,7 +63,9 @@ use App\GraphQL\Queries\Orders\OrderQuery;
     use App\GraphQL\Queries\Pages\PageQuery;
     use App\GraphQL\Queries\Pages\PagesQuery;
     use App\GraphQL\Queries\Pages\PageTypesQuery;
-    use App\GraphQL\Queries\Permissions\AuthPermissionsQuery;
+use App\GraphQL\Queries\PaymentLinks\PaymentLinkQuery;
+use App\GraphQL\Queries\PaymentLinks\PaymentLinksQuery;
+use App\GraphQL\Queries\Permissions\AuthPermissionsQuery;
     use App\GraphQL\Queries\Permissions\PermissionQuery;
     use App\GraphQL\Queries\PersonsQuery;
     use App\GraphQL\Queries\PossessionsInsuranceQuery;
@@ -256,9 +258,11 @@ use App\GraphQL\Queries\Orders\OrderQuery;
                 'getContacts'    => ContactsQuery::class,
                 'getSettings'    => SettingsQuery::class,
                 'getOrders'      => OrdersQuery::class,
+                'getPayments'    => PaymentLinksQuery::class,
                 'getGroups'      => GroupsQuery::class,
                 'getPageTypes'   => PageTypesQuery::class,
                 'getOrder'       => OrderQuery::class,
+                'getPayment'     => PaymentLinkQuery::class,
                 'getContact'     => ContactQuery::class,
                 'getSection'     => SectionQuery::class,
                 'getComponentTypes' => ComponentTypesQuery::class,
