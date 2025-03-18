@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations\Orders;
 
+use App\Models\Admin;
 use App\Services\HelperService;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\Type;
@@ -113,6 +114,8 @@ class CreateOrderMutation extends Mutation
 
     public function resolve($root, $args)
     {
+        $auth = Admin::find(request()->auth['sub']);
+
         try {
             $isTrailer = (bool)$args['trailer_id'];
 
@@ -175,7 +178,26 @@ class CreateOrderMutation extends Mutation
                 }
             }
 
-            return Order::create($data);
+            $order = Order::create($data);
+
+            try {
+                $auth = Admin::find(request()->auth['sub']);
+
+                if ($order->paymentLink) {
+                    throw new \Exception('Link de plată deja a fost creat');
+                }
+    
+                #Generate payment link
+                $order->refresh()->paymentLink()->create([
+                    'admin_id'  => $auth->id
+                ]);
+            } catch (\Exception $e) {
+
+            }
+        
+
+            
+            return $order;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return new Error(HelperService::message($args['lang'], 'error'));

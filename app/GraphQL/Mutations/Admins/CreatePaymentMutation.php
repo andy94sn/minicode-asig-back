@@ -64,9 +64,10 @@ class CreatePaymentMutation extends Mutation
             }
 
             #Generate payment link
-            $order->paymentLink()->create([
+            $order->refresh()->paymentLink()->create([
                 'admin_id'  => $auth->id
             ]);
+
             return $order;
             
             // return env('APP_FRONT_URL','http://motoasig.md') .  '/' . $token;
