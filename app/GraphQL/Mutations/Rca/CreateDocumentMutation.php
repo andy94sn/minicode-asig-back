@@ -87,7 +87,7 @@ class CreateDocumentMutation extends Mutation
                 $data = [];
 
                 if(!isset($order->name)){
-                    $data['name'] = $http_response['name'];
+                    $data['name'] = $http_response['name'] ?? '';
                 }
 
                 $data['contract_number'] = $http_response['contract_number'];
