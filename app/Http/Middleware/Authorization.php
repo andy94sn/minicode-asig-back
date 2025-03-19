@@ -13,7 +13,8 @@ class Authorization
         'https://admin.motoasig.md',
         'https://api.motoasig.md',
         'http://127.0.0.1:8000',
-        'http://localhost:5175'
+        'http://localhost:5175',
+        'http://localhost:3001',
     ];
 
     /**

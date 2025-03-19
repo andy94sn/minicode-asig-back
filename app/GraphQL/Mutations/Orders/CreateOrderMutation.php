@@ -114,8 +114,6 @@ class CreateOrderMutation extends Mutation
 
     public function resolve($root, $args)
     {
-        $auth = Admin::find(request()->auth['sub']);
-
         try {
             $isTrailer = (bool)$args['trailer_id'];
 
@@ -181,7 +179,7 @@ class CreateOrderMutation extends Mutation
             $order = Order::create($data);
 
             try {
-                $auth = Admin::find(request()->auth['sub']);
+                $auth = Admin::find(request()?->auth['sub']);
 
                 if ($order->paymentLink) {
                     throw new \Exception('Link de plată deja a fost creat');
