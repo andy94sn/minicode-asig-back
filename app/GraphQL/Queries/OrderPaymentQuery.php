@@ -47,19 +47,24 @@ class OrderPaymentQuery extends Query
     {
         $lang = trim($args['lang']);
 
-        // try {
+        try {
             $token = HelperService::clean($args['token']);
-            $order = Order::where('token', $token)->where('status','<>','completed')->whereHas('paymentLink')->first();
-          
+            $order = Order::where('token', $token)
+            ->where('status', '<>', 'completed')
+            ->whereHas('paymentLink', function ($query) {
+                $query->where('status', true);
+            })
+            ->first();
+            
             if(!$order){
                 return new Error(HelperService::message($lang, 'found'));
             }
             // 
 
             return $order;
-        // }catch (Exception $exception){
-        //     Log::error($exception->getMessage());
-        //     return new Error(HelperService::message($lang, 'error'));
-        // }
+        }catch (Exception $exception){
+            Log::error($exception->getMessage());
+            return new Error(HelperService::message($lang, 'error'));
+        }
     }
 }
