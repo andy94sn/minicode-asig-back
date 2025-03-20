@@ -21,6 +21,7 @@ enum PagesType: string
 
     case NOT_FOUND = 'not_found';
     case PRIVACY   = 'politica_de_confidenialitate';
+    case ORDER_LINK = 'order_link';
 
     /**
      * Return description
@@ -39,7 +40,8 @@ enum PagesType: string
             self::CONSUMER  => 'consumer',
             self::ERROR     => 'error',
             self::NOT_FOUND => 'not_found',
-            self::PRIVACY   => 'politica_de_confidenialitate'
+            self::PRIVACY   => 'politica_de_confidenialitate',
+            self::ORDER_LINK => 'order_link'
         };
     }
 

@@ -90,6 +90,7 @@ class CreateDocumentMutation extends Mutation
                     $data['name'] = $http_response['name'] ?? '';
                 }
 
+                dump($http_response);
                 $data['contract_number'] = $http_response['contract_number'];
 
                 foreach($http_response['documents'] as $key => $document){
