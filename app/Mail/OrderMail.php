@@ -42,13 +42,13 @@ class OrderMail extends Mailable
             ? 'Pentru orice întrebări sau asistență suplimentară, vă rugăm să nu ezitați să ne contactați la numerele de telefon:'
             : 'Для любых вопросов или дополнительной помощи, пожалуйста, не стесняйтесь связаться с нами по следующим телефонным номерам:';
 
-        $phones = array('+373 600 30 421','+373 79 250 564','079 250 564');
+        $phones = explode(',', env('CONTACT_PHONES'));
 
         $text_email =  $this->lang == 'ro'
             ? 'sau prin email la:'
             : 'или по электронной почте:';
 
-        $email = 'info@motoasig.md';
+        $email = env('CONTACT_MAIL') ?? 'info@motoasig.md';
 
         $thanks = $this->lang == 'ro'
             ? 'Vă mulțumim pentru încrederea acordată și vă asigurăm de tot suportul nostru. Drumuri bune și sigure!'
@@ -109,7 +109,7 @@ class OrderMail extends Mailable
     {
         $string = null;
         $app_name = env('APP_NAME');
-        
+
         if($type == 'rca'){
             $string = $lang == 'ro' ? "Mulțumim că ați ales $app_name.MD pentru asigurarea RCAI!" : "Благодарим вас за выбор $app_name.MD для страхования ОСАГО";
         }elseif($type =='greenCard'){
