@@ -21,16 +21,16 @@ class ContactMail extends Mailable
     }
 
     public function build(){
-        $subject = 'Notificare - Pagina '.$this->page->title.'Primasig';
+        $subject = 'Notificare - Pagina '.$this->page->title . env('APP_NAME');
         $welcome = 'Salutare,';
         $body =   'Ați primit un mesaj in secțiunea Contacte. Vă rugăm să procesați această solicitare cât mai curând posibil.';
-        $footer = 'Cu apreciere, PrimAsig';
+        $footer = 'Cu apreciere,' . env('APP_NAME');
 
         return $this->subject($subject)
             ->markdown('vendor.mail.html.contact')
             ->with([
-                'url'   => 'https://primasig.md',
-                'image' => asset('storage/images/primasig.png'),
+                'url'   => 'https://motoasig.md',
+                'image' => asset('storage/images/motoasig.png'),
                 'welcome'  => $welcome,
                 'slot'     => nl2br($body),
                 'footer' => nl2br($footer)

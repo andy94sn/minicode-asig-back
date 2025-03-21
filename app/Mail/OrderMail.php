@@ -48,21 +48,21 @@ class OrderMail extends Mailable
             ? 'sau prin email la:'
             : 'или по электронной почте:';
 
-        $email = 'info@primasig.md';
+        $email = 'info@motoasig.md';
 
         $thanks = $this->lang == 'ro'
             ? 'Vă mulțumim pentru încrederea acordată și vă asigurăm de tot suportul nostru. Drumuri bune și sigure!'
             : 'Спасибо за ваше доверие, мы готовы оказать вам всю необходимую поддержку. Хорошей и безопасной поездки!';
 
         $footer = $this->lang == 'ro'
-            ? 'Cu apreciere, PrimAsig.'
-            : 'С уважением, PrimAsig.';
+            ? 'Cu apreciere, ' . env('APP_NAME'). '.'
+            : 'С уважением, ' . env('APP_NAME'). '.';
 
 
         $mail =  $this->subject($subject)
             ->markdown('vendor.mail.html.order')
             ->with([
-                'url'   => 'https://primasig.md',
+                'url'   => 'https://motoasig.md',
                 'image' => asset('storage/uploads/logo.png'),
                 'welcome'  => $welcome,
                 'slot'     => nl2br($body),
@@ -95,10 +95,11 @@ class OrderMail extends Mailable
     {
         $string = null;
 
+        $app_name = env('APP_NAME');
         if($type == 'rca'){
-           $string = $lang == 'ro' ? 'Asigurare RCAI - PrimAsig' : 'Страхования ОСАГО - PrimAsig';
+           $string = $lang == 'ro' ? "Asigurare RCAI - $app_name" : "Страхования ОСАГО - $app_name";
         }elseif($type =='greenCard'){
-           $string = $lang == 'ro' ? 'Asigurare RCAE - PrimAsig' : 'Страхования RCAE - PrimAsig';
+           $string = $lang == 'ro' ? "Asigurare RCAE - $app_name" : "Страхования RCAE - $app_name";
         }
 
         return $string;
@@ -107,11 +108,12 @@ class OrderMail extends Mailable
     private function getTextMessage($type, $lang): ?string
     {
         $string = null;
-
+        $app_name = env('APP_NAME');
+        
         if($type == 'rca'){
-            $string = $lang == 'ro' ? 'Mulțumim că ați ales PrimAsig.MD pentru asigurarea RCAI!' : 'Благодарим вас за выбор PrimAsig.MD для страхования ОСАГО';
+            $string = $lang == 'ro' ? "Mulțumim că ați ales $app_name.MD pentru asigurarea RCAI!" : "Благодарим вас за выбор $app_name.MD для страхования ОСАГО";
         }elseif($type =='greenCard'){
-            $string = $lang == 'ro' ? 'Mulțumim că ați ales PrimAsig.MD pentru asigurarea RCAE!' : 'Благодарим вас за выбор PrimAsig.MD для страхования RCAE!';
+            $string = $lang == 'ro' ? "Mulțumim că ați ales $app_name.MD pentru asigurarea RCAE!" : "Благодарим вас за выбор $app_name.MD для страхования RCAE!";
         }
 
         return $string;
