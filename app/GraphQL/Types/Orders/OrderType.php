@@ -80,6 +80,10 @@ class OrderType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Contract Number'
             ],
+            'agent' => [
+                'type' => Type::string(),
+                'description' => 'Agent name'
+            ],
         ];
     }
 }

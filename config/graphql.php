@@ -43,7 +43,8 @@ use App\GraphQL\Mutations\Admins\DeleteAdminMutation;
     use App\GraphQL\Mutations\Settings\UpdateSettingMutation;
     use App\GraphQL\Queries\Admins\AdminQuery;
     use App\GraphQL\Queries\Admins\AdminsQuery;
-    use App\GraphQL\Queries\Admins\ProfileQuery;
+use App\GraphQL\Queries\Admins\AgentsQuery;
+use App\GraphQL\Queries\Admins\ProfileQuery;
     use App\GraphQL\Queries\BlogQuery;
     use App\GraphQL\Queries\Categories\CategoriesQuery;
     use App\GraphQL\Queries\Categories\CategoryQuery;
@@ -248,6 +249,7 @@ use App\GraphQL\Queries\Permissions\AuthPermissionsQuery;
         'user' => [
             'query' => [
                 'getAdmins'      => AdminsQuery::class,
+                'getAgents'      => AgentsQuery::class,
                 'getAdmin'       => AdminQuery::class,
                 'getProfile'     => ProfileQuery::class,
                 'getPages'       => PagesQuery::class,

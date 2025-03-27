@@ -6,9 +6,11 @@ use App\Models\Admin;
 use App\Models\Order;
 use App\Models\Translation;
 use App\Services\HelperService;
+use Carbon\Carbon;
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Rebing\GraphQL\Support\Facades\GraphQL;
@@ -41,6 +43,14 @@ class PaymentLinksQuery extends Query
             'email' => [
                 'type' => Type::string(),
                 'description' => 'Search By Email'
+            ],
+            'agent' => [
+                'type' => Type::string(),
+                'description' => 'Search By Agent name'
+            ],
+            'range' => [
+                'type' => Type::string(),
+                'description' => 'Search By Range of dates'
             ],
             'policy_number' => [
                 'type' => Type::string(),
@@ -75,7 +85,7 @@ class PaymentLinksQuery extends Query
     public function resolve($root, $args)
     {
         $lang = $args['lang'] ?? 'ro';
-
+        
         try{
             $auth = Admin::find(request()->auth['sub']);
             $perPage = $args['perPage'] ?? 10;
@@ -116,11 +126,41 @@ class PaymentLinksQuery extends Query
                 $query->where('status',  $args['status']);
             }
 
+            if(isset($args['agent'])){
+               $query->whereHas('paymentLink', function (Builder $query) use ($args) {
+                    $query->whereHas('agent', function (Builder $query) use ($args) {
+                        $query->where('name', 'like', '%' . $args['agent'] . '%');
+                    });
+                });
+            }
+
+            if (isset($args['range'])) {
+                $range = explode(' to ', $args['range']);
+                if (count($range) == 2) {
+                    $startDate = Carbon::parse($range[0]);
+                    $endDate = Carbon::parse($range[1])->endOfDay();
+            
+                    $query->whereBetween('created_at', [$startDate, $endDate]);
+                }
+                else {
+                    $date = Carbon::parse($range[0]);
+                    $query->whereDate('created_at', '=', $date);
+                }
+            }
+            
+
             if(!empty($args['orderBy']) && !empty($args['sortBy'])){
-                $query->orderBy($args['sortBy'], $args['orderBy']);
+                if ($args['sortBy'] === 'agent') {
+                    $query->with(['paymentLink.agent' => function ($q) use ($args) {
+                        $q->orderBy('name', $args['orderBy']);
+                    }]);
+                } else {
+                    $query->orderBy($args['sortBy'], $args['orderBy']);
+                }
             }else{
                 $query->orderBy('created_at', 'desc');
             }
+            
 
             $orders = $query->paginate($perPage, ['*'], 'page', $page);
 

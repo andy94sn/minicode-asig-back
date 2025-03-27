@@ -62,4 +62,14 @@ class Admin extends Model
         return $token;
     }
 
+    public function scopeWithPayments($query)
+    {
+        return $query->whereHas('paymentLink');
+    }
+
+    public function paymentLink()
+    {
+        return $this->hasOne(PaymentLink::class, 'admin_id');
+    }
+
 }

@@ -32,4 +32,10 @@ class PaymentLink extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
+    
 }

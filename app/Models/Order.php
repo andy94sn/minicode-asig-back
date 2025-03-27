@@ -83,4 +83,9 @@ class Order extends Model
     {
         return $this->paymentLink ? $this->paymentLink->status : null;
     }
+
+    public function getAgentAttribute()
+    {
+        return $this?->paymentLink?->agent?->name ?? "-";
+    }
 }
