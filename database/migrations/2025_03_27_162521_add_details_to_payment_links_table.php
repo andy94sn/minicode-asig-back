@@ -14,7 +14,7 @@ class AddDetailsToPaymentLinksTable extends Migration
     public function up()
     {
         Schema::table('payment_links', function (Blueprint $table) {
-            $table->string('trailer_id')->nullable()->after('certificate');
+            $table->string('trailer_id')->nullable()->after('status');
             $table->string('vehicle_data')->nullable()->after('trailer_id');
             $table->string('vehicle_insured')->nullable()->after('vehicle_data');
             $table->string('vehicle_owner')->nullable()->after('vehicle_insured');
