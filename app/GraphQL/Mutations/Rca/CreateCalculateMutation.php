@@ -83,8 +83,11 @@ class CreateCalculateMutation extends Mutation
 
         try{
 
-            $auth = Admin::find(request()?->auth['sub']);
-
+            $auth = null;
+            if (!empty(request()?->auth['sub'])) {
+                $auth = Admin::find(request()?->auth['sub']);
+            }
+  
             if ($auth && !$auth?->idno) {
                 return new Error("Nu aveți setat IDNP!"); 
             }

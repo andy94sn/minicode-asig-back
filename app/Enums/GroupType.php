@@ -5,11 +5,11 @@ namespace App\Enums;
 enum GroupType: string
 {
     case GENERAL = 'general';
-    case SOCIAL = 'social';
-    case CONTACT = 'contact';
-    case PAYMENT = 'payment';
-    case MAIL    = 'mail';
-    case ADMIN   = 'admin';
+    // case SOCIAL = 'social';
+    // case CONTACT = 'contact';
+    // case PAYMENT = 'payment';
+    // case MAIL    = 'mail';
+    // case ADMIN   = 'admin';
 
     /**
      * Return description
@@ -18,11 +18,11 @@ enum GroupType: string
     {
         return match($this) {
             self::GENERAL => 'general',
-            self::SOCIAL  => 'social',
-            self::CONTACT => 'contact',
-            self::PAYMENT => 'payment',
-            self::MAIL    => 'mail',
-            self::ADMIN    => 'admin',
+            // self::SOCIAL  => 'social',
+            // self::CONTACT => 'contact',
+            // self::PAYMENT => 'payment',
+            // self::MAIL    => 'mail',
+            // self::ADMIN    => 'admin',
         };
     }
 

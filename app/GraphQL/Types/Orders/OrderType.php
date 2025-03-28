@@ -84,6 +84,14 @@ class OrderType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'Contract Link'
             ],
+            'demand_link' => [
+                'type' => Type::string(),
+                'description' => 'Demand Link'
+            ],
+            'contract_number' => [
+                'type' => Type::string(),
+                'description' => 'Contract number'
+            ],
             'agent' => [
                 'type' => Type::string(),
                 'description' => 'Agent name'
@@ -91,12 +99,12 @@ class OrderType extends GraphQLType
 
             'code' => [
                 'type' => Type::string(),
-                'description' => 'Agent name'
+                'description' => 'Code'
             ],
 
             'certificate' => [
                 'type' => Type::string(),
-                'description' => 'Agent name'
+                'description' => 'Certificate'
             ],
 
             'vehicle_data' => [

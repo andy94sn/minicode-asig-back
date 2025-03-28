@@ -78,14 +78,15 @@ class CreateDocumentMutation extends Mutation
             ]);
 
             $http_response = json_decode($response->getBody()->getContents(), true);
-
+            
             if(isset($http_response['error'])){
                 return new Error(HelperService::message($lang, 'invalid'));
             }
 
             if($http_response){
+               
                 $data = [];
-
+                
                 if(!isset($order->name)){
                     $data['name'] = $http_response['name'] ?? '';
                 }
@@ -96,6 +97,9 @@ class CreateDocumentMutation extends Mutation
                     $data[$key] = $document;
                     if($key == 'policy'){
                         $data['link'] = env('RCA_APP_URL').'/storage/documents/'.$document;
+                    }
+                    if($key == 'demand'){
+                        $data['demand_link'] = env('RCA_APP_URL').'/storage/documents/'.$document;
                     }
                 }
 

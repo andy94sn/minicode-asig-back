@@ -118,4 +118,9 @@ class Order extends Model
     {
         return $this?->contract ? env('RCA_APP_URL') . '/storage/documents/' . $this?->contract : "";
     }
+
+    public function getDemandLinkAttribute()
+    {
+        return $this?->contract_number ? env('RCA_APP_URL') . '/storage/documents/' . "Demand-" . $this?->contract_number . ".pdf" : "";
+    }
 }
