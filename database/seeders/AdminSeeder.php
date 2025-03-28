@@ -26,7 +26,7 @@ class AdminSeeder extends Seeder
             'manage-contacts',
             'manage-settings',
             'manage-refund',
-            'manage-blog',
+            // 'manage-blog',
             'manage-payments',
             'manage-all-payments',
         ];
@@ -39,7 +39,7 @@ class AdminSeeder extends Seeder
             'Manage Contacts',
             'Manage Settings',
             'Manage Refund',
-            'Manage Blog',
+            // 'Manage Blog',
             'Create order payment links',
             "Show all payment links"
         ];

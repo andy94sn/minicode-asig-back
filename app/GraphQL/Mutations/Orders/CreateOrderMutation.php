@@ -108,13 +108,32 @@ class CreateOrderMutation extends Mutation
             'lang' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Language'
-            ]
+            ],
+            'vehicle_data' => [
+                'type' => Type::string(),
+                'description' => 'Vehicle data'
+            ],
+            'vehicle_insured' => [
+                'type' => Type::string(),
+                'description' => 'Vehicle insured'
+            ],
+            'vehicle_owner' => [
+                'type' => Type::string(),
+                'description' => 'Vehicle owner'
+            ],
         ];
     }
 
     public function resolve($root, $args)
     {
+
         try {
+            $auth = Admin::find(request()?->auth['sub']);
+
+            if ($auth && !$auth?->idno) {
+                return new Error("Nu aveți setat IDNP!"); 
+            }
+
             $isTrailer = (bool)$args['trailer_id'];
 
             $params = [
@@ -131,7 +150,8 @@ class CreateOrderMutation extends Mutation
                 'possession' => $args['possession'] ?? null,
                 'person_type' => $args['person'] ?? null,
                 'name' => $args['name'] ?? null,
-                'lang' => $args['lang']
+                'lang' => $args['lang'],
+                'agent_idnp' => $auth?->idno ?? null
             ];
 
             $response = $this->client->post('api/calculate', [
@@ -179,7 +199,6 @@ class CreateOrderMutation extends Mutation
             $order = Order::create($data);
 
             try {
-                $auth = Admin::find(request()?->auth['sub']);
 
                 if ($order->paymentLink) {
                     throw new \Exception('Link de plată deja a fost creat');
@@ -187,13 +206,17 @@ class CreateOrderMutation extends Mutation
     
                 #Generate payment link
                 $order->refresh()->paymentLink()->create([
-                    'admin_id'  => $auth->id
+                    'admin_id'          => $auth->id,
+                    'trailer_id'        => trim($args['trailer_id']),
+                    'vehicle_data'      => $args['vehicle_data'],
+                    'vehicle_insured'   => $args['vehicle_insured'],
+                    'vehicle_owner'     => $args['vehicle_owner'],
+                    'name'              => trim($args['name']),
                 ]);
             } catch (\Exception $e) {
 
             }
         
-
             
             return $order;
         } catch (Exception $exception) {

@@ -88,4 +88,34 @@ class Order extends Model
     {
         return $this?->paymentLink?->agent?->name ?? "-";
     }
+
+    public function getTrailerIdAttribute()
+    {
+        return $this?->paymentLink?->trailer_id ?? "";
+    }
+
+    public function getVehicleDataAttribute()
+    {
+        return $this?->paymentLink?->vehicle_data ?? "";
+    }
+
+    public function getVehicleInsuredAttribute()
+    {
+        return $this?->paymentLink?->vehicle_insured ?? "";
+    }
+
+    public function getVehicleOwnerAttribute()
+    {
+        return $this?->paymentLink?->vehicle_owner ?? "";
+    }
+
+    public function getPayerNameAttribute()
+    {
+        return $this?->paymentLink?->name ?? "";
+    }
+
+    public function getContractLinkAttribute()
+    {
+        return $this?->contract ? env('RCA_APP_URL') . '/storage/documents/' . $this?->contract : "";
+    }
 }

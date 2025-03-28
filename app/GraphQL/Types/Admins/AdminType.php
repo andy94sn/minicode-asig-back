@@ -37,7 +37,11 @@ class AdminType extends GraphQLType
             'role' => [
                 'type' => GraphQL::type('Role'),
                 'description' => 'Role Type'
-            ]
+            ],
+            'idno' => [
+                'type' => Type::string(),
+                'description' => 'IDNO',
+            ],
         ];
     }
 }

@@ -10,7 +10,14 @@ class PaymentLink extends Model
     protected $fillable = [
         'order_id',
         'status',
-        'admin_id'
+        'admin_id',
+        'code',
+        'certificate',
+        'trailer_id',
+        'vehicle_data',
+        'vehicle_owner',
+        'vehicle_insured',
+        'name'
     ];
 
     protected $casts = [
@@ -37,5 +44,5 @@ class PaymentLink extends Model
     {
         return $this->belongsTo(Admin::class, 'admin_id');
     }
-    
+
 }

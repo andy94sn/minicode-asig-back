@@ -12,6 +12,7 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 use Exception;
 use GuzzleHttp\Client;
+use App\Models\Admin;
 
 class CreateCalculateMutation extends Mutation
 {
@@ -81,6 +82,15 @@ class CreateCalculateMutation extends Mutation
         $isTrailer = $args['trailer_status'] ?? false;
 
         try{
+
+            $auth = Admin::find(request()?->auth['sub']);
+
+            if ($auth && !$auth?->idno) {
+                return new Error("Nu aveți setat IDNP!"); 
+            }
+
+            $args['agent_idnp'] = $auth?->idno ?? null;
+
             $response = $this->client->post('/api/calculate', [
                 'json' => $args,
                 'headers' => [

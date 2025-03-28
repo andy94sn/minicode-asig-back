@@ -78,11 +78,46 @@ class OrderType extends GraphQLType
             ],
             'link' => [
                 'type' => Type::string(),
-                'description' => 'Contract Number'
+                'description' => 'Policy link'
+            ],
+            'contract_link' => [
+                'type' => Type::string(),
+                'description' => 'Contract Link'
             ],
             'agent' => [
                 'type' => Type::string(),
                 'description' => 'Agent name'
+            ],
+
+            'code' => [
+                'type' => Type::string(),
+                'description' => 'Agent name'
+            ],
+
+            'certificate' => [
+                'type' => Type::string(),
+                'description' => 'Agent name'
+            ],
+
+            'vehicle_data' => [
+                'type' => Type::string(),
+                'description' => 'Vehicle data'
+            ],
+            'vehicle_insured' => [
+                'type' => Type::string(),
+                'description' => 'Vehicle insured'
+            ],
+            'vehicle_owner' => [
+                'type' => Type::string(),
+                'description' => 'Vehicle owner'
+            ],
+            'trailer_id' => [
+                'type' => Type::string(),
+                'description' => 'Trailer id'
+            ],
+            'payer_name' => [
+                'type' => Type::string(),
+                'description' => 'Payer name'
             ],
         ];
     }

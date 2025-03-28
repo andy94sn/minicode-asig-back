@@ -37,6 +37,11 @@ class UpdateProfileMutation extends Mutation
                 'type' => Type::string(),
                 'description' => 'Name'
             ],
+            'idno' => [
+                'name' => 'idno',
+                'type' => Type::string(),
+                'description' => 'IDNO'
+            ],
             'status' => [
                 'name' => 'status',
                 'type' => Type::boolean(),
@@ -74,7 +79,7 @@ class UpdateProfileMutation extends Mutation
             $status = $args['status'] ?? true;
             $password = $args['password'] ?? '';
             $passwordConfirmation = $args['password_confirmation'] ?? '';
-
+            $idno = HelperService::clean($args['idno'] ?? '');
             $admin = Admin::where('token', $token)->first();
 
             if(!$admin){
@@ -90,7 +95,8 @@ class UpdateProfileMutation extends Mutation
             $admin->update([
                 'name' => $name,
                 'status' => $status,
-                'password' => $password
+                'password' => $password,
+                'idno' => $idno
             ]);
 
             return $admin;

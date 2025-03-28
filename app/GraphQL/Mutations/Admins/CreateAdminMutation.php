@@ -46,6 +46,11 @@ class CreateAdminMutation extends Mutation
                 'type' => Type::string(),
                 'description' => 'Confirmation Password'
             ],
+            'idno' => [
+                'name' => 'idno',
+                'type' => Type::string(),
+                'description' => 'IDNO'
+            ],
             'status' => [
                 'name' => 'status',
                 'type' => Type::boolean(),
@@ -73,6 +78,7 @@ class CreateAdminMutation extends Mutation
             $email = HelperService::clean($args['email']);
             $password = HelperService::clean($args['password']);
             $status  = $args['status'];
+            $idno = HelperService::clean($args['idno'] ?? '');
 
             if(Admin::where('email', $email)->exists()) {
                 return new Error(HelperService::message($lang, 'exists'));
@@ -90,7 +96,8 @@ class CreateAdminMutation extends Mutation
                 'name' => $name,
                 'email' => $email,
                 'password' => $password,
-                'status' => $status
+                'status' => $status,
+                'idno' => $idno
             ]);
 
             $admin->assignRole($role);

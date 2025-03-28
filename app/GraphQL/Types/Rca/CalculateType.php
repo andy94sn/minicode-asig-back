@@ -58,6 +58,10 @@ class CalculateType extends GraphQLType
             'expirationLastContract' => [
                 'type' => Type::string(),
                 'description' => 'Expiration Date'
+            ],
+            'minimalStartDate' => [
+                'type' => Type::string(),
+                'description' => 'Min Start Date'
             ]
         ];
     }
