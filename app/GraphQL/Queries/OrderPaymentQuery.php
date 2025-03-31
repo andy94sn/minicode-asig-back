@@ -50,7 +50,7 @@ class OrderPaymentQuery extends Query
         try {
             $token = HelperService::clean($args['token']);
             $order = Order::where('token', $token)
-            ->where('status', '<>', 'completed')
+            ->where('status', 'pending')
             ->whereHas('paymentLink', function ($query) {
                 $query->where('status', true);
             })
