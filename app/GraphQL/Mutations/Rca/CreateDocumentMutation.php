@@ -68,6 +68,7 @@ class CreateDocumentMutation extends Mutation
 
             $params = $order->toArray();
             $params['lang'] = $lang;
+            $params['agent_idnp'] = $order?->paymentLink?->agent?->idno ?? null;
 
             $response = $this->client->post('/api/save', [
                 'json' => $params,
