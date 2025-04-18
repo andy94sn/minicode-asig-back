@@ -62,6 +62,10 @@ class CalculateType extends GraphQLType
             'minimalStartDate' => [
                 'type' => Type::string(),
                 'description' => 'Min Start Date'
+            ],
+            'isProperty' => [
+                'type' => Type::boolean(),
+                'description' => 'Is property'
             ]
         ];
     }
